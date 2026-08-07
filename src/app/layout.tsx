@@ -4,34 +4,35 @@ import "./globals.css";
 export const metadata: Metadata = {
     metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
     title: {
-        default: "Koushik Mondal | Satellite Simulation & Scalable Web Systems",
+        default: "Koushik Mondal | Senior React Engineer & Frontend Architect",
         template: "%s | Koushik Mondal"
     },
-    description: "Portfolio of Koushik Mondal, a software engineer building satellite simulation systems, geospatial visualization interfaces, and scalable frontend applications with React, Next.js, TypeScript, Cesium, and Mapbox.",
+    description: "Portfolio of Koushik Mondal, Senior React Engineer & Frontend Architect specializing in scalable web systems, reusable component architectures, performance optimization, React, Next.js, and TypeScript.",
     applicationName: "Koushik Mondal Portfolio",
     authors: [{ name: "Koushik Mondal" }],
     creator: "Koushik Mondal",
     keywords: [
         "Koushik Mondal",
+        "Senior React Engineer",
+        "Frontend Architect",
         "Software Engineer",
-        "Satellite Simulation",
-        "Geospatial Visualization",
-        "Frontend Engineer",
-        "React",
-        "Next.js",
+        "React.js",
+        "Next.js App Router",
         "TypeScript",
-        "Cesium",
-        "Mapbox",
-        "Three.js",
-        "Scalable Web Systems"
+        "Reusable Component Libraries",
+        "Performance Optimization",
+        "TanStack Query",
+        "Satellite Simulation UI",
+        "Geospatial Visualization",
+        "Apache ECharts"
     ],
     icons: {
-        icon: [{ url: "/koushik.png", type: "image/jpeg" }],
-        apple: [{ url: "/koushik.png", type: "image/jpeg" }]
+        icon: [{ url: "/koushik.png", type: "image/png" }],
+        apple: [{ url: "/koushik.png", type: "image/png" }]
     },
     openGraph: {
-        title: "Koushik Mondal | Satellite Simulation & Scalable Web Systems",
-        description: "Advanced interactive systems portfolio focused on satellite simulation, geospatial visualization, and production-grade frontend architecture.",
+        title: "Koushik Mondal | Senior React Engineer & Frontend Architect",
+        description: "Portfolio of Koushik Mondal — Senior React Engineer & Frontend Architect with 3.5+ years of experience building scalable enterprise frontend systems.",
         type: "website",
         locale: "en_IN",
         siteName: "Koushik Mondal Portfolio",
@@ -46,8 +47,8 @@ export const metadata: Metadata = {
     },
     twitter: {
         card: "summary_large_image",
-        title: "Koushik Mondal | Satellite Simulation & Scalable Web Systems",
-        description: "Software engineer building satellite simulation, geospatial visualization, and scalable frontend systems.",
+        title: "Koushik Mondal | Senior React Engineer & Frontend Architect",
+        description: "Senior React Engineer & Frontend Architect building high-performance web applications, reusable UI systems, and interactive platforms.",
         images: ["/koushik.png"]
     }
 };
