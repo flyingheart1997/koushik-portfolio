@@ -416,15 +416,15 @@ export const PORTFOLIO_MISSION_DATA: PortfolioMissionChapter[] = [
         impact: 'Available for conversations around satellite simulation, geospatial visualization, and advanced frontend systems.',
         actionPanel: {
             category: 'Resume',
-            title: 'Koushik_Mondal_Resume.pdf',
+            title: 'Koushik Mondal Resume.pdf',
             subtitle: 'Download the latest resume as a PDF',
             highlights: [
                 'One-click recruiter-friendly resume download.',
                 'Includes experience, projects, and technical skills.'
             ],
-            href: '/Koushik_Mondal_Resume.pdf',
+            href: '/Koushik_Mondal_Senior_React_Engineer_Resume.pdf',
             cta: 'Download resume',
-            download: 'Koushik_Mondal_Resume.pdf'
+            download: 'Koushik_Mondal_Senior_React_Engineer_Resume.pdf'
         },
         callouts: [
             {
