@@ -595,7 +595,7 @@ export class Planet {
         const targetScale = 1
             + this.targetOverview * this.getOverviewScaleBoost()
             + this.targetFocus * 0.025
-            + this.targetHover * 0.035;
+            + this.targetHover * 0.18;
         this.currentScale = THREE.MathUtils.lerp(this.currentScale, targetScale, 1 - Math.pow(0.001, delta));
         this.planetGroup.scale.setScalar(this.currentScale);
         this.setOrbitHighlight(this.targetHover > 0.1);

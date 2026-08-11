@@ -6,6 +6,8 @@ import type { PointerEvent as ReactPointerEvent } from 'react';
 import { SolarSystemScene } from './SolarSystemScene';
 import { NavigationManager } from '../services/NavigationManager';
 import { PORTFOLIO_MISSION_DATA, PortfolioMissionChapter } from '../data/PortfolioMissionData';
+import { AnimationManager } from '../services/AnimationManager';
+import { PlanetLayoutRouter } from './PlanetLayouts';
 
 type StyleWithVars = CSSProperties & Record<`--${string}`, string | number>;
 
@@ -21,8 +23,6 @@ const SURFACE_THEMES = [
     ['#4f8dff', '#092f9b', '#010b2c', '#44e3ff', 'rgba(64, 120, 255, 0.3)']
 ] as const;
 
-const formatMissionIndex = (index: number) => `0${index + 1}`.slice(-2);
-
 const getSurfaceStyle = (index: number) => {
     const theme = SURFACE_THEMES[index] ?? SURFACE_THEMES[0];
 
@@ -35,18 +35,7 @@ const getSurfaceStyle = (index: number) => {
     } as StyleWithVars;
 };
 
-const getActionLabel = (category: string) => {
-    const normalizedCategory = category.toLowerCase();
-    if (normalizedCategory.includes('email')) return 'Send Email ✉️';
-    if (normalizedCategory.includes('linkedin')) return 'LinkedIn Profile ↗';
-    if (normalizedCategory.includes('github')) return 'GitHub Profile ↗';
-    if (normalizedCategory.includes('website') || normalizedCategory.includes('company') || normalizedCategory.includes('product') || normalizedCategory.includes('geminus')) return 'Visit Website ↗';
-    return 'Open Link ↗';
-};
-
-const isExternalHref = (href: string) => /^https?:\/\//.test(href);
-
-const getSurfaceScroller = (surface: HTMLElement) => surface.querySelector<HTMLElement>('.resumeGrid');
+const getSurfaceScroller = (surface: HTMLElement) => surface.querySelector<HTMLElement>('.planetScroll');
 
 const getScrollState = (scroller: HTMLElement | null) => {
     if (!scroller) {
@@ -64,215 +53,6 @@ const getScrollState = (scroller: HTMLElement | null) => {
         atTop: scroller.scrollTop <= 2,
         atBottom: scroller.scrollTop + scroller.clientHeight >= scroller.scrollHeight - 2
     };
-};
-
-const TypewriterText = ({
-    text,
-    speed = 22,
-    delay = 100,
-    className = ''
-}: {
-    text: string;
-    speed?: number;
-    delay?: number;
-    className?: string;
-}) => {
-    const [displayedText, setDisplayedText] = useState('');
-    const [isStarted, setIsStarted] = useState(false);
-    const [isTyping, setIsTyping] = useState(false);
-
-    useEffect(() => {
-        setDisplayedText('');
-        setIsStarted(false);
-        setIsTyping(false);
-        if (!text) return;
-
-        let interval: NodeJS.Timeout;
-        const startTimeout = setTimeout(() => {
-            setIsStarted(true);
-            setIsTyping(true);
-            let index = 0;
-            interval = setInterval(() => {
-                index++;
-                setDisplayedText(text.slice(0, index));
-                if (index >= text.length) {
-                    clearInterval(interval);
-                    setIsTyping(false);
-                }
-            }, speed);
-        }, delay);
-
-        return () => {
-            clearTimeout(startTimeout);
-            if (interval) clearInterval(interval);
-        };
-    }, [text, speed, delay]);
-
-    if (!isStarted && displayedText.length === 0) {
-        return null;
-    }
-
-    return (
-        <span className={`typewriterContainer ${className}`}>
-            {displayedText}
-            {isTyping && <span className="typeCursor typing" aria-hidden="true">|</span>}
-        </span>
-    );
-};
-
-const SequentialCell = ({
-    children,
-    className = '',
-    delay,
-    style
-}: {
-    children: React.ReactNode;
-    className?: string;
-    delay: number;
-    style?: CSSProperties;
-}) => {
-    const cellRef = useRef<HTMLElement>(null);
-    const [isVisible, setIsVisible] = useState(false);
-
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setIsVisible(true);
-        }, delay);
-        return () => clearTimeout(timer);
-    }, [delay]);
-
-    useLayoutEffect(() => {
-        if (!isVisible || !cellRef.current) return;
-        gsap.fromTo(
-            cellRef.current,
-            { opacity: 0, y: 14, scale: 0.96 },
-            { opacity: 1, y: 0, scale: 1, duration: 0.45, ease: 'power2.out' }
-        );
-    }, [isVisible]);
-
-    if (!isVisible) return null;
-
-    return (
-        <article
-            ref={cellRef}
-            className={`resumeCell cellActive ${className}`}
-            style={style}
-        >
-            {children}
-        </article>
-    );
-};
-
-const SequentialListItem = ({
-    text,
-    speed = 14,
-    delay
-}: {
-    text: string;
-    speed?: number;
-    delay: number;
-}) => {
-    const [isVisible, setIsVisible] = useState(false);
-
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setIsVisible(true);
-        }, delay);
-        return () => clearTimeout(timer);
-    }, [delay]);
-
-    if (!isVisible) return null;
-
-    return (
-        <li className="sequentialItem">
-            <TypewriterText text={text} speed={speed} delay={0} />
-        </li>
-    );
-};
-
-const SequentialBadge = ({
-    tag,
-    delay
-}: {
-    tag: string;
-    delay: number;
-}) => {
-    const badgeRef = useRef<HTMLElement>(null);
-    const [isVisible, setIsVisible] = useState(false);
-
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setIsVisible(true);
-        }, delay);
-        return () => clearTimeout(timer);
-    }, [delay]);
-
-    useLayoutEffect(() => {
-        if (!isVisible || !badgeRef.current) return;
-        gsap.fromTo(
-            badgeRef.current,
-            { opacity: 0, scale: 0.85, y: 6 },
-            { opacity: 1, scale: 1, y: 0, duration: 0.3, ease: 'back.out(1.4)' }
-        );
-    }, [isVisible]);
-
-    if (!isVisible) return null;
-
-    return (
-        <small ref={badgeRef} className="badgePopIn">
-            {tag}
-        </small>
-    );
-};
-
-const SequentialLink = ({
-    href,
-    category,
-    delay,
-    download,
-    children,
-    className = 'resumeLink'
-}: {
-    href: string;
-    category?: string;
-    delay: number;
-    download?: string;
-    children?: React.ReactNode;
-    className?: string;
-}) => {
-    const linkRef = useRef<HTMLAnchorElement>(null);
-    const [isVisible, setIsVisible] = useState(false);
-
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setIsVisible(true);
-        }, delay);
-        return () => clearTimeout(timer);
-    }, [delay]);
-
-    useLayoutEffect(() => {
-        if (!isVisible || !linkRef.current) return;
-        gsap.fromTo(
-            linkRef.current,
-            { opacity: 0, scale: 0.9, y: 8 },
-            { opacity: 1, scale: 1, y: 0, duration: 0.35, ease: 'power2.out' }
-        );
-    }, [isVisible]);
-
-    if (!isVisible) return null;
-
-    return (
-        <a
-            ref={linkRef}
-            className={className}
-            href={href}
-            download={download}
-            target={isExternalHref(href) ? '_blank' : undefined}
-            rel={isExternalHref(href) ? 'noreferrer' : undefined}
-        >
-            {children ?? (category ? getActionLabel(category) : 'Open Link ↗')}
-        </a>
-    );
 };
 
 const CoreBrief = ({
@@ -347,6 +127,16 @@ const CoreBrief = ({
         return () => ctx.revert();
     }, [chapterIndex, exiting, onContentReady]);
 
+    useEffect(() => {
+        if (exiting || !surfaceRef.current) return;
+
+        const timer = setTimeout(() => {
+            AnimationManager.revealHeader(surfaceRef.current);
+        }, 700);
+
+        return () => clearTimeout(timer);
+    }, [chapterIndex, exiting]);
+
     const handleSurfaceWheel = (event: WheelEvent<HTMLElement>) => {
         const modeMultiplier = event.deltaMode === 1 ? 16 : 1;
         const deltaY = event.deltaY * modeMultiplier;
@@ -410,9 +200,11 @@ const CoreBrief = ({
         onSurfaceRestore();
     };
 
+    const layoutClasses = ['coreBriefOverlay', exiting ? 'exiting' : 'entering'].join(' ');
+
     return (
         <div
-            className={`coreBriefOverlay ${exiting ? 'exiting' : 'entering'}`}
+            className={layoutClasses}
             style={getSurfaceStyle(chapterIndex)}
             onPointerDown={handleOverlayPointerDown}
             onWheel={handleSurfaceWheel}
@@ -430,157 +222,8 @@ const CoreBrief = ({
                 <div className="surfaceTexture" aria-hidden="true" />
                 <div className="surfaceScan" aria-hidden="true" />
 
-                <div className="resumeBoard">
-                    <header className="resumeHero">
-                        <div className="resumeAvatar typeLine" aria-label="Koushik Mondal Profile" style={{ '--module-delay': '100ms' } as StyleWithVars}>
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src="/koushik.jpg" alt="Koushik Mondal" className="avatarImage" />
-                        </div>
-                        <div className="resumeHeading">
-                            <h2 className={`typeLine ${chapterIndex === 0 ? 'singleLineTitle' : ''}`}>
-                                <TypewriterText text={chapter.title} speed={24} delay={850} />
-                            </h2>
-                            <p className="typeLine">
-                                <TypewriterText text={chapter.subtitle} speed={18} delay={850} />
-                            </p>
-                        </div>
-                        <div className="resumeMeta typeLine">
-                            <b><TypewriterText text={chapter.section} speed={18} delay={850} /></b>
-                        </div>
-                    </header>
-
-                    <section className="resumeImpact typeLine">
-                        <TypewriterText text={chapter.impact} speed={14} delay={850} />
-                    </section>
-
-                    <div className="resumeGrid">
-                        {chapter.callouts.slice(0, 2).map((callout) => (
-                            <SequentialCell
-                                key={`${callout.category}-${callout.title}`}
-                                delay={850}
-                            >
-                                <span className="resumeLabel">
-                                    <TypewriterText text={callout.category} speed={16} delay={850} />
-                                </span>
-                                <h3>
-                                    <TypewriterText text={callout.title} speed={18} delay={850} />
-                                </h3>
-                                <p>
-                                    <TypewriterText text={callout.subtitle} speed={14} delay={850} />
-                                </p>
-                                <ul>
-                                    {callout.highlights.map((highlight) => (
-                                        <SequentialListItem
-                                            key={highlight}
-                                            text={highlight}
-                                            speed={14}
-                                            delay={850}
-                                        />
-                                    ))}
-                                </ul>
-                                <div className="resumeMiniTags" aria-label={`${callout.title} signals`}>
-                                    {callout.tags.slice(0, 3).map((tag) => (
-                                        <SequentialBadge
-                                            key={tag}
-                                            tag={tag}
-                                            delay={850}
-                                        />
-                                    ))}
-                                </div>
-                                {callout.href ? (
-                                    <SequentialLink
-                                        href={callout.href}
-                                        category={callout.category}
-                                        delay={850}
-                                    />
-                                ) : null}
-                            </SequentialCell>
-                        ))}
-
-                        {chapter.actionPanel ? (
-                            <SequentialCell
-                                className="resumeActionCell"
-                                delay={850}
-                            >
-                                <span className="resumeLabel">
-                                    <TypewriterText text={chapter.actionPanel.category} speed={16} delay={850} />
-                                </span>
-                                <h3>
-                                    <TypewriterText text={chapter.actionPanel.title} speed={18} delay={850} />
-                                </h3>
-                                <p>
-                                    <TypewriterText text={chapter.actionPanel.subtitle} speed={14} delay={850} />
-                                </p>
-                                <ul>
-                                    {chapter.actionPanel.highlights.map((highlight) => (
-                                        <SequentialListItem
-                                            key={highlight}
-                                            text={highlight}
-                                            speed={14}
-                                            delay={850}
-                                        />
-                                    ))}
-                                </ul>
-                                <SequentialLink
-                                    className="resumeDownload"
-                                    href={chapter.actionPanel.href}
-                                    download={chapter.actionPanel.download}
-                                    delay={850}
-                                >
-                                    {chapter.actionPanel.cta}
-                                </SequentialLink>
-                            </SequentialCell>
-                        ) : chapter.tags.length > 0 ? (
-                            <SequentialCell delay={850}>
-                                <span className="resumeLabel">
-                                    <TypewriterText text={chapter.stackLabel ?? 'Tech Stack'} speed={16} delay={850} />
-                                </span>
-                                <div className="resumeStack" aria-label={`${chapter.title} technologies`}>
-                                    {chapter.tags.map((tag) => (
-                                        <SequentialBadge
-                                            key={tag}
-                                            tag={tag}
-                                            delay={850}
-                                        />
-                                    ))}
-                                </div>
-                            </SequentialCell>
-                        ) : null}
-
-                        {chapter.callouts.slice(2, 3).map(callout => (
-                            <SequentialCell
-                                key={`${callout.category}-${callout.title}`}
-                                delay={850}
-                            >
-                                <span className="resumeLabel">
-                                    <TypewriterText text={callout.category} speed={16} delay={850} />
-                                </span>
-                                <h3>
-                                    <TypewriterText text={callout.title} speed={18} delay={850} />
-                                </h3>
-                                <p>
-                                    <TypewriterText text={callout.subtitle} speed={14} delay={850} />
-                                </p>
-                                <ul>
-                                    {callout.highlights.map((highlight) => (
-                                        <SequentialListItem
-                                            key={highlight}
-                                            text={highlight}
-                                            speed={14}
-                                            delay={850}
-                                        />
-                                    ))}
-                                </ul>
-                                {callout.href ? (
-                                    <SequentialLink
-                                        href={callout.href}
-                                        category={callout.category}
-                                        delay={850}
-                                    />
-                                ) : null}
-                            </SequentialCell>
-                        ))}
-                    </div>
+                <div className="planetSurfaceBoard">
+                    <PlanetLayoutRouter key={chapterIndex} chapter={chapter} chapterIndex={chapterIndex} />
                 </div>
             </section>
 
@@ -632,6 +275,7 @@ export const SolarExplorer = () => {
             nav.restoreFromSurface();
         }
     };
+
 
     useEffect(() => {
         if (!containerRef.current) return;

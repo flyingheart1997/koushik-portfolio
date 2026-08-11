@@ -35,7 +35,7 @@ export const PORTFOLIO_MISSION_DATA: PortfolioMissionChapter[] = [
         planet: 'Sun',
         section: 'Profile',
         title: 'Koushik Mondal',
-        subtitle: 'Senior React Engineer | Frontend Architect',
+        subtitle: 'Frontend Engineer | React.js | Next.js | TypeScript | Frontend Architecture | Performance Optimization | Enterprise Web Applications',
         stackLabel: 'Complete Stack',
         tags: [
             'TypeScript',
@@ -220,7 +220,7 @@ export const PORTFOLIO_MISSION_DATA: PortfolioMissionChapter[] = [
                 subtitle: 'Feb 2023 – Present | Pune, India',
                 tags: [],
                 highlights: [
-                    'Established frontend foundation architecture for Antaris V2 using Next.js App Router & TypeScript.',
+                    'Established frontend foundation architecture for Antaris using Next.js App Router & TypeScript.',
                     'Independently owned 15–20 enterprise application screens for satellite simulation and mission planning.',
                     'Built 18+ shared React components used across multiple simulation workflows.',
                     'Led Grafana to Apache ECharts telemetry migration (7 backend APIs across 50+ panels).'
@@ -257,7 +257,7 @@ export const PORTFOLIO_MISSION_DATA: PortfolioMissionChapter[] = [
         planet: 'Mars',
         section: 'Featured Project',
         title: 'Satellite Simulation Platform',
-        subtitle: 'Antaris V2 satellite design, mission planning & 3D orbital tracking',
+        subtitle: 'Antaris satellite design, mission planning & 3D orbital tracking',
         tags: [
             'Next.js App Router',
             'CesiumJS 3D',
@@ -376,8 +376,9 @@ export const PORTFOLIO_MISSION_DATA: PortfolioMissionChapter[] = [
                 subtitle: 'Full corporate web portal built from scratch',
                 tags: [],
                 highlights: [
-                    'Built Geminus Tech corporate website in collaboration with the UX team.',
-                    'Implemented responsive design, SEO optimization, and clean page layouts.'
+                    'Official corporate web portal for Geminus Tech Pvt. Ltd. (https://www.geminustech.com/).',
+                    'Built from scratch in collaboration with UX team using Next.js & React.',
+                    'Delivered responsive architecture, SEO optimization, and high-performance page loads.'
                 ],
                 impact: 'Establishes strong web presence and product showcase for Geminus Tech.',
                 href: 'https://www.geminustech.com/'
@@ -388,8 +389,9 @@ export const PORTFOLIO_MISSION_DATA: PortfolioMissionChapter[] = [
                 subtitle: 'Modern security product web interface',
                 tags: [],
                 highlights: [
-                    'Engineered the official product website for API Securist.',
-                    'Implemented polished visual sections, product feature showcases, and lead flows.'
+                    'Comprehensive security testing that uncovers vulnerabilities beyond traditional scans.',
+                    'Engineered official product landing & feature demonstration portal for API Securist.',
+                    'Polished visual sections, interactive security feature showcases, and lead generation flows.'
                 ],
                 impact: 'Communicates technical API security features with extreme visual clarity.',
                 href: 'https://apisecurist.com/'
@@ -508,7 +510,7 @@ export const PORTFOLIO_MISSION_DATA: PortfolioMissionChapter[] = [
             },
             {
                 category: 'GitHub',
-                title: 'flyingheart1997 on GitHub',
+                title: 'Koushik Mondal on GitHub',
                 subtitle: 'github.com/flyingheart1997',
                 tags: [],
                 highlights: [
