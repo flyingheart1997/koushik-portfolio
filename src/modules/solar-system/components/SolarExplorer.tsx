@@ -754,7 +754,7 @@ export const SolarExplorer = () => {
             {isSceneReady && !coreBrief.render && activePlanetIndex >= 0 ? (
                 <div className="exploreHint focused" aria-hidden="true">
                     <span className="hintLine left" />
-                    <span className="hintText">Zoom to flatten surface</span>
+                    <span className="hintText">Zoom to explore content</span>
                     <span className="hintLine right" />
                 </div>
             ) : null}
