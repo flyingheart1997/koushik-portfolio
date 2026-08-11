@@ -161,7 +161,6 @@ export const SOLAR_DATA: PlanetConfig[] = [
         axialTilt: 1.706,
         description: "The seventh planet from the Sun, Uranus has the third-largest planetary radius.",
         color: 0xbbe1e4,
-        atmosphere: true,
         ring: {
             innerRadius: 1.34,
             outerRadius: 2.62,
@@ -182,7 +181,6 @@ export const SOLAR_DATA: PlanetConfig[] = [
         orbitLongitude: 44.971 * DEG,
         axialTilt: 0.494,
         description: "Dark, cold, and whipped by supersonic winds, ice giant Neptune is the eighth and most distant solar planet.",
-        color: 0x6081ff,
-        atmosphere: true
+        color: 0x6081ff
     }
 ];

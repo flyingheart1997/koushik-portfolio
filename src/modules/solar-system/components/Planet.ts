@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import gsap from 'gsap';
 import { PlanetConfig } from '../data/SolarData';
 import {
     ATMOSPHERE_FRAGMENT_SHADER,
@@ -21,12 +22,16 @@ export class Planet {
     private sunMaterial: THREE.ShaderMaterial | null = null;
     private ringMaterial: THREE.MeshBasicMaterial | null = null;
     private cloudLayer: THREE.Mesh | null = null;
+    private atmosphereMesh: THREE.Mesh | null = null;
+    private cardMesh: THREE.Mesh;
+    private cardBorderMesh: THREE.LineSegments;
     private readonly manualRotation = new THREE.Quaternion();
     private currentScale = 1;
     private targetFocus = 0;
     private targetHover = 0;
     private targetOverview = 0;
     private orbitAngle: number;
+    private morphProgress = 0;
 
     constructor(config: PlanetConfig, textureLoader: THREE.TextureLoader, sharedGeometry: THREE.SphereGeometry) {
         this.config = config;
@@ -43,6 +48,36 @@ export class Planet {
         this.mesh.rotation.y = config.orbitalPhase * 0.82;
         this.mesh.userData.planet = this;
         this.planetGroup.add(this.mesh);
+
+        // 3D Glass HUD Board Mesh
+        const cardPlaneGeo = new THREE.PlaneGeometry(1, 1);
+        const cardPlaneMat = new THREE.MeshStandardMaterial({
+            color: config.color,
+            roughness: 0.15,
+            metalness: 0.1,
+            transparent: true,
+            opacity: 0,
+            side: THREE.DoubleSide
+        });
+        this.cardMesh = new THREE.Mesh(cardPlaneGeo, cardPlaneMat);
+        this.cardMesh.userData.skipRaycast = true;
+        this.cardMesh.visible = false;
+        this.disposableGeometries.push(cardPlaneGeo);
+        this.materials.push(cardPlaneMat);
+        this.planetGroup.add(this.cardMesh);
+
+        const cardEdgesGeo = new THREE.EdgesGeometry(cardPlaneGeo);
+        const cardEdgesMat = new THREE.LineBasicMaterial({
+            color: 0x4ef0ab,
+            transparent: true,
+            opacity: 0
+        });
+        this.cardBorderMesh = new THREE.LineSegments(cardEdgesGeo, cardEdgesMat);
+        this.cardBorderMesh.userData.skipRaycast = true;
+        this.cardBorderMesh.visible = false;
+        this.disposableGeometries.push(cardEdgesGeo);
+        this.materials.push(cardEdgesMat);
+        this.planetGroup.add(this.cardBorderMesh);
 
         const hitMaterial = new THREE.MeshBasicMaterial({
             color: 0xffffff,
@@ -88,10 +123,12 @@ export class Planet {
             this.sunMaterial = new THREE.ShaderMaterial({
                 uniforms: {
                     time: { value: 0 },
-                    textureMap: { value: texture }
+                    textureMap: { value: texture },
+                    opacity: { value: 1.0 }
                 },
                 vertexShader: SUN_VERTEX_SHADER,
-                fragmentShader: SUN_FRAGMENT_SHADER
+                fragmentShader: SUN_FRAGMENT_SHADER,
+                transparent: true
             });
             this.materials.push(this.sunMaterial);
             return this.sunMaterial;
@@ -141,14 +178,14 @@ export class Planet {
     }
 
     private addAtmosphere(color: number) {
-        const atmosphereGeo = new THREE.SphereGeometry(this.config.radius * 1.055, 48, 32);
+        const atmosphereGeo = new THREE.SphereGeometry(this.config.radius * 1.015, 48, 32);
         const atmosphereMat = new THREE.ShaderMaterial({
             vertexShader: ATMOSPHERE_VERTEX_SHADER,
             fragmentShader: ATMOSPHERE_FRAGMENT_SHADER,
             uniforms: {
                 atmosphereColor: { value: new THREE.Color(color) },
-                coefficient: { value: 0.18 },
-                power: { value: 2.7 }
+                coefficient: { value: 0.08 },
+                power: { value: 4.8 }
             },
             transparent: true,
             side: THREE.BackSide,
@@ -158,9 +195,84 @@ export class Planet {
 
         const atmosphere = new THREE.Mesh(atmosphereGeo, atmosphereMat);
         atmosphere.userData.skipRaycast = true;
+        this.atmosphereMesh = atmosphere;
         this.disposableGeometries.push(atmosphereGeo);
         this.materials.push(atmosphereMat);
         this.planetGroup.add(atmosphere);
+    }
+
+    private readonly baseOrbitPosition = new THREE.Vector3();
+    private readonly morphTargetPosition = new THREE.Vector3();
+    private readonly morphTargetQuaternion = new THREE.Quaternion();
+    private readonly initialQuaternion = new THREE.Quaternion();
+
+    private targetCardWidth = 14.5;
+    private targetCardHeight = 8.8;
+
+    public setMorphTarget(
+        targetPosition: THREE.Vector3,
+        targetQuaternion: THREE.Quaternion,
+        targetWidth = 14.5,
+        targetHeight = 8.8
+    ) {
+        this.morphTargetPosition.copy(targetPosition);
+        this.morphTargetQuaternion.copy(targetQuaternion);
+        this.initialQuaternion.copy(this.planetGroup.quaternion);
+        this.targetCardWidth = targetWidth;
+        this.targetCardHeight = targetHeight;
+    }
+
+    public setMorphProgress(progress: number) {
+        this.morphProgress = THREE.MathUtils.clamp(progress, 0, 1);
+
+        const r = this.config.radius * this.currentScale;
+
+        // Position & orientation transition from orbit to screen center stage
+        if (this.morphProgress > 0) {
+            this.planetGroup.position.lerpVectors(this.baseOrbitPosition, this.morphTargetPosition, this.morphProgress);
+            this.planetGroup.quaternion.slerp(this.morphTargetQuaternion, this.morphProgress);
+        } else {
+            this.planetGroup.position.copy(this.baseOrbitPosition);
+        }
+
+        // 1. Planet Sphere shrinks from radius r down to 0 at screen center and dissolves opacity to 0
+        const sphereScale = THREE.MathUtils.lerp(r, 0, this.morphProgress);
+        this.mesh.scale.setScalar(sphereScale);
+
+        if (this.mesh.material instanceof THREE.Material) {
+            this.mesh.material.transparent = true;
+            this.mesh.material.opacity = THREE.MathUtils.lerp(1, 0, this.morphProgress);
+        }
+        if (this.sunMaterial) {
+            this.sunMaterial.uniforms.opacity.value = THREE.MathUtils.lerp(1, 0, this.morphProgress);
+        }
+
+        // 2. All sub-meshes (clouds, atmosphere, rings, orbit line) shrink to 0 and dissolve in exact unison
+        if (this.cloudLayer) {
+            this.cloudLayer.scale.setScalar(sphereScale * 1.018);
+            (this.cloudLayer.material as THREE.Material).opacity = THREE.MathUtils.lerp(0.28, 0, this.morphProgress);
+        }
+        if (this.atmosphereMesh) {
+            this.atmosphereMesh.scale.setScalar(sphereScale * 1.015);
+            (this.atmosphereMesh.material as THREE.Material).opacity = THREE.MathUtils.lerp(1, 0, this.morphProgress);
+        }
+        if (this.ringMaterial) {
+            this.ringMaterial.transparent = true;
+            this.ringMaterial.opacity = THREE.MathUtils.lerp(0.85, 0, this.morphProgress);
+        }
+        if (this.orbitLine) {
+            (this.orbitLine.material as THREE.Material).opacity = THREE.MathUtils.lerp(0.34, 0.05, this.morphProgress);
+        }
+    }
+
+    public animateMorph(targetProgress: number, duration = 1.0, onComplete?: () => void) {
+        gsap.to(this, {
+            morphProgress: targetProgress,
+            duration,
+            ease: targetProgress > 0 ? 'power3.inOut' : 'power2.inOut',
+            onUpdate: () => this.setMorphProgress(this.morphProgress),
+            onComplete
+        });
     }
 
     private addCloudLayer(textureLoader: THREE.TextureLoader, cloudTextureUrl: string) {
@@ -450,10 +562,19 @@ export class Planet {
     }
 
     private updateOrbitPosition() {
-        this.planetGroup.position.copy(this.getOrbitPosition(this.orbitAngle));
+        const pos = this.getOrbitPosition(this.orbitAngle);
+        this.baseOrbitPosition.copy(pos);
+        if (this.morphProgress === 0) {
+            this.planetGroup.position.copy(pos);
+        }
     }
 
     public update(time: number, delta: number) {
+        if (this.morphProgress > 0) {
+            // When converted into a card, stop rotation and orbit movement so it behaves as a stable still card
+            return;
+        }
+
         this.mesh.rotation.y += this.config.rotationSpeed * delta * 60;
         this.mesh.quaternion.premultiply(this.manualRotation);
         this.manualRotation.slerp(new THREE.Quaternion(), 1 - Math.pow(0.0005, delta));

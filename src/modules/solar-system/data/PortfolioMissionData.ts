@@ -35,7 +35,7 @@ export const PORTFOLIO_MISSION_DATA: PortfolioMissionChapter[] = [
         planet: 'Sun',
         section: 'Profile',
         title: 'Koushik Mondal',
-        subtitle: 'Software Engineer - Satellite Simulation & Scalable Web Systems',
+        subtitle: 'Senior React Engineer | Frontend Architect',
         stackLabel: 'Complete Stack',
         tags: [
             'TypeScript',
@@ -44,423 +44,476 @@ export const PORTFOLIO_MISSION_DATA: PortfolioMissionChapter[] = [
             'Next.js',
             'Tailwind CSS',
             'ShadCN UI',
-            'Cesium JS',
-            'Mapbox',
+            'CesiumJS',
+            'Mapbox GL',
             'Node.js',
             'Express.js',
             'REST API',
             'GraphQL',
             'WebSocket',
-            'tRPC',
-            'oRPC',
-            'MongoDB',
-            'PostgreSQL',
-            'Prisma',
             'Redux',
             'Zustand',
             'TanStack Query',
-            'Git',
+            'Apache ECharts',
             'Azure DevOps',
-            'Jira',
-            'Supabase',
-            'Convex'
+            'GitHub Actions',
+            'Git'
         ],
-        impact: 'Builds advanced interactive systems across satellite simulation, geospatial visualization, and scalable frontend architecture.',
+        impact: '3.5 years of experience designing scalable React & Next.js applications, satellite simulation architectures, and high-density telemetry dashboards.',
         callouts: [
             {
                 category: 'Identity',
-                title: 'Advanced Interactive Systems Engineer',
-                subtitle: 'Frontend engineer with simulation and geospatial product experience',
-                tags: ['Simulation UI', 'Realtime UX', 'Scalable Systems'],
+                title: 'Senior React Engineer & Architect',
+                subtitle: 'Specializing in frontend architecture, reusable component systems & performance optimization',
+                tags: [],
                 highlights: [
-                    'Specializes in high-performance satellite simulation and geospatial systems.',
-                    'Combines frontend architecture with visual systems thinking.'
+                    'Proven track record establishing production frontend projects from scratch using Next.js App Router.',
+                    'Honored with Performance Optimization Award and Ownership Award for end-to-end feature leadership.'
                 ],
-                impact: 'Not a generic frontend profile: positioned for advanced interactive engineering work.'
+                impact: 'Delivers maintainable, high-performance web applications built for enterprise scale.'
             },
             {
-                category: 'Current Base',
-                title: 'Pune, Maharashtra',
-                subtitle: 'Software Engineer working with production product teams',
-                tags: ['Product Teams', 'Architecture', 'Performance'],
+                category: 'Location & Mobility',
+                title: 'Pune, MH, India',
+                subtitle: 'Open to Relocation & Senior Engineering roles',
+                tags: [],
                 highlights: [
-                    'Builds maintainable interfaces for complex workflows.',
-                    'Focuses on performance, clarity, and production-grade delivery.'
+                    'Experienced building reusable component libraries and scalable frontend infrastructure.',
+                    'Full ownership mindset from technical planning to production CI/CD deployment.'
                 ],
-                impact: 'Strong fit for teams building complex web systems that need both speed and structure.'
+                impact: 'Strong technical lead for high-impact product teams building complex web applications.'
             },
             {
-                category: 'Contact Signal',
+                category: 'Direct Signal',
                 title: 'koushikm718@gmail.com',
-                subtitle: 'Primary contact channel | Phone: 7003885674',
-                tags: ['Email', 'LinkedIn', 'GitHub'],
+                subtitle: 'Phone: +91 7003885674 | Pune, India',
+                tags: [],
                 highlights: [
-                    'LinkedIn: koushik-mondal-0a299723b',
-                    'GitHub: flyingheart1997'
+                    'LinkedIn: linkedin.com/in/koushik-mondal-0a299723b',
+                    'GitHub: github.com/flyingheart1997'
                 ],
-                impact: 'Open for roles and projects around simulation, geospatial, and scalable frontend systems.',
+                impact: 'Direct channel for senior engineering roles, architecture leads, and technical consulting.',
                 href: 'mailto:koushikm718@gmail.com'
             }
         ]
     },
     {
         planet: 'Mercury',
-        section: 'Frontend',
-        title: 'Frontend Engineering',
-        subtitle: 'React, Next.js, TypeScript, and modern UI systems',
-        tags: ['TypeScript', 'JavaScript', 'HTML', 'CSS', 'React', 'Next.js'],
-        impact: 'Designs scalable frontend architecture for high-performance interactive products.',
+        section: 'Frontend Architecture',
+        title: 'Frontend Architecture & Systems',
+        subtitle: 'Next.js App Router, TypeScript, Component Libraries & Performance',
+        tags: [
+            'Next.js App Router',
+            'TypeScript',
+            'React.js',
+            'Tailwind CSS',
+            'ShadCN UI',
+            'Zustand',
+            'TanStack Query',
+            'SSR & Code Splitting'
+        ],
+        impact: 'Establishes component-driven architectures, modular typing, and high-performance UI foundations.',
         callouts: [
             {
-                category: 'Core Stack',
-                title: 'React + Next.js',
-                subtitle: 'Production application interfaces with typed architecture',
-                tags: ['React.js', 'Next.js', 'TypeScript'],
+                category: 'Foundation',
+                title: 'Next.js App Router & TypeScript',
+                subtitle: 'Production infrastructure with strict typing and SSR optimization',
+                tags: [],
                 highlights: [
-                    'Builds reusable feature flows and component systems.',
-                    'Keeps large frontend surfaces maintainable and predictable.'
+                    'Architects scalable frontend applications from scratch using Next.js App Router & TypeScript.',
+                    'Enforces strict typing, code splitting, lazy loading, and server-side rendering optimization.'
                 ],
-                impact: 'Creates frontend foundations that scale beyond single-page UI screens.'
+                impact: 'Creates robust frontend foundations that scale cleanly over product lifecycles.'
             },
             {
-                category: 'UI Systems',
-                title: 'Polished Components',
-                subtitle: 'Tailwind CSS, ShadCN UI, Bootstrap, and Aceternity UI',
-                tags: ['Tailwind', 'ShadCN', 'Bootstrap', 'Aceternity'],
+                category: 'Design Systems',
+                title: 'Reusable Component Libraries',
+                subtitle: 'Tailwind CSS, ShadCN UI & Modular Design Systems',
+                tags: [],
                 highlights: [
-                    'Builds modern responsive layouts and product-ready components.',
-                    'Balances visual polish with implementation discipline.'
+                    'Designed reusable component architecture consisting of 18+ shared React components.',
+                    'Improves developer velocity and maintains consistent product design systems across team workflows.'
                 ],
-                impact: 'Improves delivery speed while preserving product consistency.'
+                impact: 'Dramatically speeds up feature delivery across multi-screen enterprise applications.'
             },
             {
-                category: 'State + UX',
-                title: 'Interactive Reliability',
-                subtitle: 'Redux, Context API, Zustand, and TanStack Query',
-                tags: ['Redux', 'Context', 'Zustand', 'TanStack Query'],
+                category: 'State & Speed',
+                title: 'State Management & Optimization',
+                subtitle: 'Zustand, Redux, Context API, and TanStack Query',
+                tags: [],
                 highlights: [
-                    'Uses state tools based on workflow complexity.',
-                    'Optimizes dense dashboards and repeated operational interactions.'
+                    'Implements scalable state management patterns tailored to application complexity.',
+                    'Awarded Performance Optimization Award for rendering speed and application memory tuning.'
                 ],
-                impact: 'Keeps complex user flows responsive, stable, and easier to maintain.'
+                impact: 'Keeps dense data screens smooth, responsive, and light on client memory.'
             }
         ]
     },
     {
         planet: 'Venus',
-        section: 'Backend',
-        title: 'Backend & Data Layer',
-        subtitle: 'API integration, data models, and reliable application flows',
-        tags: ['Node.js', 'Express.js', 'REST API', 'GraphQL', 'WebSocket', 'tRPC', 'oRPC', 'Prisma'],
-        impact: 'Connects modern frontend systems to clean APIs, durable data models, and predictable data-fetching patterns.',
+        section: 'Data & Telemetry',
+        title: 'Telemetry & Data Systems',
+        subtitle: 'Apache ECharts, Satellite Telemetry, REST & GraphQL Services',
+        tags: [
+            'Apache ECharts',
+            'Satellite Telemetry',
+            'REST APIs',
+            'GraphQL',
+            'Node.js',
+            'Express.js',
+            'TanStack Query'
+        ],
+        impact: 'Connects modern frontend UIs with clean API services, telemetry pipelines, and efficient data handling.',
         callouts: [
             {
+                category: 'Dashboard Migration',
+                title: 'Grafana to Apache ECharts Migration',
+                subtitle: 'High-density telemetry dashboard engineering',
+                tags: [],
+                highlights: [
+                    'Led migration of satellite telemetry dashboards from Grafana to custom Apache ECharts.',
+                    'Delivered real-time telemetry panels monitoring live satellite simulation metrics.'
+                ],
+                impact: 'Significantly enhanced dashboard customization, render speed, and user interactivity.'
+            },
+            {
                 category: 'API Integration',
-                title: 'Service Workflows',
-                subtitle: 'REST, GraphQL, WebSocket, tRPC, and oRPC integration',
-                tags: ['REST', 'GraphQL', 'WebSocket', 'tRPC'],
+                title: 'REST & GraphQL Data Pipelines',
+                subtitle: 'Integrated 7 backend APIs across 50+ telemetry panels',
+                tags: [],
                 highlights: [
-                    'Integrates backend services into production frontend workflows.',
-                    'Keeps API boundaries clean, typed, and predictable.'
+                    'Seamlessly integrated 7 backend APIs across 50+ telemetry dashboards using TanStack Query.',
+                    'Keeps data fetching, caching, and state synchronization predictable and resilient.'
                 ],
-                impact: 'Reduces UI complexity by designing explicit service boundaries.'
+                impact: 'Reduces UI data loading overhead and eliminates redundant network requests.'
             },
             {
-                category: 'Database',
-                title: 'Persistent Systems',
-                subtitle: 'MongoDB, PostgreSQL, and Prisma ORM',
-                tags: ['MongoDB', 'PostgreSQL', 'Prisma'],
+                category: 'Node Microservices',
+                title: 'Node.js & Express Endpoints',
+                subtitle: 'Lightweight backend endpoints & client-server contract alignment',
+                tags: [],
                 highlights: [
-                    'Works with both relational and document data models.',
-                    'Maps product workflows into durable application state.'
+                    'Develops utility microservices and REST endpoints using Node.js & Express.',
+                    'Works across full-stack boundaries to ensure smooth client-server data flow.'
                 ],
-                impact: 'Supports complex products with reliable data structures.'
-            },
-            {
-                category: 'Data Fetching',
-                title: 'Frontend Data Reliability',
-                subtitle: 'TanStack Query and optimized data handling',
-                tags: ['TanStack Query', 'Caching', 'Data UX'],
-                highlights: [
-                    'Improves data loading and update patterns.',
-                    'Keeps interactive screens usable under changing data states.'
-                ],
-                impact: 'Makes dashboards and simulation views feel stable under real product pressure.'
+                impact: 'Guarantees seamless frontend-backend API contract alignment.'
             }
         ]
     },
     {
         planet: 'Earth',
         section: 'Experience',
-        title: 'Geminus Tech',
-        subtitle: 'Software Engineer | Nov 2022 - Present',
-        tags: ['React', 'TypeScript', 'Frontend Architecture', 'REST', 'GraphQL'],
-        impact: 'Works at Geminus Tech and contributes to the Antaris satellite simulation project through Geminus delivery.',
+        title: 'Professional Work Experience',
+        subtitle: 'Antaris Space India & Geminus Tech Pvt. Ltd.',
+        tags: [
+            'Antaris Space (Feb 2023 - Present)',
+            'Geminus Tech (Nov 2022 - Present)',
+            '3.5 Yrs Experience',
+            'Azure DevOps',
+            'Agile Workflows'
+        ],
+        impact: '3.5 years of continuous engineering impact across space-tech simulations and enterprise web portals.',
         callouts: [
             {
-                category: 'Role',
-                title: 'Software Engineer',
-                subtitle: 'Scalable frontend applications using React and TypeScript',
-                tags: ['React', 'TypeScript', 'Reusable UI'],
+                category: 'Antaris Space',
+                title: 'Software Engineer — Antaris Space',
+                subtitle: 'Feb 2023 – Present | Pune, India',
+                tags: [],
                 highlights: [
-                    'Develops scalable frontend applications.',
-                    'Builds reusable UI component systems to improve delivery efficiency.'
+                    'Established frontend foundation architecture for Antaris V2 using Next.js App Router & TypeScript.',
+                    'Independently owned 15–20 enterprise application screens for satellite simulation and mission planning.',
+                    'Built 18+ shared React components used across multiple simulation workflows.',
+                    'Led Grafana to Apache ECharts telemetry migration (7 backend APIs across 50+ panels).'
                 ],
-                impact: 'Ships maintainable product interfaces for production business systems.',
+                impact: 'Established the core web architecture for next-gen satellite simulation platforms.'
+            },
+            {
+                category: 'Geminus Tech',
+                title: 'Software Engineer — Geminus Tech',
+                subtitle: 'Nov 2022 – Present | Pune, India',
+                tags: [],
+                highlights: [
+                    'Built company corporate portal from scratch in collaboration with UX team using React & Next.js.',
+                    'Designed reusable frontend components following scalable architecture principles.',
+                    'Collaborated within Agile teams using Azure DevOps development workflows.'
+                ],
+                impact: 'Delivered highly responsive corporate identity and scalable web systems.',
                 href: 'https://www.geminustech.com/'
             },
             {
-                category: 'Delivery',
-                title: 'API + Product Integration',
-                subtitle: 'REST and GraphQL workflows with optimized data handling',
-                tags: ['REST', 'GraphQL', 'Data Handling'],
+                category: 'Awards',
+                title: 'Engineering Recognition',
+                subtitle: 'Recognized for Technical Leadership & Performance Excellence',
+                tags: [],
                 highlights: [
-                    'Connects frontend features with backend services.',
-                    'Improves maintainability through better state management patterns.'
+                    '🏆 Performance Optimization Award: Recognized for delivering optimized implementations & speed.',
+                    '🏆 Ownership Award: Recognized for independently leading complex feature implementation end-to-end.'
                 ],
-                impact: 'Keeps product workflows reliable as application complexity grows.'
-            },
-            {
-                category: 'Client Work',
-                title: 'Antaris Project',
-                subtitle: 'Satellite simulation and visualization platform',
-                tags: ['Aerospace', 'Simulation', 'Visualization'],
-                highlights: [
-                    'Works on Antaris through Geminus Tech.',
-                    'Contributes to production-grade satellite simulation UI workflows.'
-                ],
-                impact: 'Applies frontend architecture inside a high-context aerospace product.'
+                impact: 'Demonstrated technical excellence and strong product ownership mindset.'
             }
         ]
     },
     {
         planet: 'Mars',
-        section: 'Project',
-        title: 'Satellite Simulation Dashboard',
-        subtitle: 'Antaris simulation workflows for satellite design, configuration, and tracking',
-        tags: ['Satellite Simulation', 'Cesium JS', '3D Tracking', 'Realtime UI'],
-        impact: 'Built systems enabling real and virtual satellite simulation workflows.',
+        section: 'Featured Project',
+        title: 'Satellite Simulation Platform',
+        subtitle: 'Antaris V2 satellite design, mission planning & 3D orbital tracking',
+        tags: [
+            'Next.js App Router',
+            'CesiumJS 3D',
+            'Apache ECharts',
+            'Payload Builder',
+            'Bus Configurator',
+            'Mission Planning'
+        ],
+        impact: 'Built 15-20 enterprise screens enabling complete satellite lifecycle simulation & telemetry monitoring.',
         callouts: [
             {
-                category: 'Configuration',
-                title: 'Satellite Builder',
+                category: 'UI Engineering',
+                title: 'Satellite Design & Builder UI',
                 subtitle: 'Payload, bus, and edge system configuration',
-                tags: ['Payload', 'Bus', 'Edge Systems'],
+                tags: [],
                 highlights: [
-                    'Built interfaces enabling users to design and configure satellites.',
-                    'Supported satellite payload, bus, and edge component workflows.'
+                    'Independently owned 15–20 application screens for satellite payload, bus, and component setup.',
+                    'Created intuitive visual workflows for orbital mission planning and satellite parameters.'
                 ],
-                impact: 'Turns complex satellite setup into structured, usable product flows.'
+                impact: 'Transforms complex aerospace parameter configuration into streamlined visual workflows.'
             },
             {
-                category: 'Tracking',
-                title: 'Real + Virtual Satellites',
-                subtitle: 'Pre-simulation and post-simulation tracking workflows',
-                tags: ['Tracking', 'Mission Flows', 'Simulation States'],
+                category: 'Telemetry Systems',
+                title: '50+ Live Telemetry Dashboards',
+                subtitle: 'Custom Apache ECharts telemetry monitoring',
+                tags: [],
                 highlights: [
-                    'Enabled real satellite tracking workflows.',
-                    'Supported virtual satellite tracking before and after simulation runs.'
+                    'Engineered custom ECharts dashboards monitoring live satellite telemetry metrics.',
+                    'Displays real-time thermal, power, altitude, and payload simulation metrics.'
                 ],
-                impact: 'Links planning, simulation, and tracking into one operator-friendly experience.'
+                impact: 'Provides satellite operators real-time visual insights during simulation runs.'
             },
             {
-                category: 'Visualization',
-                title: 'Cesium 3D Simulation',
-                subtitle: 'Realtime 3D visualization and simulation clarity',
-                tags: ['Cesium', '3D Maps', 'Orbital UI'],
+                category: '3D Orbiting',
+                title: 'CesiumJS 3D Earth Globe',
+                subtitle: 'Real-time 3D satellite propagation & orbit visualizer',
+                tags: [],
                 highlights: [
-                    'Developed 3D visualization workflows using Cesium.',
-                    'Improved simulation and tracking clarity through interactive views.'
+                    'Developed 3D satellite trajectory visualization workflows using CesiumJS.',
+                    'Displays orbital ground tracks, coverage cones, and satellite pass predictions.'
                 ],
-                impact: 'Makes orbital and simulation state easier to understand through 3D interaction.'
+                impact: 'Delivers high-precision spatial context for satellite mission operators.'
             }
         ]
     },
     {
         planet: 'Jupiter',
-        section: 'Project',
-        title: 'World Monitor',
-        subtitle: 'Global intelligence monitoring platform with map-based data visualization',
-        tags: ['Geospatial', 'Mapbox', 'Cesium', 'Realtime Data', 'Large-scale Layers'],
-        impact: 'Built a real-time global data visualization platform using modern web technologies.',
+        section: 'Featured Project',
+        title: 'World Monitor Platform',
+        subtitle: 'Global intelligence visualizer with Mapbox GL & CesiumJS',
+        tags: [
+            'Mapbox GL',
+            'CesiumJS',
+            'Vector Tiles',
+            'Layer Controls',
+            '60 FPS Maps',
+            'Geospatial UI'
+        ],
+        impact: 'Engineered real-time geospatial visualization interfaces for processing dense map-based layers.',
         callouts: [
             {
-                category: 'Platform',
-                title: 'Global Intelligence UI',
-                subtitle: 'Map-first monitoring interface for large-scale data context',
-                tags: ['Monitoring', 'Global Data', 'Dashboards'],
+                category: 'Map Engine',
+                title: 'Mapbox GL & CesiumJS Integration',
+                subtitle: 'Map-first interactive visual monitoring platform',
+                tags: [],
                 highlights: [
-                    'Built real-time global data visualization experiences.',
-                    'Designed interfaces for scanning large-scale intelligence layers.'
+                    'Integrated Mapbox GL and CesiumJS for high-performance map rendering.',
+                    'Designed dynamic layer controls for toggleable geospatial intelligence data.'
                 ],
-                impact: 'Turns complex global data into readable monitoring workflows.'
+                impact: 'Turns high-density geographical datasets into clear visual insights.'
             },
             {
-                category: 'Maps',
-                title: 'Dynamic Geospatial Layers',
-                subtitle: 'Large-scale data layers with map-based interaction',
-                tags: ['Mapbox', 'Cesium', 'Layer Controls'],
+                category: 'Performance',
+                title: 'High-Density Spatial Rendering',
+                subtitle: 'Optimized vector tiles & interactive map states',
+                tags: [],
                 highlights: [
-                    'Designed dynamic map-based interfaces.',
-                    'Handled large-scale data layers with interaction clarity.'
+                    'Applied code splitting and memoization to keep map renders smooth at 60 FPS.',
+                    'Optimized memory consumption during real-time spatial data streaming.'
                 ],
-                impact: 'Improves decision-making through cleaner geospatial visualization.'
+                impact: 'Maintains buttery smooth interaction even with thousands of map entities.'
             },
             {
-                category: 'Architecture',
-                title: 'Performance-focused Frontend',
-                subtitle: 'Scalable UI architecture under dense visualization workloads',
-                tags: ['Performance', 'Architecture', 'Frontend Systems'],
+                category: 'UI Controls',
+                title: 'Spatial Toolbars & Inspect Panels',
+                subtitle: 'Modular map legends, view switches, and layer controls',
+                tags: [],
                 highlights: [
-                    'Focused on scalable frontend architecture.',
-                    'Balanced performance optimization with user experience.'
+                    'Built reusable map toolbar components, view switches, and coordinate inspect panels.',
+                    'Followed component-driven architecture for rapid UI expansion.'
                 ],
-                impact: 'Preserves responsiveness in dense real-time monitoring screens.'
+                impact: 'Ensures geospatial products can add new data layers with zero refactoring.'
             }
         ]
     },
     {
         planet: 'Saturn',
-        section: 'Web Systems',
-        title: 'Company & Product Websites',
-        subtitle: 'Identity websites for Geminus Tech and API Securist',
-        tags: ['Responsive UI', 'Brand Systems', 'Frontend Delivery', 'Modern Web'],
-        impact: 'Delivered polished identity websites for a company brand and a security product.',
+        section: 'Products & Portals',
+        title: 'Enterprise Web Platforms',
+        subtitle: 'Geminus Tech Corporate Website & API Securist Product Site',
+        tags: [
+            'Next.js',
+            'React.js',
+            'ShadCN UI',
+            'SEO Optimization',
+            'Azure DevOps',
+            'GitHub Actions'
+        ],
+        impact: 'Delivered production corporate websites from scratch with responsive, high-performance UIs.',
         callouts: [
             {
-                category: 'Company Website',
-                title: 'GeminusTech',
-                subtitle: 'Corporate identity website implementation',
-                tags: ['Brand UI', 'Responsive Layout', 'Frontend'],
+                category: 'Geminus Tech',
+                title: 'Corporate Website from Scratch',
+                subtitle: 'Full corporate web portal built from scratch',
+                tags: [],
                 highlights: [
-                    'Built the company identity website experience.',
-                    'Translated brand positioning into a polished frontend surface.'
+                    'Built Geminus Tech corporate website from scratch in collaboration with the UX team.',
+                    'Implemented responsive design, SEO optimization, and clean page layouts.'
                 ],
-                impact: 'Created a credible, responsive company web presence.',
+                impact: 'Establishes strong web presence and product showcase for Geminus Tech.',
                 href: 'https://www.geminustech.com/'
             },
             {
-                category: 'Product Website',
-                title: 'API Securist',
-                subtitle: 'Security product identity website',
-                tags: ['Security Product', 'Branding', 'UI Polish'],
+                category: 'API Securist',
+                title: 'API Securist Product Site',
+                subtitle: 'Modern security product web interface',
+                tags: [],
                 highlights: [
-                    'Implemented a modern security product website.',
-                    'Focused on clean visual execution and product credibility.'
+                    'Engineered the official product website for API Securist.',
+                    'Implemented polished visual sections, product feature showcases, and lead flows.'
                 ],
-                impact: 'Presents a technical security product through a clear, trustworthy interface.',
+                impact: 'Communicates technical API security features with extreme visual clarity.',
                 href: 'https://apisecurist.com/'
             },
             {
-                category: 'Execution',
-                title: 'Responsive Product Experience',
-                subtitle: 'Modern interaction systems and maintainable layout patterns',
-                tags: ['Responsive', 'Interaction', 'Reusable Layouts'],
+                category: 'Engineering Standards',
+                title: 'Clean Architecture & CI/CD',
+                subtitle: 'Azure DevOps & GitHub Actions workflows',
+                tags: [],
                 highlights: [
-                    'Created repeatable UI and layout patterns.',
-                    'Balanced visual polish with maintainable implementation.'
+                    'Conducted regular code reviews promoting clean architecture and reusable patterns.',
+                    'Contributed to Azure DevOps CI/CD pipelines and GitHub Actions workflows.'
                 ],
-                impact: 'Improves brand quality without sacrificing engineering maintainability.'
+                impact: 'Guarantees reliable, automated production deployments.'
             }
         ]
     },
     {
         planet: 'Uranus',
-        section: 'Tools',
-        title: 'Engineering Toolkit',
-        subtitle: 'Tools, platforms, and delivery workflows used in production',
-        tags: ['Git', 'GitHub', 'Azure DevOps', 'Jira', 'Supabase', 'Convex'],
-        impact: 'Combines product delivery discipline with fast learning, clean code, and architecture thinking.',
+        section: 'Toolkit',
+        title: 'Technical Skills Matrix',
+        subtitle: 'Comprehensive overview of frontend, visualization & DevOps capabilities',
+        tags: [
+            'React / Next.js',
+            'TypeScript',
+            'CesiumJS / Mapbox GL',
+            'Apache ECharts',
+            'Zustand / TanStack Query',
+            'Azure DevOps / CI/CD'
+        ],
+        impact: 'Combines technical versatility with strong ownership and architecture standards.',
         callouts: [
             {
-                category: 'Workflow',
-                title: 'Team Delivery',
-                subtitle: 'Git, GitHub, Azure DevOps, and Jira',
-                tags: ['Git', 'GitHub', 'Azure DevOps', 'Jira'],
+                category: 'Core Frontend',
+                title: 'Frontend & Architecture',
+                subtitle: 'React.js, Next.js App Router, TypeScript, Tailwind CSS, ShadCN UI',
+                tags: [],
                 highlights: [
-                    'Works inside collaborative engineering workflows.',
-                    'Keeps implementation aligned with product delivery priorities.'
+                    'Expertise in App Router, SSR, Code Splitting, Lazy Loading & Clean Architecture.',
+                    'Mastery over Tailwind CSS, ShadCN UI, and modern styling libraries.'
                 ],
-                impact: 'Comfortable in structured production development environments.'
+                impact: 'Builds maintainable frontend foundations that last.'
             },
             {
-                category: 'Platforms',
-                title: 'Modern App Services',
-                subtitle: 'Supabase and Convex for faster product delivery',
-                tags: ['Supabase', 'Convex', 'Backend Services'],
+                category: 'Data & State',
+                title: 'Visualization & State',
+                subtitle: 'Apache ECharts, CesiumJS, Mapbox GL, TanStack Query, Zustand',
+                tags: [],
                 highlights: [
-                    'Uses platform services pragmatically.',
-                    'Maintains clean application structure while moving quickly.'
+                    'Deep domain experience in geospatial visualizers & telemetry charts.',
+                    'Mastery of asynchronous state management with TanStack Query.'
                 ],
-                impact: 'Accelerates implementation without losing architectural control.'
+                impact: 'Delivers wowed visual experiences for complex data products.'
             },
             {
-                category: 'Strengths',
-                title: 'System Design Mindset',
-                subtitle: 'Performance optimization, clean code, and problem solving',
-                tags: ['Architecture', 'Performance', 'Problem Solving'],
+                category: 'DevOps & Delivery',
+                title: 'Backend & CI/CD Pipelines',
+                subtitle: 'REST, GraphQL, Node.js, Express.js, Azure DevOps, GitHub Actions, Git',
+                tags: [],
                 highlights: [
-                    'Breaks complex workflows into clear product systems.',
-                    'Learns fast across new domains and tools.'
+                    'Experienced with Azure DevOps CI/CD, GitHub Actions, and Git version control.',
+                    'Strong ownership mindset with proven track record of leading features independently.'
                 ],
-                impact: 'Strong fit for high-context engineering teams building advanced interactive products.'
+                impact: 'Ensures fast, reliable delivery from development to production deployment.'
             }
         ]
     },
     {
         planet: 'Neptune',
         section: 'Contact',
-        title: 'Open Signal',
-        subtitle: 'Reach out for simulation, geospatial, and scalable frontend opportunities',
-        tags: [],
-        impact: 'Available for conversations around satellite simulation, geospatial visualization, and advanced frontend systems.',
+        title: 'Connect & Hire',
+        subtitle: 'Available for Senior React Engineer & Frontend Architect roles',
+        tags: [
+            'Senior React Engineer',
+            'Frontend Architect',
+            'Open to Relocation',
+            'koushikm718@gmail.com'
+        ],
+        impact: 'Ready to build high-impact, scalable frontend architectures and interactive products.',
         actionPanel: {
-            category: 'Resume',
-            title: 'Koushik_Mondal_Resume.pdf',
-            subtitle: 'Download the latest resume as a PDF',
+            category: 'Resume PDF',
+            title: 'Koushik Mondal Resume',
+            subtitle: 'Download Koushik Mondal\'s latest resume',
             highlights: [
-                'One-click recruiter-friendly resume download.',
-                'Includes experience, projects, and technical skills.'
+                'Latest updated resume (Senior React Engineer / Frontend Architect).',
+                'Covers 3.5+ years experience, Antaris Space, Geminus Tech, awards & technical skills.'
             ],
-            href: '/Koushik_Mondal_Resume.pdf',
-            cta: 'Download resume',
-            download: 'Koushik_Mondal_Resume.pdf'
+            href: '/Koushik_Mondal_Senior_React_Engineer_Resume.pdf',
+            cta: 'Download Resume PDF',
+            download: 'Koushik_Mondal_Senior_React_Engineer_Resume.pdf'
         },
         callouts: [
             {
                 category: 'Email',
                 title: 'koushikm718@gmail.com',
-                subtitle: 'Primary contact channel',
-                tags: ['Email', 'Collaboration'],
+                subtitle: 'Primary contact channel | Phone: +91 7003885674',
+                tags: [],
                 highlights: [
-                    'Best channel for project, role, and collaboration conversations.',
-                    'Phone: 7003885674'
+                    'Email: koushikm718@gmail.com',
+                    'Phone: +91 7003885674 (Pune, MH, India — Open to Relocation)'
                 ],
-                impact: 'Direct channel for recruiter and product-team conversations.',
+                impact: 'Best channel for hiring, role opportunities, and project inquiries.',
                 href: 'mailto:koushikm718@gmail.com'
             },
             {
                 category: 'LinkedIn',
-                title: 'Koushik Mondal',
+                title: 'Koushik Mondal on LinkedIn',
                 subtitle: 'linkedin.com/in/koushik-mondal-0a299723b',
-                tags: ['Professional Profile', 'Work History'],
+                tags: [],
                 highlights: [
-                    'Professional profile and experience overview.',
-                    'Useful for role, project, and collaboration context.'
+                    'View detailed work history, endorsements, and project accomplishments.',
+                    'Connect directly on LinkedIn for professional opportunities.'
                 ],
-                impact: 'Recruiter-friendly signal for work history and professional presence.',
+                impact: 'Direct social proof and professional work background.',
                 href: 'https://www.linkedin.com/in/koushik-mondal-0a299723b/'
             },
             {
                 category: 'GitHub',
-                title: 'flyingheart1997',
+                title: 'flyingheart1997 on GitHub',
                 subtitle: 'github.com/flyingheart1997',
-                tags: ['Code', 'Engineering Presence'],
+                tags: [],
                 highlights: [
-                    'Public engineering presence and experiments.',
-                    'Code signal for implementation quality and learning.'
+                    'Explore code repositories, open source experiments, and portfolio source.',
+                    'Demonstrates clean coding standards and passion for continuous learning.'
                 ],
-                impact: 'Supports the portfolio with a public engineering footprint.',
+                impact: 'Public code verification of engineering craft.',
                 href: 'https://github.com/flyingheart1997'
             }
         ]
