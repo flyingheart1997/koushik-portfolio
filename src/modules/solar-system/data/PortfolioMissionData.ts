@@ -508,7 +508,7 @@ export const PORTFOLIO_MISSION_DATA: PortfolioMissionChapter[] = [
             },
             {
                 category: 'GitHub',
-                title: 'flyingheart1997 on GitHub',
+                title: 'Koushik Mondal on GitHub',
                 subtitle: 'github.com/flyingheart1997',
                 tags: [],
                 highlights: [

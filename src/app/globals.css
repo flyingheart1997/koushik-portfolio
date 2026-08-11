@@ -310,12 +310,12 @@ body {
 }
 
 .resumeImpact {
-  padding: clamp(12px, 1.5vw, 16px) clamp(16px, 1.8vw, 20px);
-  color: rgba(255, 255, 255, 0.95);
+  padding: clamp(12px, 1.8vw, 20px) clamp(16px, 2vw, 24px);
+  color: rgba(255, 255, 255, 0.92);
   font-family: var(--font-body);
-  font-size: clamp(0.85rem, 1.05vw, 0.96rem);
-  line-height: 1.48;
-  font-weight: 600;
+  font-size: clamp(0.88rem, 1.1vw, 1rem);
+  line-height: 1.58;
+  font-weight: 550;
   border-bottom: 1px solid rgba(255, 255, 255, 0.12);
   background: rgba(0, 0, 0, 0.15);
   text-shadow: 0 2px 16px rgba(0, 0, 0, 0.6);
@@ -325,8 +325,8 @@ body {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   grid-auto-rows: minmax(min-content, max-content);
-  gap: 14px;
-  padding: 16px;
+  gap: clamp(12px, 1.8vw, 18px);
+  padding: clamp(14px, 1.8vw, 20px);
   overflow-y: auto;
   max-height: calc(100vh - 280px);
   -webkit-overflow-scrolling: touch;
@@ -355,32 +355,37 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: start;
-  gap: 12px;
+  gap: clamp(10px, 1.5vw, 14px);
   min-width: 0;
   min-height: auto;
-  padding: clamp(16px, 1.8vw, 22px);
-  border-radius: 14px;
-  border: 1px solid transparent;
-  background: transparent;
+  padding: clamp(16px, 2vw, 24px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(160deg, rgba(38, 26, 14, 0.4), rgba(20, 13, 8, 0.5));
   opacity: 0;
   transform: translate3d(0, 14px, 0) scale(0.96);
   pointer-events: none;
-  transition: background 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+  transition: all 220ms ease;
 }
 
 .resumeCell.cellActive {
-  border-color: rgba(255, 255, 255, 0.12);
-  background: rgba(0, 0, 0, 0.35);
+  border-color: color-mix(in srgb, var(--surface-accent), transparent 30%);
+  background: linear-gradient(160deg, rgba(38, 26, 14, 0.6), rgba(20, 13, 8, 0.72));
   backdrop-filter: blur(10px);
   opacity: 1;
   transform: translate3d(0, 0, 0) scale(1);
   pointer-events: auto;
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.3),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.055);
 }
 
 .resumeCell:hover {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: color-mix(in srgb, var(--surface-accent), transparent 50%);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(160deg, rgba(38, 26, 14, 0.7), rgba(20, 13, 8, 0.8));
+  border-color: color-mix(in srgb, var(--surface-accent), white 20%);
+  box-shadow:
+    0 16px 40px rgba(0, 0, 0, 0.4),
+    inset 0 0 0 1px color-mix(in srgb, var(--surface-accent), transparent 50%);
 }
 
 .coreBriefOverlay.exiting .resumeCell {
@@ -390,11 +395,11 @@ body {
 .resumeLabel {
   width: max-content;
   max-width: 100%;
-  color: color-mix(in srgb, var(--surface-accent), white 30%);
-  font-size: 0.64rem;
+  color: color-mix(in srgb, var(--surface-accent), white 35%);
+  font-size: 0.68rem;
   font-family: var(--font-body);
-  font-weight: 800;
-  letter-spacing: 0.14em;
+  font-weight: 700;
+  letter-spacing: 0.15em;
   line-height: 1;
   text-transform: uppercase;
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
@@ -404,26 +409,26 @@ body {
   margin: 0;
   color: #ffffff;
   font-family: var(--font-display);
-  font-size: clamp(1rem, 1.28vw, 1.22rem);
-  line-height: 1.25;
-  font-weight: 750;
+  font-size: clamp(1.05rem, 1.32vw, 1.28rem);
+  line-height: 1.3;
+  font-weight: 700;
   letter-spacing: -0.01em;
   text-shadow: 0 2px 12px rgba(0, 0, 0, 0.45);
 }
 
 .resumeCell p {
   margin: 0;
-  color: rgba(255, 255, 255, 0.86);
+  color: rgba(255, 255, 255, 0.84);
   font-family: var(--font-body);
-  font-size: clamp(0.76rem, 0.92vw, 0.86rem);
-  line-height: 1.4;
+  font-size: clamp(0.79rem, 0.95vw, 0.88rem);
+  line-height: 1.52;
   font-weight: 500;
   text-shadow: 0 2px 14px rgba(0, 0, 0, 0.6);
 }
 
 .resumeCell ul {
   display: grid;
-  gap: 6px;
+  gap: clamp(6px, 0.8vw, 9px);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -432,10 +437,10 @@ body {
 .resumeCell li {
   position: relative;
   padding-left: 18px;
-  color: rgba(255, 255, 255, 0.92);
+  color: rgba(255, 255, 255, 0.9);
   font-family: var(--font-body);
-  font-size: clamp(0.72rem, 0.86vw, 0.8rem);
-  line-height: 1.38;
+  font-size: clamp(0.75rem, 0.88vw, 0.82rem);
+  line-height: 1.48;
   font-weight: 500;
   text-shadow: 0 2px 14px rgba(0, 0, 0, 0.6);
 }
@@ -456,37 +461,38 @@ body {
 .resumeStack {
   display: flex;
   flex-wrap: wrap;
-  gap: 7px;
-  margin-top: 4px;
+  gap: clamp(8px, 1vw, 10px);
+  margin-top: 6px;
 }
 
 .resumeMiniTags small,
 .resumeStack small {
   display: inline-flex;
   align-items: center;
-  min-height: 25px;
-  padding: 4px 11px;
-  color: rgba(255, 255, 255, 0.94);
-  font-size: clamp(0.66rem, 0.8vw, 0.74rem);
+  min-height: 27px;
+  padding: 6px 13px;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: clamp(0.68rem, 0.82vw, 0.76rem);
   font-family: var(--font-body);
   font-weight: 600;
   line-height: 1;
-  border: 1px solid color-mix(in srgb, var(--surface-accent), transparent 45%);
+  border: 1px solid color-mix(in srgb, var(--surface-accent), transparent 40%);
   border-radius: 999px;
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(4px);
-  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.6);
+  background: linear-gradient(135deg, rgba(232, 195, 122, 0.08), rgba(232, 195, 122, 0.04));
+  backdrop-filter: blur(6px);
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
   opacity: 0;
   transform: translate3d(0, 7px, 0) scale(0.94);
   animation: pillReveal 420ms var(--pill-delay) cubic-bezier(0.19, 1, 0.22, 1) forwards;
   will-change: transform, opacity;
-  transition: border-color 180ms ease, background 180ms ease;
+  transition: all 200ms ease;
 }
 
 .resumeMiniTags small:hover,
 .resumeStack small:hover {
-  border-color: color-mix(in srgb, var(--surface-accent), white 40%);
-  background: color-mix(in srgb, var(--surface-accent), transparent 75%);
+  border-color: color-mix(in srgb, var(--surface-accent), white 50%);
+  background: linear-gradient(135deg, rgba(232, 195, 122, 0.15), rgba(232, 195, 122, 0.08));
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--surface-accent), transparent 60%);
 }
 
 .coreBriefOverlay.exiting .resumeMiniTags small,
@@ -504,18 +510,18 @@ body {
   max-width: 100%;
   margin-top: auto;
   margin-left: auto;
-  padding: 8px 18px;
+  padding: 9px 20px;
   color: #ffffff !important;
-  font-size: clamp(0.7rem, 0.84vw, 0.78rem);
+  font-size: clamp(0.72rem, 0.85vw, 0.8rem);
   font-family: var(--font-body);
   font-weight: 700;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   text-decoration: none;
-  border: 1px solid color-mix(in srgb, var(--surface-accent), white 40%);
+  border: 1px solid color-mix(in srgb, var(--surface-accent), white 50%);
   border-radius: 999px;
-  background: linear-gradient(135deg, color-mix(in srgb, var(--surface-accent), transparent 45%), rgba(0, 0, 0, 0.5));
-  box-shadow: 0 4px 18px color-mix(in srgb, var(--surface-glow), transparent 50%);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--surface-accent), white 10%), rgba(0, 0, 0, 0.3));
+  box-shadow: 0 4px 16px color-mix(in srgb, var(--surface-glow), transparent 55%);
   transition: all 220ms ease;
   cursor: pointer;
   pointer-events: auto !important;
@@ -524,10 +530,10 @@ body {
 }
 
 .resumeCell a.resumeLink:hover {
-  transform: translateY(-2px);
+  transform: translateY(-3px);
   border-color: #ffffff;
-  background: linear-gradient(135deg, color-mix(in srgb, var(--surface-accent), white 30%), color-mix(in srgb, var(--surface-accent), transparent 20%));
-  box-shadow: 0 8px 26px color-mix(in srgb, var(--surface-glow), transparent 20%);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--surface-accent), white 25%), color-mix(in srgb, var(--surface-accent), transparent 10%));
+  box-shadow: 0 8px 28px color-mix(in srgb, var(--surface-glow), transparent 35%);
   color: #000 !important;
 }
 
@@ -1033,16 +1039,45 @@ body {
   }
 }
 
+@media (max-width: 1024px) {
+  .flatSurface {
+    width: calc(100vw - 32px);
+    height: calc(100vh - 100px);
+    min-height: 0;
+    padding: clamp(14px, 2vw, 18px);
+  }
+
+  .resumeGrid {
+    gap: clamp(10px, 1.6vw, 16px);
+    padding: clamp(12px, 1.6vw, 18px);
+  }
+
+  .resumeCell {
+    padding: clamp(14px, 1.8vw, 20px);
+  }
+}
+
 @media (max-width: 900px) {
   .flatSurface {
     width: calc(100vw - 28px);
-    height: calc(100vh - 118px);
+    height: calc(100vh - 100px);
     min-height: 0;
-    padding: 20px;
+    padding: clamp(12px, 1.8vw, 16px);
   }
 
   .resumeHero {
     grid-template-columns: auto 1fr;
+    gap: clamp(12px, 1.6vw, 14px);
+    padding: clamp(12px, 1.5vw, 16px);
+  }
+
+  .resumeAvatar {
+    width: clamp(48px, 8vw, 64px);
+    height: clamp(48px, 8vw, 64px);
+  }
+
+  .resumeHeading h2 {
+    font-size: clamp(1.6rem, 2.4vw, 2.2rem);
   }
 
   .resumeMeta {
@@ -1053,20 +1088,24 @@ body {
     gap: 10px;
   }
 
+  .resumeImpact {
+    padding: clamp(10px, 1.5vw, 14px) clamp(12px, 1.8vw, 16px);
+    font-size: clamp(0.82rem, 1vw, 0.92rem);
+  }
+
   .resumeGrid {
     grid-template-columns: 1fr;
-    grid-template-rows: none;
     overflow-y: auto;
     overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
     touch-action: pan-y;
+    gap: clamp(10px, 1.5vw, 14px);
+    padding: clamp(12px, 1.5vw, 16px);
   }
 
-  .resumeCell,
-  .resumeCell:nth-child(2n),
-  .resumeCell:nth-last-child(-n + 2) {
-    border-right: 0;
+  .resumeCell {
     border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    padding: clamp(12px, 1.6vw, 18px);
   }
 
   .resumeCell:last-child {
@@ -1090,13 +1129,6 @@ body {
 
   .surfaceModule {
     grid-template-columns: 1fr;
-    grid-template-areas:
-      "label"
-      "title"
-      "subtitle"
-      "tags"
-      "points"
-      "link";
   }
 
   .surfaceIdentity {
@@ -1106,52 +1138,81 @@ body {
 
 @media (max-width: 760px) {
   .flatSurface {
-    max-height: calc(100vh - 90px);
-    height: calc(100vh - 90px);
+    max-height: calc(100vh - 80px);
+    height: calc(100vh - 80px);
     min-height: 0;
     overflow: hidden;
-    padding: 12px;
+    padding: clamp(10px, 2vw, 14px);
+    border-radius: 18px;
   }
 
   .resumeBoard {
     grid-template-rows: auto auto 1fr;
     overflow: hidden;
-  }
-
-  .surfaceIdentity h2 {
-    font-size: clamp(2rem, 13vw, 3.15rem);
-  }
-
-  .surfaceIdentity h2.singleLineTitle {
-    font-size: clamp(2.25rem, 11vw, 3.25rem);
-    white-space: normal;
+    border-radius: 14px;
   }
 
   .resumeHero {
-    gap: 12px;
-    padding: 12px;
+    gap: clamp(10px, 1.4vw, 12px);
+    padding: clamp(10px, 1.5vw, 12px);
   }
 
   .resumeAvatar {
-    width: 46px;
+    width: clamp(42px, 10vw, 48px);
+    height: clamp(42px, 10vw, 48px);
   }
 
-  .resumeHeading h2,
-  .resumeHeading h2.singleLineTitle {
-    font-size: clamp(1.75rem, 8vw, 2.6rem);
+  .resumeHeading h2 {
+    font-size: clamp(1.3rem, 6.5vw, 1.75rem);
     white-space: normal;
   }
 
+  .resumeHeading h2.singleLineTitle {
+    white-space: normal;
+  }
+
+  .resumeHeading p {
+    font-size: clamp(0.75rem, 0.9vw, 0.85rem);
+  }
+
   .resumeImpact {
-    padding: 12px;
+    padding: clamp(10px, 1.4vw, 12px);
+    font-size: clamp(0.78rem, 0.95vw, 0.88rem);
   }
 
   .resumeCell {
-    padding: 12px;
+    padding: clamp(12px, 1.5vw, 14px);
     align-content: start;
+    gap: clamp(8px, 1.2vw, 10px);
+  }
+
+  .resumeCell h3 {
+    font-size: clamp(0.95rem, 1.15vw, 1.1rem);
+  }
+
+  .resumeCell p {
+    font-size: clamp(0.72rem, 0.88vw, 0.8rem);
+  }
+
+  .resumeCell li {
+    font-size: clamp(0.68rem, 0.82vw, 0.75rem);
+  }
+
+  .resumeMiniTags,
+  .resumeStack {
+    gap: clamp(6px, 0.8vw, 8px);
+  }
+
+  .resumeMiniTags small,
+  .resumeStack small {
+    font-size: clamp(0.62rem, 0.76vw, 0.7rem);
+    padding: 5px 10px;
+    min-height: 24px;
   }
 
   .resumeGrid {
+    gap: clamp(8px, 1.2vw, 10px);
+    padding: clamp(10px, 1.4vw, 12px);
     overflow: auto;
   }
 
@@ -1166,7 +1227,7 @@ body {
 
   .coreHint,
   .exploreHint {
-    bottom: 18px;
+    bottom: 16px;
     gap: 10px;
   }
 
@@ -1179,5 +1240,83 @@ body {
   .hintLine,
   .coreHint span {
     width: 44px;
+  }
+}
+
+@media (max-width: 480px) {
+  .flatSurface {
+    padding: 8px;
+    border-radius: 14px;
+  }
+
+  .resumeHero {
+    grid-template-columns: auto 1fr;
+    padding: 8px;
+    gap: 8px;
+  }
+
+  .resumeAvatar {
+    width: 40px;
+    height: 40px;
+  }
+
+  .resumeHeading h2 {
+    font-size: clamp(1.1rem, 5.5vw, 1.4rem);
+  }
+
+  .resumeMeta {
+    gap: 6px;
+  }
+
+  .resumeImpact {
+    padding: 8px;
+    font-size: 0.75rem;
+    line-height: 1.5;
+  }
+
+  .resumeCell {
+    padding: 10px;
+    gap: 8px;
+  }
+
+  .resumeCell h3 {
+    font-size: clamp(0.9rem, 5vw, 1rem);
+  }
+
+  .resumeCell p {
+    font-size: 0.7rem;
+    line-height: 1.4;
+  }
+
+  .resumeCell li {
+    font-size: 0.65rem;
+    padding-left: 14px;
+  }
+
+  .resumeCell li::before {
+    left: 2px;
+  }
+
+  .resumeMiniTags,
+  .resumeStack {
+    gap: 6px;
+  }
+
+  .resumeMiniTags small,
+  .resumeStack small {
+    font-size: 0.6rem;
+    padding: 4px 8px;
+    min-height: 22px;
+  }
+
+  .resumeGrid {
+    gap: 8px;
+    padding: 8px;
+  }
+
+  .resumeCell a.resumeLink,
+  .resumeCell a.resumeDownload {
+    padding: 8px 14px;
+    font-size: 0.65rem;
   }
 }
