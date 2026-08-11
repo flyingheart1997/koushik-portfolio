@@ -413,7 +413,7 @@ export const PORTFOLIO_MISSION_DATA: PortfolioMissionChapter[] = [
         impact: 'Ready to build high-impact, scalable frontend architectures and interactive products.',
         actionPanel: {
             category: 'Resume PDF',
-            title: 'Koushik_Mondal_Senior_React_Engineer_Resume.pdf',
+            title: 'Koushik Mondal Resume',
             subtitle: 'Download Koushik Mondal\'s latest resume',
             highlights: [
                 'Latest updated resume (Senior React Engineer / Frontend Architect).',

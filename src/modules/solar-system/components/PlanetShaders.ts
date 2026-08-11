@@ -40,6 +40,7 @@ varying vec2 vUv;
 varying vec3 vNormal;
 uniform float time;
 uniform sampler2D textureMap;
+uniform float opacity;
 
 void main() {
     // Simple animated noise-like effect for the sun surface
@@ -50,6 +51,6 @@ void main() {
     vec4 color = texture2D(textureMap, uv);
     float brightness = 1.25 + pow(abs(dot(vNormal, vec3(0.0, 0.0, 1.0))), 0.6) * 0.55;
     
-    gl_FragColor = vec4(color.rgb * brightness, 1.0);
+    gl_FragColor = vec4(color.rgb * brightness, opacity);
 }
 `;

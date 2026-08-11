@@ -1,6 +1,7 @@
 'use client';
 
-import { CSSProperties, useEffect, useRef, useState, type TouchEvent, type WheelEvent } from 'react';
+import { CSSProperties, useEffect, useLayoutEffect, useRef, useState, type TouchEvent, type WheelEvent } from 'react';
+import gsap from 'gsap';
 import type { PointerEvent as ReactPointerEvent } from 'react';
 import { SolarSystemScene } from './SolarSystemScene';
 import { NavigationManager } from '../services/NavigationManager';
@@ -65,74 +66,302 @@ const getScrollState = (scroller: HTMLElement | null) => {
     };
 };
 
+const TypewriterText = ({
+    text,
+    speed = 22,
+    delay = 100,
+    className = ''
+}: {
+    text: string;
+    speed?: number;
+    delay?: number;
+    className?: string;
+}) => {
+    const [displayedText, setDisplayedText] = useState('');
+    const [isStarted, setIsStarted] = useState(false);
+    const [isTyping, setIsTyping] = useState(false);
+
+    useEffect(() => {
+        setDisplayedText('');
+        setIsStarted(false);
+        setIsTyping(false);
+        if (!text) return;
+
+        let interval: NodeJS.Timeout;
+        const startTimeout = setTimeout(() => {
+            setIsStarted(true);
+            setIsTyping(true);
+            let index = 0;
+            interval = setInterval(() => {
+                index++;
+                setDisplayedText(text.slice(0, index));
+                if (index >= text.length) {
+                    clearInterval(interval);
+                    setIsTyping(false);
+                }
+            }, speed);
+        }, delay);
+
+        return () => {
+            clearTimeout(startTimeout);
+            if (interval) clearInterval(interval);
+        };
+    }, [text, speed, delay]);
+
+    if (!isStarted && displayedText.length === 0) {
+        return null;
+    }
+
+    return (
+        <span className={`typewriterContainer ${className}`}>
+            {displayedText}
+            {isTyping && <span className="typeCursor typing" aria-hidden="true">|</span>}
+        </span>
+    );
+};
+
+const SequentialCell = ({
+    children,
+    className = '',
+    delay,
+    style
+}: {
+    children: React.ReactNode;
+    className?: string;
+    delay: number;
+    style?: CSSProperties;
+}) => {
+    const cellRef = useRef<HTMLElement>(null);
+    const [isVisible, setIsVisible] = useState(false);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsVisible(true);
+        }, delay);
+        return () => clearTimeout(timer);
+    }, [delay]);
+
+    useLayoutEffect(() => {
+        if (!isVisible || !cellRef.current) return;
+        gsap.fromTo(
+            cellRef.current,
+            { opacity: 0, y: 14, scale: 0.96 },
+            { opacity: 1, y: 0, scale: 1, duration: 0.45, ease: 'power2.out' }
+        );
+    }, [isVisible]);
+
+    if (!isVisible) return null;
+
+    return (
+        <article
+            ref={cellRef}
+            className={`resumeCell cellActive ${className}`}
+            style={style}
+        >
+            {children}
+        </article>
+    );
+};
+
+const SequentialListItem = ({
+    text,
+    speed = 14,
+    delay
+}: {
+    text: string;
+    speed?: number;
+    delay: number;
+}) => {
+    const [isVisible, setIsVisible] = useState(false);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsVisible(true);
+        }, delay);
+        return () => clearTimeout(timer);
+    }, [delay]);
+
+    if (!isVisible) return null;
+
+    return (
+        <li className="sequentialItem">
+            <TypewriterText text={text} speed={speed} delay={0} />
+        </li>
+    );
+};
+
+const SequentialBadge = ({
+    tag,
+    delay
+}: {
+    tag: string;
+    delay: number;
+}) => {
+    const badgeRef = useRef<HTMLElement>(null);
+    const [isVisible, setIsVisible] = useState(false);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsVisible(true);
+        }, delay);
+        return () => clearTimeout(timer);
+    }, [delay]);
+
+    useLayoutEffect(() => {
+        if (!isVisible || !badgeRef.current) return;
+        gsap.fromTo(
+            badgeRef.current,
+            { opacity: 0, scale: 0.85, y: 6 },
+            { opacity: 1, scale: 1, y: 0, duration: 0.3, ease: 'back.out(1.4)' }
+        );
+    }, [isVisible]);
+
+    if (!isVisible) return null;
+
+    return (
+        <small ref={badgeRef} className="badgePopIn">
+            {tag}
+        </small>
+    );
+};
+
+const SequentialLink = ({
+    href,
+    category,
+    delay,
+    download,
+    children,
+    className = 'resumeLink'
+}: {
+    href: string;
+    category?: string;
+    delay: number;
+    download?: string;
+    children?: React.ReactNode;
+    className?: string;
+}) => {
+    const linkRef = useRef<HTMLAnchorElement>(null);
+    const [isVisible, setIsVisible] = useState(false);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsVisible(true);
+        }, delay);
+        return () => clearTimeout(timer);
+    }, [delay]);
+
+    useLayoutEffect(() => {
+        if (!isVisible || !linkRef.current) return;
+        gsap.fromTo(
+            linkRef.current,
+            { opacity: 0, scale: 0.9, y: 8 },
+            { opacity: 1, scale: 1, y: 0, duration: 0.35, ease: 'power2.out' }
+        );
+    }, [isVisible]);
+
+    if (!isVisible) return null;
+
+    return (
+        <a
+            ref={linkRef}
+            className={className}
+            href={href}
+            download={download}
+            target={isExternalHref(href) ? '_blank' : undefined}
+            rel={isExternalHref(href) ? 'noreferrer' : undefined}
+        >
+            {children ?? (category ? getActionLabel(category) : 'Open Link ↗')}
+        </a>
+    );
+};
+
 const CoreBrief = ({
     chapter,
     chapterIndex,
     exiting,
     onSurfaceNavigate,
-    onSurfaceRestore
+    onSurfaceRestore,
+    onContentReady
 }: {
     chapter: PortfolioMissionChapter;
     chapterIndex: number;
     exiting: boolean;
     onSurfaceNavigate: (deltaY: number) => void;
     onSurfaceRestore: () => void;
+    onContentReady?: () => void;
 }) => {
-    const touchStateRef = useRef({
-        startY: 0,
-        startedAtTop: true,
-        startedAtBottom: true
-    });
-    const wheelBoundaryRef = useRef({
-        direction: 0,
-        lastWheelAt: 0,
-        armed: false
-    });
+    const surfaceRef = useRef<HTMLElement>(null);
+    const vignetteRef = useRef<HTMLDivElement>(null);
+
+    useLayoutEffect(() => {
+        if (!surfaceRef.current) return;
+
+        const ctx = gsap.context(() => {
+            if (exiting) {
+                const tl = gsap.timeline();
+                tl.to(surfaceRef.current, {
+                    opacity: 0,
+                    scale: 0,
+                    rotateX: 18,
+                    y: 16,
+                    filter: 'blur(4px)',
+                    duration: 0.5,
+                    ease: 'power2.in'
+                });
+                if (vignetteRef.current) {
+                    tl.to(vignetteRef.current, { opacity: 0, duration: 0.4 }, 0);
+                }
+                return;
+            }
+
+            const tl = gsap.timeline({
+                onComplete: () => {
+                    onContentReady?.();
+                }
+            });
+
+            if (vignetteRef.current) {
+                tl.fromTo(vignetteRef.current, { opacity: 0 }, { opacity: 1, duration: 0.6, ease: 'power2.out' }, 0);
+            }
+
+            tl.fromTo(
+                surfaceRef.current,
+                {
+                    opacity: 0,
+                    scale: 0,
+                    y: 14,
+                    filter: 'blur(6px)'
+                },
+                {
+                    opacity: 1,
+                    scale: 1,
+                    y: 0,
+                    filter: 'blur(0px)',
+                    duration: 0.7,
+                    ease: 'power3.out'
+                },
+                0.2
+            );
+        });
+
+        return () => ctx.revert();
+    }, [chapterIndex, exiting, onContentReady]);
 
     const handleSurfaceWheel = (event: WheelEvent<HTMLElement>) => {
         const modeMultiplier = event.deltaMode === 1 ? 16 : 1;
         const deltaY = event.deltaY * modeMultiplier;
-        if (deltaY === 0) return;
+        if (Math.abs(deltaY) < 4) return;
 
-        const scroller = getSurfaceScroller(event.currentTarget);
-        const { canScroll, atTop, atBottom } = getScrollState(scroller);
-        const movingDown = deltaY > 0;
-        const shouldNavigate = !canScroll || (movingDown && atBottom) || (!movingDown && atTop);
         const now = performance.now();
-        const direction = Math.sign(deltaY);
-        const wheelGap = now - wheelBoundaryRef.current.lastWheelAt;
-
-        if (!shouldNavigate) {
-            wheelBoundaryRef.current = {
-                direction: 0,
-                lastWheelAt: now,
-                armed: false
-            };
+        if (now - wheelBoundaryRef.current.lastWheelAt < 400) {
+            event.preventDefault();
             event.stopPropagation();
             return;
         }
 
         event.preventDefault();
         event.stopPropagation();
-
-        const isSeparateGesture = wheelBoundaryRef.current.armed
-            && wheelBoundaryRef.current.direction === direction
-            && wheelGap > 280;
-
-        if (!isSeparateGesture) {
-            wheelBoundaryRef.current = {
-                direction,
-                lastWheelAt: now,
-                armed: true
-            };
-            return;
-        }
-
-        wheelBoundaryRef.current = {
-            direction: 0,
-            lastWheelAt: now,
-            armed: false
-        };
+        wheelBoundaryRef.current.lastWheelAt = now;
         onSurfaceNavigate(deltaY);
     };
 
@@ -144,8 +373,8 @@ const CoreBrief = ({
         const { atTop, atBottom } = getScrollState(scroller);
         touchStateRef.current = {
             startY: touch.clientY,
-            startedAtTop: atTop,
-            startedAtBottom: atBottom
+            atTop,
+            atBottom
         };
     };
 
@@ -154,19 +383,23 @@ const CoreBrief = ({
         if (!touch) return;
 
         const deltaY = touchStateRef.current.startY - touch.clientY;
-        if (Math.abs(deltaY) < 46) return;
+        if (Math.abs(deltaY) < 32) return;
 
         const movingDown = deltaY > 0;
-        const scroller = getSurfaceScroller(event.currentTarget);
-        const { canScroll, atTop, atBottom } = getScrollState(scroller);
-        const shouldNavigate = !canScroll
-            || (movingDown && atBottom && touchStateRef.current.startedAtBottom)
-            || (!movingDown && atTop && touchStateRef.current.startedAtTop);
-
-        if (shouldNavigate) {
+        const { atTop, atBottom } = touchStateRef.current;
+        if ((movingDown && atBottom) || (!movingDown && atTop)) {
             onSurfaceNavigate(deltaY);
         }
     };
+
+    const wheelBoundaryRef = useRef({
+        lastWheelAt: 0
+    });
+    const touchStateRef = useRef({
+        startY: 0,
+        atTop: true,
+        atBottom: true
+    });
 
     const handleOverlayPointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
         const target = event.target as HTMLElement;
@@ -182,10 +415,12 @@ const CoreBrief = ({
             className={`coreBriefOverlay ${exiting ? 'exiting' : 'entering'}`}
             style={getSurfaceStyle(chapterIndex)}
             onPointerDown={handleOverlayPointerDown}
+            onWheel={handleSurfaceWheel}
         >
-            <div className="surfaceVignette" />
+            <div className="surfaceVignette" ref={vignetteRef} />
 
             <section
+                ref={surfaceRef}
                 className="flatSurface"
                 aria-label={`${chapter.section} flat planet surface`}
                 onWheel={handleSurfaceWheel}
@@ -197,132 +432,156 @@ const CoreBrief = ({
 
                 <div className="resumeBoard">
                     <header className="resumeHero">
-                        <div className="resumeAvatar typeLine" aria-label="Koushik Mondal Profile">
+                        <div className="resumeAvatar typeLine" aria-label="Koushik Mondal Profile" style={{ '--module-delay': '100ms' } as StyleWithVars}>
                             {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img src="/koushik.jpg" alt="Koushik Mondal" className="avatarImage" />
                         </div>
                         <div className="resumeHeading">
-                            <h2 className={`typeLine ${chapterIndex === 0 ? 'singleLineTitle' : ''}`}>{chapter.title}</h2>
-                            <p className="typeLine">{chapter.subtitle}</p>
+                            <h2 className={`typeLine ${chapterIndex === 0 ? 'singleLineTitle' : ''}`}>
+                                <TypewriterText text={chapter.title} speed={24} delay={200} />
+                            </h2>
+                            <p className="typeLine">
+                                <TypewriterText text={chapter.subtitle} speed={18} delay={450} />
+                            </p>
                         </div>
                         <div className="resumeMeta typeLine">
-                            <span className="statusBadge"><span className="statusDot" /> Open to Opportunities</span>
-                            <span>{chapterIndex === 0 ? 'Pune, India' : `Mission ${formatMissionIndex(chapterIndex)}`}</span>
-                            <b>{chapter.section}</b>
+                            <b><TypewriterText text={chapter.section} speed={18} delay={700} /></b>
                         </div>
                     </header>
 
-                    <section className="resumeImpact typeLine" style={{ '--text-delay': '760ms' } as StyleWithVars}>
-                        {chapter.impact}
+                    <section className="resumeImpact typeLine">
+                        <TypewriterText text={chapter.impact} speed={14} delay={900} />
                     </section>
 
                     <div className="resumeGrid">
-                        {chapter.callouts.slice(0, 2).map((callout, index) => (
-                            <article
-                                className="resumeCell"
-                                key={`${callout.category}-${callout.title}`}
-                                style={{ '--module-delay': `${940 + index * 120}ms` } as StyleWithVars}
-                            >
-                                <span className="resumeLabel">{callout.category}</span>
-                                <h3>{callout.title}</h3>
-                                <p>{callout.subtitle}</p>
-                                <ul>
-                                    {callout.highlights.map(highlight => (
-                                        <li key={highlight}>{highlight}</li>
-                                    ))}
-                                </ul>
-                                <div className="resumeMiniTags" aria-label={`${callout.title} signals`}>
-                                    {callout.tags.slice(0, 3).map((tag, tagIndex) => (
-                                        <small
-                                            key={tag}
-                                            style={{
-                                                '--pill-delay': `${1210 + index * 120 + tagIndex * 82}ms`
-                                            } as StyleWithVars}
-                                        >
-                                            {tag}
-                                        </small>
-                                    ))}
-                                </div>
-                                {callout.href ? (
-                                    <a
-                                        className="resumeLink"
-                                        href={callout.href}
-                                        target={isExternalHref(callout.href) ? '_blank' : undefined}
-                                        rel={isExternalHref(callout.href) ? 'noreferrer' : undefined}
-                                    >
-                                        {getActionLabel(callout.category)}
-                                    </a>
-                                ) : null}
-                            </article>
-                        ))}
+                        {chapter.callouts.slice(0, 2).map((callout, index) => {
+                            const baseDelay = 1200;
+                            return (
+                                <SequentialCell
+                                    key={`${callout.category}-${callout.title}`}
+                                    delay={baseDelay + index * 80}
+                                >
+                                    <span className="resumeLabel">
+                                        <TypewriterText text={callout.category} speed={16} delay={baseDelay + 100} />
+                                    </span>
+                                    <h3>
+                                        <TypewriterText text={callout.title} speed={18} delay={baseDelay + 250} />
+                                    </h3>
+                                    <p>
+                                        <TypewriterText text={callout.subtitle} speed={14} delay={baseDelay + 450} />
+                                    </p>
+                                    <ul>
+                                        {callout.highlights.map((highlight, hIdx) => (
+                                            <SequentialListItem
+                                                key={highlight}
+                                                text={highlight}
+                                                speed={14}
+                                                delay={baseDelay + 650 + hIdx * 200}
+                                            />
+                                        ))}
+                                    </ul>
+                                    <div className="resumeMiniTags" aria-label={`${callout.title} signals`}>
+                                        {callout.tags.slice(0, 3).map((tag, tagIndex) => (
+                                            <SequentialBadge
+                                                key={tag}
+                                                tag={tag}
+                                                delay={baseDelay + 1050 + tagIndex * 60}
+                                            />
+                                        ))}
+                                    </div>
+                                    {callout.href ? (
+                                        <SequentialLink
+                                            href={callout.href}
+                                            category={callout.category}
+                                            delay={baseDelay + 1150}
+                                        />
+                                    ) : null}
+                                </SequentialCell>
+                            );
+                        })}
 
                         {chapter.actionPanel ? (
-                            <article
-                                className="resumeCell resumeActionCell"
-                                style={{ '--module-delay': '1180ms' } as StyleWithVars}
+                            <SequentialCell
+                                className="resumeActionCell"
+                                delay={1280}
                             >
-                                <span className="resumeLabel">{chapter.actionPanel.category}</span>
-                                <h3>{chapter.actionPanel.title}</h3>
-                                <p>{chapter.actionPanel.subtitle}</p>
+                                <span className="resumeLabel">
+                                    <TypewriterText text={chapter.actionPanel.category} speed={16} delay={1380} />
+                                </span>
+                                <h3>
+                                    <TypewriterText text={chapter.actionPanel.title} speed={18} delay={1530} />
+                                </h3>
+                                <p>
+                                    <TypewriterText text={chapter.actionPanel.subtitle} speed={14} delay={1730} />
+                                </p>
                                 <ul>
-                                    {chapter.actionPanel.highlights.map(highlight => (
-                                        <li key={highlight}>{highlight}</li>
+                                    {chapter.actionPanel.highlights.map((highlight, hIdx) => (
+                                        <SequentialListItem
+                                            key={highlight}
+                                            text={highlight}
+                                            speed={14}
+                                            delay={1930 + hIdx * 200}
+                                        />
                                     ))}
                                 </ul>
-                                <a
+                                <SequentialLink
                                     className="resumeDownload"
                                     href={chapter.actionPanel.href}
                                     download={chapter.actionPanel.download}
+                                    delay={2350}
                                 >
                                     {chapter.actionPanel.cta}
-                                </a>
-                            </article>
+                                </SequentialLink>
+                            </SequentialCell>
                         ) : chapter.tags.length > 0 ? (
-                            <article
-                                className="resumeCell"
-                                style={{ '--module-delay': '1180ms' } as StyleWithVars}
-                            >
-                                <span className="resumeLabel">{chapter.stackLabel ?? 'Tech Stack'}</span>
+                            <SequentialCell delay={1280}>
+                                <span className="resumeLabel">
+                                    <TypewriterText text={chapter.stackLabel ?? 'Tech Stack'} speed={16} delay={1380} />
+                                </span>
                                 <div className="resumeStack" aria-label={`${chapter.title} technologies`}>
                                     {chapter.tags.map((tag, tagIndex) => (
-                                        <small
+                                        <SequentialBadge
                                             key={tag}
-                                            style={{
-                                                '--pill-delay': `${1410 + tagIndex * 58}ms`
-                                            } as StyleWithVars}
-                                        >
-                                            {tag}
-                                        </small>
+                                            tag={tag}
+                                            delay={1530 + tagIndex * 50}
+                                        />
                                     ))}
                                 </div>
-                            </article>
+                            </SequentialCell>
                         ) : null}
 
                         {chapter.callouts.slice(2, 3).map(callout => (
-                            <article
-                                className="resumeCell"
+                            <SequentialCell
                                 key={`${callout.category}-${callout.title}`}
-                                style={{ '--module-delay': '1300ms' } as StyleWithVars}
+                                delay={1280}
                             >
-                                <span className="resumeLabel">{callout.category}</span>
-                                <h3>{callout.title}</h3>
-                                <p>{callout.subtitle}</p>
+                                <span className="resumeLabel">
+                                    <TypewriterText text={callout.category} speed={16} delay={1380} />
+                                </span>
+                                <h3>
+                                    <TypewriterText text={callout.title} speed={18} delay={1530} />
+                                </h3>
+                                <p>
+                                    <TypewriterText text={callout.subtitle} speed={14} delay={1730} />
+                                </p>
                                 <ul>
-                                    {callout.highlights.map(highlight => (
-                                        <li key={highlight}>{highlight}</li>
+                                    {callout.highlights.map((highlight, hIdx) => (
+                                        <SequentialListItem
+                                            key={highlight}
+                                            text={highlight}
+                                            speed={14}
+                                            delay={1930 + hIdx * 200}
+                                        />
                                     ))}
                                 </ul>
                                 {callout.href ? (
-                                    <a
-                                        className="resumeLink"
+                                    <SequentialLink
                                         href={callout.href}
-                                        target={isExternalHref(callout.href) ? '_blank' : undefined}
-                                        rel={isExternalHref(callout.href) ? 'noreferrer' : undefined}
-                                    >
-                                        {getActionLabel(callout.category)}
-                                    </a>
+                                        category={callout.category}
+                                        delay={2350}
+                                    />
                                 ) : null}
-                            </article>
+                            </SequentialCell>
                         ))}
                     </div>
                 </div>
@@ -390,7 +649,7 @@ export const SolarExplorer = () => {
         const nav = new NavigationManager(
             scene,
             setActivePlanetIndex,
-            (open, planetIndex) => {
+            (open: boolean, planetIndex: number) => {
                 window.clearTimeout(coreCloseTimerRef.current);
 
                 if (open) {
@@ -430,11 +689,49 @@ export const SolarExplorer = () => {
         };
     }, []);
 
+    useLayoutEffect(() => {
+        if (!isSceneReady || !containerRef.current) return;
+
+        const ctx = gsap.context(() => {
+            gsap.fromTo(
+                containerRef.current,
+                {
+                    scale: 0.2,
+                    opacity: 0,
+                    filter: 'blur(8px)'
+                },
+                {
+                    scale: 1,
+                    opacity: 1,
+                    filter: 'blur(0px)',
+                    duration: 1.4,
+                    ease: 'power3.out',
+                    clearProps: 'transform,filter'
+                }
+            );
+
+            const hintEl = document.querySelector('.exploreHint');
+            if (hintEl) {
+                gsap.fromTo(
+                    hintEl,
+                    { opacity: 0, y: 24, scale: 0.85 },
+                    { opacity: 1, y: 0, scale: 1, duration: 0.9, delay: 0.6, ease: 'power2.out' }
+                );
+            }
+        });
+
+        return () => ctx.revert();
+    }, [isSceneReady]);
+
     return (
         <div className="explorerWrapper">
             <div
                 ref={containerRef}
                 className="threeCanvasViewport"
+                style={{
+                    opacity: isSceneReady ? undefined : 0,
+                    transform: isSceneReady ? undefined : 'scale(0.2)'
+                }}
             />
 
             {coreBrief.render ? (
@@ -444,6 +741,7 @@ export const SolarExplorer = () => {
                     exiting={coreBrief.exiting}
                     onSurfaceNavigate={handleSurfaceNavigate}
                     onSurfaceRestore={handleSurfaceRestore}
+                    onContentReady={() => navRef.current?.onContentReady()}
                     key={`${coreBrief.index}-${coreBrief.exiting ? 'out' : 'in'}`}
                 />
             ) : null}

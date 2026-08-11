@@ -26,6 +26,19 @@ body {
   box-sizing: border-box;
 }
 
+.typeCursor {
+  display: inline-block;
+  color: #4ef0ab;
+  font-weight: 800;
+  margin-left: 2px;
+  animation: cursorBlink 0.6s infinite;
+}
+
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
 .explorerWrapper {
   position: relative;
   min-height: 100vh;
@@ -61,17 +74,13 @@ body {
     radial-gradient(circle at center, transparent 0 38%, rgba(0, 0, 0, 0.48) 72%, rgba(0, 0, 0, 0.82)),
     linear-gradient(180deg, rgba(1, 8, 20, 0.16), rgba(0, 0, 0, 0.42));
   opacity: 0;
-  animation: surfaceVignetteIn 620ms ease forwards;
-}
-
-.coreBriefOverlay.exiting .surfaceVignette {
-  animation: surfaceVignetteOut 420ms ease forwards;
 }
 
 .flatSurface {
   position: relative;
   z-index: 2;
   width: min(1120px, calc(100vw - 48px));
+  height: min(720px, calc(100vh - 90px));
   max-height: calc(100vh - 90px);
   display: flex;
   flex-direction: column;
@@ -94,7 +103,6 @@ body {
   -webkit-backdrop-filter: blur(14px) saturate(132%);
   opacity: 0;
   transform-origin: center center;
-  animation: surfaceFlatten 900ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
   pointer-events: auto;
   overscroll-behavior: contain;
 }
@@ -159,7 +167,7 @@ body {
   display: flex;
   flex-direction: column;
   height: 100%;
-  min-height: 0;
+  min-height: 520px;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.11);
   border-radius: 18px;
@@ -243,6 +251,24 @@ body {
   font-family: var(--font-body);
 }
 
+.typewriterContainer {
+  display: inline-block;
+  position: relative;
+}
+
+.typeCursor {
+  display: inline-block;
+  color: var(--surface-accent, #44e3ff);
+  font-weight: 700;
+  margin-left: 2px;
+  animation: blinkTypeCursor 0.5s infinite alternate ease-in-out;
+}
+
+@keyframes blinkTypeCursor {
+  from { opacity: 1; text-shadow: 0 0 8px var(--surface-accent, #44e3ff); }
+  to { opacity: 0.12; text-shadow: none; }
+}
+
 .statusBadge {
   display: inline-flex;
   align-items: center;
@@ -275,7 +301,7 @@ body {
 
 .resumeMeta b {
   color: color-mix(in srgb, var(--surface-accent), white 25%);
-  font-size: 0.64rem;
+  font-size: 0.84rem;
   font-weight: 800;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -328,19 +354,27 @@ body {
 .resumeCell {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: start;
   gap: 12px;
   min-width: 0;
   min-height: auto;
   padding: clamp(16px, 1.8vw, 22px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 14px;
+  border: 1px solid transparent;
+  background: transparent;
+  opacity: 0;
+  transform: translate3d(0, 14px, 0) scale(0.96);
+  pointer-events: none;
+  transition: background 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+}
+
+.resumeCell.cellActive {
+  border-color: rgba(255, 255, 255, 0.12);
   background: rgba(0, 0, 0, 0.35);
   backdrop-filter: blur(10px);
-  opacity: 0;
-  transform: translate3d(0, 12px, 0);
-  animation: surfaceModuleIn 520ms var(--module-delay) cubic-bezier(0.19, 1, 0.22, 1) forwards;
-  transition: all 220ms ease;
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  pointer-events: auto;
 }
 
 .resumeCell:hover {
@@ -492,7 +526,7 @@ body {
   border-color: #ffffff;
   background: linear-gradient(135deg, color-mix(in srgb, var(--surface-accent), white 30%), color-mix(in srgb, var(--surface-accent), transparent 20%));
   box-shadow: 0 8px 26px color-mix(in srgb, var(--surface-glow), transparent 20%);
-  color: #ffffff !important;
+  color: #000 !important;
 }
 
 .resumeCell a.resumeDownload {

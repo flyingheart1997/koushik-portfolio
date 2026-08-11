@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import gsap from 'gsap';
 import { FOCUS_PLANET_INDICES, SOLAR_DATA } from '../data/SolarData';
 import { Planet } from './Planet';
 
@@ -391,10 +392,10 @@ export class SolarSystemScene {
         const zoomStrength = isLastStep && phase >= CHAPTER_ZOOM_IN_END
             ? 1
             : phase < CHAPTER_ZOOM_IN_END
-            ? this.smoothstep(phase / CHAPTER_ZOOM_IN_END)
-            : phase < CHAPTER_HOLD_END
-                ? 1
-                : 1 - this.smoothstep((phase - CHAPTER_HOLD_END) / (1 - CHAPTER_HOLD_END));
+                ? this.smoothstep(phase / CHAPTER_ZOOM_IN_END)
+                : phase < CHAPTER_HOLD_END
+                    ? 1
+                    : 1 - this.smoothstep((phase - CHAPTER_HOLD_END) / (1 - CHAPTER_HOLD_END));
         const sequencePosition = fromStep + travelProgress;
 
         return {
@@ -430,7 +431,12 @@ export class SolarSystemScene {
         const coreDiveDistance = THREE.MathUtils.clamp(radius * (isMobile ? 3.4 : 2.85), isMobile ? 4.2 : 3.2, isMobile ? 38 : 44);
         const cameraBaseDistance = THREE.MathUtils.lerp(baseFocusDistance, coreDiveDistance, this.coreDiveStrength);
         this.zoomDistanceOffset = THREE.MathUtils.lerp(this.zoomDistanceOffset, this.targetZoomDistanceOffset, controlLerp);
-        const focusDistance = THREE.MathUtils.clamp(cameraBaseDistance + this.zoomDistanceOffset, isMobile ? 4.2 : 3.2, isMobile ? 90 : 118);
+        const travelArc = this.navigationActive ? Math.sin(focus.localProgress * Math.PI) * (isMobile ? 70 : 105) : 0;
+        const focusDistance = THREE.MathUtils.clamp(
+            cameraBaseDistance + this.zoomDistanceOffset + travelArc,
+            isMobile ? 4.2 : 3.2,
+            isMobile ? 220 : 350
+        );
         this.orbitYaw = THREE.MathUtils.lerp(this.orbitYaw, this.targetOrbitYaw, controlLerp);
         this.orbitPitch = THREE.MathUtils.lerp(this.orbitPitch, this.targetOrbitPitch, controlLerp);
 
@@ -465,8 +471,8 @@ export class SolarSystemScene {
             return;
         }
 
-        const cameraLerp = 1 - Math.exp(-(this.navigationActive ? 13.5 : 7.2) * delta);
-        const targetLerp = 1 - Math.exp(-(this.navigationActive ? 15.5 : 8.4) * delta);
+        const cameraLerp = 1 - Math.exp(-(this.navigationActive ? 4.8 : 3.8) * delta);
+        const targetLerp = 1 - Math.exp(-(this.navigationActive ? 5.2 : 4.2) * delta);
         this.camera.position.lerp(this.desiredCameraPosition, cameraLerp);
         this.cameraTarget.lerp(this.focusPosition, targetLerp);
         this.camera.lookAt(this.cameraTarget);
@@ -628,7 +634,7 @@ export class SolarSystemScene {
 
     public dolly(delta: number) {
         this.targetZoomDistanceOffset = THREE.MathUtils.clamp(
-            this.targetZoomDistanceOffset + delta,
+            this.targetZoomDistanceOffset - delta,
             -14,
             72
         );
@@ -636,6 +642,54 @@ export class SolarSystemScene {
 
     public setCoreDiveStrength(strength: number) {
         this.targetCoreDiveStrength = THREE.MathUtils.clamp(strength, 0, 1);
+    }
+
+    public animateCoreDive(strength: number, duration = 0.8) {
+        gsap.to(this, {
+            targetCoreDiveStrength: THREE.MathUtils.clamp(strength, 0, 1),
+            duration,
+            ease: strength > 0 ? 'power3.out' : 'power2.inOut',
+            overwrite: true
+        });
+    }
+
+    public getCardTargetDimensions(distance = 16.5) {
+        const width = Math.max(this.container.clientWidth, 1);
+        const height = Math.max(this.container.clientHeight, 1);
+        const fovRad = (this.camera.fov * Math.PI) / 180;
+        const frustumHeight = 2 * distance * Math.tan(fovRad / 2);
+        const frustumWidth = frustumHeight * (width / height);
+
+        const isMobile = width < 768;
+        const cssWidthPx = isMobile ? width - 28 : Math.min(1120, width - 48);
+        const cssHeightPx = isMobile ? height - 90 : Math.max(height - 90, 340);
+
+        const targetWidth = (cssWidthPx / width) * frustumWidth;
+        const targetHeight = (cssHeightPx / height) * frustumHeight;
+
+        return { targetWidth, targetHeight };
+    }
+
+    public morphPlanetToCard(index: number, duration = 0.8, onComplete?: () => void) {
+        const planet = this.planets[index];
+        if (!planet) return;
+
+        const cameraDir = new THREE.Vector3();
+        this.camera.getWorldDirection(cameraDir);
+        const centerPos = new THREE.Vector3()
+            .copy(this.camera.position)
+            .addScaledVector(cameraDir, 16.5);
+
+        const { targetWidth, targetHeight } = this.getCardTargetDimensions(16.5);
+        planet.setMorphTarget(centerPos, this.camera.quaternion, targetWidth, targetHeight);
+        planet.animateMorph(1, duration, onComplete);
+    }
+
+    public unmorphPlanetFromCard(index: number, duration = 0.6, onComplete?: () => void) {
+        const planet = this.planets[index];
+        if (planet) {
+            planet.animateMorph(0, duration, onComplete);
+        }
     }
 
     public orbitBy(deltaYaw: number, deltaPitch: number) {
