@@ -633,6 +633,7 @@ export const SolarExplorer = () => {
         }
     };
 
+
     useEffect(() => {
         if (!containerRef.current) return;
 

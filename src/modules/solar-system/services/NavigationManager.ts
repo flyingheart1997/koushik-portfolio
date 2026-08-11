@@ -126,8 +126,11 @@ export class NavigationManager {
     private navigateByDirection(stepDirection: number) {
         const lastStep = this.sceneManager.getFocusStepCount() - 1;
 
+        // Invert direction: up scrolls forward, down scrolls backward
+        stepDirection = -stepDirection;
+
         if (stepDirection > 0) {
-            // Scroll Down / Forward
+            // Scroll Up / Forward
             if (this.currentStep === -1 || this.navState === 'IDLE') {
                 this.startPlanetSequence(0);
             } else if (this.currentStep < lastStep) {
@@ -137,7 +140,7 @@ export class NavigationManager {
                 this.resetToOverview();
             }
         } else {
-            // Scroll Up / Backward
+            // Scroll Down / Backward
             if (this.currentStep > 0) {
                 this.startPlanetSequence(this.currentStep - 1);
             } else {
@@ -152,7 +155,9 @@ export class NavigationManager {
         this.inputLocked = true;
 
         const isCardOpen = this.coreBriefStage === 'open';
-        const isDirectJump = Math.abs(targetStep - this.currentStep) > 1 || this.currentStep === -1;
+        const stepDistance = Math.abs(targetStep - this.currentStep);
+        // Direct jump if > 2 steps away OR jumping from overview
+        const isDirectJump = stepDistance > 2 || this.currentStep === -1;
 
         const runTravelAndMorph = () => {
             this.navState = 'FOCUSING';
@@ -160,7 +165,7 @@ export class NavigationManager {
             this.currentStep = targetStep;
 
             const targetProgress = this.sceneManager.getProgressForFocusStep(targetStep);
-            
+
             // Set active planet immediately for direct jumps so UI focus updates cleanly
             const targetPlanetIndex = this.sceneManager.getPlanetIndexForFocusStep(targetStep);
             if (targetPlanetIndex !== -1 && targetPlanetIndex !== this.activePlanetIndex) {
@@ -168,7 +173,8 @@ export class NavigationManager {
                 this.onPlanetChange?.(targetPlanetIndex);
             }
 
-            const travelDuration = isDirectJump ? 1.2 : 1.4;
+            // Direct jumps: faster (1.0s), Smooth sequential: slower (1.4s)
+            const travelDuration = isDirectJump ? 1.0 : 1.4;
 
             this.setNavigationProgress(targetProgress, travelDuration, () => {
                 // Camera Arrived -> Step 2: HOLDING_PLANET (1.2s Calm focus pause)
@@ -223,7 +229,8 @@ export class NavigationManager {
                 this.onPlanetChange?.(-1);
             }
 
-            this.setNavigationProgress(0, 1.2, () => {
+            // Direct jump back to overview (1.0s instead of 1.2s)
+            this.setNavigationProgress(0, 1.0, () => {
                 this.navState = 'IDLE';
                 this.inputLocked = false;
             }, true);
@@ -304,20 +311,40 @@ export class NavigationManager {
         this.navigationTween?.kill();
         this.sceneManager.setNavigationActive(true);
 
-        this.navigationTween = gsap.to(this.navigationState, {
-            progress: this.targetProgress,
-            duration,
-            ease: 'sine.inOut',
-            overwrite: true,
-            onUpdate: () => this.applyProgress(this.navigationState.progress, isDirectJump),
-            onComplete: () => {
-                this.navigationState.progress = this.targetProgress;
-                this.applyProgress(this.targetProgress, false);
-                this.sceneManager.setNavigationActive(false);
-                this.navigationTween = null;
-                onComplete?.();
-            }
-        });
+        // For direct jumps > 2 steps, instantly jump to target without animating through planets
+        if (isDirectJump) {
+            this.navigationState.progress = this.targetProgress;
+            this.applyProgress(this.targetProgress, true);
+
+            // Then animate the camera/morph only
+            this.navigationTween = gsap.to({}, {
+                duration: 0.8, // Faster animation for just the morph, not the travel
+                ease: 'sine.inOut',
+                onComplete: () => {
+                    this.navigationState.progress = this.targetProgress;
+                    this.applyProgress(this.targetProgress, false);
+                    this.sceneManager.setNavigationActive(false);
+                    this.navigationTween = null;
+                    onComplete?.();
+                }
+            });
+        } else {
+            // For adjacent planets, smooth sequential animation
+            this.navigationTween = gsap.to(this.navigationState, {
+                progress: this.targetProgress,
+                duration,
+                ease: 'sine.inOut',
+                overwrite: true,
+                onUpdate: () => this.applyProgress(this.navigationState.progress, false),
+                onComplete: () => {
+                    this.navigationState.progress = this.targetProgress;
+                    this.applyProgress(this.targetProgress, false);
+                    this.sceneManager.setNavigationActive(false);
+                    this.navigationTween = null;
+                    onComplete?.();
+                }
+            });
+        }
     }
 
     private openCoreBrief() {
