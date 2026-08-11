@@ -350,10 +350,10 @@ const CoreBrief = ({
     const handleSurfaceWheel = (event: WheelEvent<HTMLElement>) => {
         const modeMultiplier = event.deltaMode === 1 ? 16 : 1;
         const deltaY = event.deltaY * modeMultiplier;
-        if (Math.abs(deltaY) < 4) return;
+        if (Math.abs(deltaY) < 32) return;
 
         const now = performance.now();
-        if (now - wheelBoundaryRef.current.lastWheelAt < 400) {
+        if (now - wheelBoundaryRef.current.lastWheelAt < 500) {
             event.preventDefault();
             event.stopPropagation();
             return;
@@ -383,7 +383,7 @@ const CoreBrief = ({
         if (!touch) return;
 
         const deltaY = touchStateRef.current.startY - touch.clientY;
-        if (Math.abs(deltaY) < 32) return;
+        if (Math.abs(deltaY) < 40) return;
 
         const movingDown = deltaY > 0;
         const { atTop, atBottom } = touchStateRef.current;
@@ -438,89 +438,86 @@ const CoreBrief = ({
                         </div>
                         <div className="resumeHeading">
                             <h2 className={`typeLine ${chapterIndex === 0 ? 'singleLineTitle' : ''}`}>
-                                <TypewriterText text={chapter.title} speed={24} delay={200} />
+                                <TypewriterText text={chapter.title} speed={24} delay={850} />
                             </h2>
                             <p className="typeLine">
-                                <TypewriterText text={chapter.subtitle} speed={18} delay={450} />
+                                <TypewriterText text={chapter.subtitle} speed={18} delay={850} />
                             </p>
                         </div>
                         <div className="resumeMeta typeLine">
-                            <b><TypewriterText text={chapter.section} speed={18} delay={700} /></b>
+                            <b><TypewriterText text={chapter.section} speed={18} delay={850} /></b>
                         </div>
                     </header>
 
                     <section className="resumeImpact typeLine">
-                        <TypewriterText text={chapter.impact} speed={14} delay={900} />
+                        <TypewriterText text={chapter.impact} speed={14} delay={850} />
                     </section>
 
                     <div className="resumeGrid">
-                        {chapter.callouts.slice(0, 2).map((callout, index) => {
-                            const baseDelay = 1200;
-                            return (
-                                <SequentialCell
-                                    key={`${callout.category}-${callout.title}`}
-                                    delay={baseDelay + index * 80}
-                                >
-                                    <span className="resumeLabel">
-                                        <TypewriterText text={callout.category} speed={16} delay={baseDelay + 100} />
-                                    </span>
-                                    <h3>
-                                        <TypewriterText text={callout.title} speed={18} delay={baseDelay + 250} />
-                                    </h3>
-                                    <p>
-                                        <TypewriterText text={callout.subtitle} speed={14} delay={baseDelay + 450} />
-                                    </p>
-                                    <ul>
-                                        {callout.highlights.map((highlight, hIdx) => (
-                                            <SequentialListItem
-                                                key={highlight}
-                                                text={highlight}
-                                                speed={14}
-                                                delay={baseDelay + 650 + hIdx * 200}
-                                            />
-                                        ))}
-                                    </ul>
-                                    <div className="resumeMiniTags" aria-label={`${callout.title} signals`}>
-                                        {callout.tags.slice(0, 3).map((tag, tagIndex) => (
-                                            <SequentialBadge
-                                                key={tag}
-                                                tag={tag}
-                                                delay={baseDelay + 1050 + tagIndex * 60}
-                                            />
-                                        ))}
-                                    </div>
-                                    {callout.href ? (
-                                        <SequentialLink
-                                            href={callout.href}
-                                            category={callout.category}
-                                            delay={baseDelay + 1150}
-                                        />
-                                    ) : null}
-                                </SequentialCell>
-                            );
-                        })}
-
-                        {chapter.actionPanel ? (
+                        {chapter.callouts.slice(0, 2).map((callout) => (
                             <SequentialCell
-                                className="resumeActionCell"
-                                delay={1280}
+                                key={`${callout.category}-${callout.title}`}
+                                delay={850}
                             >
                                 <span className="resumeLabel">
-                                    <TypewriterText text={chapter.actionPanel.category} speed={16} delay={1380} />
+                                    <TypewriterText text={callout.category} speed={16} delay={850} />
                                 </span>
                                 <h3>
-                                    <TypewriterText text={chapter.actionPanel.title} speed={18} delay={1530} />
+                                    <TypewriterText text={callout.title} speed={18} delay={850} />
                                 </h3>
                                 <p>
-                                    <TypewriterText text={chapter.actionPanel.subtitle} speed={14} delay={1730} />
+                                    <TypewriterText text={callout.subtitle} speed={14} delay={850} />
                                 </p>
                                 <ul>
-                                    {chapter.actionPanel.highlights.map((highlight, hIdx) => (
+                                    {callout.highlights.map((highlight) => (
                                         <SequentialListItem
                                             key={highlight}
                                             text={highlight}
                                             speed={14}
-                                            delay={1930 + hIdx * 200}
+                                            delay={850}
+                                        />
+                                    ))}
+                                </ul>
+                                <div className="resumeMiniTags" aria-label={`${callout.title} signals`}>
+                                    {callout.tags.slice(0, 3).map((tag) => (
+                                        <SequentialBadge
+                                            key={tag}
+                                            tag={tag}
+                                            delay={850}
+                                        />
+                                    ))}
+                                </div>
+                                {callout.href ? (
+                                    <SequentialLink
+                                        href={callout.href}
+                                        category={callout.category}
+                                        delay={850}
+                                    />
+                                ) : null}
+                            </SequentialCell>
+                        ))}
+
+                        {chapter.actionPanel ? (
+                            <SequentialCell
+                                className="resumeActionCell"
+                                delay={850}
+                            >
+                                <span className="resumeLabel">
+                                    <TypewriterText text={chapter.actionPanel.category} speed={16} delay={850} />
+                                </span>
+                                <h3>
+                                    <TypewriterText text={chapter.actionPanel.title} speed={18} delay={850} />
+                                </h3>
+                                <p>
+                                    <TypewriterText text={chapter.actionPanel.subtitle} speed={14} delay={850} />
+                                </p>
+                                <ul>
+                                    {chapter.actionPanel.highlights.map((highlight) => (
+                                        <SequentialListItem
+                                            key={highlight}
+                                            text={highlight}
+                                            speed={14}
+                                            delay={850}
                                         />
                                     ))}
                                 </ul>
@@ -528,22 +525,22 @@ const CoreBrief = ({
                                     className="resumeDownload"
                                     href={chapter.actionPanel.href}
                                     download={chapter.actionPanel.download}
-                                    delay={2350}
+                                    delay={850}
                                 >
                                     {chapter.actionPanel.cta}
                                 </SequentialLink>
                             </SequentialCell>
                         ) : chapter.tags.length > 0 ? (
-                            <SequentialCell delay={1280}>
+                            <SequentialCell delay={850}>
                                 <span className="resumeLabel">
-                                    <TypewriterText text={chapter.stackLabel ?? 'Tech Stack'} speed={16} delay={1380} />
+                                    <TypewriterText text={chapter.stackLabel ?? 'Tech Stack'} speed={16} delay={850} />
                                 </span>
                                 <div className="resumeStack" aria-label={`${chapter.title} technologies`}>
-                                    {chapter.tags.map((tag, tagIndex) => (
+                                    {chapter.tags.map((tag) => (
                                         <SequentialBadge
                                             key={tag}
                                             tag={tag}
-                                            delay={1530 + tagIndex * 50}
+                                            delay={850}
                                         />
                                     ))}
                                 </div>
@@ -553,24 +550,24 @@ const CoreBrief = ({
                         {chapter.callouts.slice(2, 3).map(callout => (
                             <SequentialCell
                                 key={`${callout.category}-${callout.title}`}
-                                delay={1280}
+                                delay={850}
                             >
                                 <span className="resumeLabel">
-                                    <TypewriterText text={callout.category} speed={16} delay={1380} />
+                                    <TypewriterText text={callout.category} speed={16} delay={850} />
                                 </span>
                                 <h3>
-                                    <TypewriterText text={callout.title} speed={18} delay={1530} />
+                                    <TypewriterText text={callout.title} speed={18} delay={850} />
                                 </h3>
                                 <p>
-                                    <TypewriterText text={callout.subtitle} speed={14} delay={1730} />
+                                    <TypewriterText text={callout.subtitle} speed={14} delay={850} />
                                 </p>
                                 <ul>
-                                    {callout.highlights.map((highlight, hIdx) => (
+                                    {callout.highlights.map((highlight) => (
                                         <SequentialListItem
                                             key={highlight}
                                             text={highlight}
                                             speed={14}
-                                            delay={1930 + hIdx * 200}
+                                            delay={850}
                                         />
                                     ))}
                                 </ul>
@@ -578,7 +575,7 @@ const CoreBrief = ({
                                     <SequentialLink
                                         href={callout.href}
                                         category={callout.category}
-                                        delay={2350}
+                                        delay={850}
                                     />
                                 ) : null}
                             </SequentialCell>

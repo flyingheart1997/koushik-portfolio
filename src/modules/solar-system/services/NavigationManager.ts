@@ -101,13 +101,13 @@ export class NavigationManager {
         this.wheelResetId = window.setTimeout(() => {
             this.wheelIntent = 0;
             this.wheelResetId = null;
-        }, 180);
+        }, 200);
 
-        const threshold = event.ctrlKey || event.metaKey ? 34 : 76;
+        const threshold = event.ctrlKey || event.metaKey ? 45 : 120;
         if (Math.abs(this.wheelIntent) < threshold) return;
 
         const now = performance.now();
-        if (now - this.lastWheelStepAt < 600) {
+        if (now - this.lastWheelStepAt < 650) {
             this.wheelIntent = 0;
             return;
         }
@@ -152,13 +152,25 @@ export class NavigationManager {
         this.inputLocked = true;
 
         const isCardOpen = this.coreBriefStage === 'open';
+        const isDirectJump = Math.abs(targetStep - this.currentStep) > 1 || this.currentStep === -1;
 
         const runTravelAndMorph = () => {
             this.navState = 'FOCUSING';
+            const previousStep = this.currentStep;
             this.currentStep = targetStep;
 
             const targetProgress = this.sceneManager.getProgressForFocusStep(targetStep);
-            this.setNavigationProgress(targetProgress, 1.6, () => {
+            
+            // Set active planet immediately for direct jumps so UI focus updates cleanly
+            const targetPlanetIndex = this.sceneManager.getPlanetIndexForFocusStep(targetStep);
+            if (targetPlanetIndex !== -1 && targetPlanetIndex !== this.activePlanetIndex) {
+                this.activePlanetIndex = targetPlanetIndex;
+                this.onPlanetChange?.(targetPlanetIndex);
+            }
+
+            const travelDuration = isDirectJump ? 1.2 : 1.4;
+
+            this.setNavigationProgress(targetProgress, travelDuration, () => {
                 // Camera Arrived -> Step 2: HOLDING_PLANET (1.2s Calm focus pause)
                 this.navState = 'HOLDING';
 
@@ -174,7 +186,7 @@ export class NavigationManager {
                         this.openCoreBrief();
                     }, 1300);
                 }, 1200);
-            });
+            }, isDirectJump);
         };
 
         if (isCardOpen) {
@@ -206,10 +218,15 @@ export class NavigationManager {
             this.navState = 'FOCUSING';
             this.currentStep = -1;
 
-            this.setNavigationProgress(0, 1.4, () => {
+            if (this.activePlanetIndex !== -1) {
+                this.activePlanetIndex = -1;
+                this.onPlanetChange?.(-1);
+            }
+
+            this.setNavigationProgress(0, 1.2, () => {
                 this.navState = 'IDLE';
                 this.inputLocked = false;
-            });
+            }, true);
         };
 
         if (isCardOpen) {
@@ -268,10 +285,10 @@ export class NavigationManager {
         this.initInteractivity();
     }
 
-    private applyProgress(progress: number) {
+    private applyProgress(progress: number, suppressEvents = false) {
         const planetIndex = this.sceneManager.setScrollProgress(progress);
 
-        if (planetIndex !== this.activePlanetIndex) {
+        if (!suppressEvents && planetIndex !== this.activePlanetIndex) {
             this.activePlanetIndex = planetIndex;
             this.onPlanetChange?.(planetIndex);
             if (planetIndex === -1) {
@@ -282,19 +299,20 @@ export class NavigationManager {
         }
     }
 
-    private setNavigationProgress(progress: number, duration = 1.45, onComplete?: () => void) {
+    private setNavigationProgress(progress: number, duration = 1.25, onComplete?: () => void, isDirectJump = false) {
         this.targetProgress = gsap.utils.clamp(0, 1, progress);
         this.navigationTween?.kill();
         this.sceneManager.setNavigationActive(true);
+
         this.navigationTween = gsap.to(this.navigationState, {
             progress: this.targetProgress,
             duration,
             ease: 'sine.inOut',
             overwrite: true,
-            onUpdate: () => this.applyProgress(this.navigationState.progress),
+            onUpdate: () => this.applyProgress(this.navigationState.progress, isDirectJump),
             onComplete: () => {
                 this.navigationState.progress = this.targetProgress;
-                this.applyProgress(this.targetProgress);
+                this.applyProgress(this.targetProgress, false);
                 this.sceneManager.setNavigationActive(false);
                 this.navigationTween = null;
                 onComplete?.();

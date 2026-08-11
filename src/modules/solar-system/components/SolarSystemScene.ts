@@ -408,7 +408,7 @@ export class SolarSystemScene {
         };
     }
 
-    private updateCameraForProgress(immediate = false, delta = 1 / 60) {
+    public updateCameraForProgress(immediate = false, delta = 1 / 60) {
         const focus = this.getFocusStep(this.scrollProgress);
         const fromPlanet = this.planets[focus.fromIndex];
         const toPlanet = this.planets[focus.toIndex];
@@ -431,7 +431,7 @@ export class SolarSystemScene {
         const coreDiveDistance = THREE.MathUtils.clamp(radius * (isMobile ? 3.4 : 2.85), isMobile ? 4.2 : 3.2, isMobile ? 38 : 44);
         const cameraBaseDistance = THREE.MathUtils.lerp(baseFocusDistance, coreDiveDistance, this.coreDiveStrength);
         this.zoomDistanceOffset = THREE.MathUtils.lerp(this.zoomDistanceOffset, this.targetZoomDistanceOffset, controlLerp);
-        const travelArc = this.navigationActive ? Math.sin(focus.localProgress * Math.PI) * (isMobile ? 70 : 105) : 0;
+        const travelArc = this.navigationActive ? Math.sin(focus.localProgress * Math.PI) * (isMobile ? 150 : 240) : 0;
         const focusDistance = THREE.MathUtils.clamp(
             cameraBaseDistance + this.zoomDistanceOffset + travelArc,
             isMobile ? 4.2 : 3.2,
@@ -730,6 +730,11 @@ export class SolarSystemScene {
     public getFocusStepForPlanetIndex(index: number) {
         const sequenceIndex = FOCUS_PLANET_INDICES.indexOf(index);
         return sequenceIndex === -1 ? null : sequenceIndex;
+    }
+
+    public getPlanetIndexForFocusStep(step: number) {
+        if (step < 0 || step >= FOCUS_PLANET_INDICES.length) return -1;
+        return FOCUS_PLANET_INDICES[step];
     }
 
     public getFocusStepCount() {

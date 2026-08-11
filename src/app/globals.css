@@ -498,10 +498,12 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  align-self: flex-end;
   gap: 6px;
   width: max-content;
   max-width: 100%;
-  margin-top: 8px;
+  margin-top: auto;
+  margin-left: auto;
   padding: 8px 18px;
   color: #ffffff !important;
   font-size: clamp(0.7rem, 0.84vw, 0.78rem);
@@ -533,10 +535,12 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  align-self: flex-end;
   gap: 8px;
   width: max-content;
   max-width: 100%;
-  margin-top: 8px;
+  margin-top: auto;
+  margin-left: auto;
   padding: 10px 22px;
   color: #040914 !important;
   font-size: clamp(0.74rem, 0.88vw, 0.82rem);
