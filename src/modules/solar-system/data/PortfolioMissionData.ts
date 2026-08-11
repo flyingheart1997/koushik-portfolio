@@ -306,50 +306,52 @@ export const PORTFOLIO_MISSION_DATA: PortfolioMissionChapter[] = [
     {
         planet: 'Jupiter',
         section: 'Featured Project',
-        title: 'World Monitor Platform',
-        subtitle: 'Global intelligence visualizer with Mapbox GL & CesiumJS',
+        title: 'World Monitor & Satellite Orbit Tracker',
+        subtitle: 'Interactive global monitoring platform combining satellite orbit tracking with real-time geospatial intelligence',
         tags: [
-            'Mapbox GL',
+            'Next.js',
+            'React.js',
             'CesiumJS',
-            'Vector Tiles',
-            'Layer Controls',
-            '60 FPS Maps',
-            'Geospatial UI'
+            'Mapbox GL',
+            'Satellite Propagation',
+            'Geospatial UI',
+            'Tailwind CSS'
         ],
-        impact: 'Engineered real-time geospatial visualization interfaces for processing dense map-based layers.',
+        impact: 'Combines a World Monitor–inspired monitoring dashboard with a dedicated 3D satellite simulation module for tracking active satellites around Earth.',
         callouts: [
             {
-                category: 'Map Engine',
+                category: 'Sentinel Core',
+                title: 'Sentinel Live Web Platform',
+                subtitle: 'Real-time world monitoring & satellite orbit visualizer',
+                tags: [],
+                highlights: [
+                    'Built Sentinel, a modern web platform integrating real-time geospatial monitoring with interactive 3D satellite orbit tracking.',
+                    'Features dedicated simulation modules for tracking active satellites orbiting Earth in real-time.'
+                ],
+                impact: 'Delivers an interactive, high-precision visual monitoring experience accessible on web.',
+                href: 'https://sentinel-beige-gamma.vercel.app/'
+            },
+            {
+                category: 'Geospatial & 3D',
                 title: 'Mapbox GL & CesiumJS Integration',
-                subtitle: 'Map-first interactive visual monitoring platform',
+                subtitle: 'High-performance 3D orbit propagation & map visualization',
                 tags: [],
                 highlights: [
-                    'Integrated Mapbox GL and CesiumJS for high-performance map rendering.',
-                    'Designed dynamic layer controls for toggleable geospatial intelligence data.'
+                    'Integrated Mapbox GL & CesiumJS for rendering dense map layers and 3D satellite orbital trajectories.',
+                    'Engineered dynamic layer controls and spatial inspect panels for live intelligence feeds.'
                 ],
-                impact: 'Turns high-density geographical datasets into clear visual insights.'
+                impact: 'Renders complex spatial datasets and satellite orbital passes seamlessly at 60 FPS.'
             },
             {
-                category: 'Performance',
-                title: 'High-Density Spatial Rendering',
-                subtitle: 'Optimized vector tiles & interactive map states',
+                category: 'Architecture',
+                title: 'Component-Driven Dashboard UI',
+                subtitle: 'Modular controls, satellite telemetry views, and responsive layouts',
                 tags: [],
                 highlights: [
-                    'Applied code splitting and memoization to keep map renders smooth at 60 FPS.',
-                    'Optimized memory consumption during real-time spatial data streaming.'
+                    'Architected modular React component workflows for satellite tracking, view switching, and data controls.',
+                    'Applied memoization and efficient state synchronization for real-time telemetry updates.'
                 ],
-                impact: 'Maintains buttery smooth interaction even with thousands of map entities.'
-            },
-            {
-                category: 'UI Controls',
-                title: 'Spatial Toolbars & Inspect Panels',
-                subtitle: 'Modular map legends, view switches, and layer controls',
-                tags: [],
-                highlights: [
-                    'Built reusable map toolbar components, view switches, and coordinate inspect panels.',
-                    'Followed component-driven architecture for rapid UI expansion.'
-                ],
-                impact: 'Ensures geospatial products can add new data layers with zero refactoring.'
+                impact: 'Ensures smooth live data updates without UI lag or memory degradation.'
             }
         ]
     },
@@ -370,11 +372,11 @@ export const PORTFOLIO_MISSION_DATA: PortfolioMissionChapter[] = [
         callouts: [
             {
                 category: 'Geminus Tech',
-                title: 'Corporate Website from Scratch',
+                title: 'Corporate Website',
                 subtitle: 'Full corporate web portal built from scratch',
                 tags: [],
                 highlights: [
-                    'Built Geminus Tech corporate website from scratch in collaboration with the UX team.',
+                    'Built Geminus Tech corporate website in collaboration with the UX team.',
                     'Implemented responsive design, SEO optimization, and clean page layouts.'
                 ],
                 impact: 'Establishes strong web presence and product showcase for Geminus Tech.',
