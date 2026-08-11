@@ -26,19 +26,6 @@ body {
   box-sizing: border-box;
 }
 
-.typeCursor {
-  display: inline-block;
-  color: #4ef0ab;
-  font-weight: 800;
-  margin-left: 2px;
-  animation: cursorBlink 0.6s infinite;
-}
-
-@keyframes cursorBlink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
-}
-
 .explorerWrapper {
   position: relative;
   min-height: 100vh;
@@ -161,710 +148,6 @@ body {
   opacity: 0.22;
 }
 
-.resumeBoard {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  min-height: 520px;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.11);
-  border-radius: 18px;
-  background: rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(10px);
-}
-
-.resumeHero {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  gap: 16px;
-  align-items: center;
-  padding: clamp(14px, 1.6vw, 18px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(0, 0, 0, 0.25);
-}
-
-.resumeAvatar {
-  display: grid;
-  place-items: center;
-  width: clamp(54px, 5vw, 68px);
-  height: clamp(54px, 5vw, 68px);
-  aspect-ratio: 1;
-  border-radius: 50%;
-  position: relative;
-  padding: 3px;
-  background: linear-gradient(135deg, color-mix(in srgb, var(--surface-accent), white 50%), color-mix(in srgb, var(--surface-accent), transparent 60%));
-  box-shadow: 0 0 24px color-mix(in srgb, var(--surface-glow), transparent 30%), inset 0 0 0 1px rgba(255, 255, 255, 0.3);
-  overflow: hidden;
-  flex-shrink: 0;
-}
-
-.avatarImage {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  object-fit: cover;
-  display: block;
-}
-
-.resumeHeading {
-  min-width: 0;
-  display: grid;
-  gap: 4px;
-  align-items: center;
-}
-
-.resumeHeading h2 {
-  margin: 0;
-  color: #ffffff;
-  font-family: var(--font-display);
-  font-size: clamp(1.75rem, 2.6vw, 2.7rem);
-  line-height: 1.05;
-  font-weight: 800;
-  letter-spacing: -0.01em;
-  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
-}
-
-.resumeHeading h2.singleLineTitle {
-  white-space: nowrap;
-}
-
-.resumeHeading p {
-  margin: 0;
-  color: rgba(255, 255, 255, 0.92);
-  font-family: var(--font-body);
-  font-size: clamp(0.82rem, 1.05vw, 0.96rem);
-  line-height: 1.35;
-  font-weight: 600;
-  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.58);
-}
-
-.resumeMeta {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 6px;
-  min-width: 0;
-  color: rgba(255, 255, 255, 0.9);
-  text-align: right;
-  font-family: var(--font-body);
-}
-
-.typewriterContainer {
-  display: inline-block;
-  position: relative;
-}
-
-.typeCursor {
-  display: inline-block;
-  color: var(--surface-accent, #44e3ff);
-  font-weight: 700;
-  margin-left: 2px;
-  animation: blinkTypeCursor 0.5s infinite alternate ease-in-out;
-}
-
-@keyframes blinkTypeCursor {
-  from { opacity: 1; text-shadow: 0 0 8px var(--surface-accent, #44e3ff); }
-  to { opacity: 0.12; text-shadow: none; }
-}
-
-.statusBadge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 10px;
-  color: #4ef0ab;
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  border: 1px solid rgba(78, 240, 171, 0.3);
-  border-radius: 999px;
-  background: rgba(78, 240, 171, 0.1);
-  white-space: nowrap;
-}
-
-.statusDot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #4ef0ab;
-  box-shadow: 0 0 8px #4ef0ab;
-}
-
-.resumeMeta span {
-  font-size: clamp(0.7rem, 0.85vw, 0.8rem);
-  font-weight: 600;
-  white-space: nowrap;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.58);
-}
-
-.resumeMeta b {
-  color: color-mix(in srgb, var(--surface-accent), white 25%);
-  font-size: 0.84rem;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  white-space: nowrap;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.58);
-}
-
-.resumeImpact {
-  padding: clamp(12px, 1.8vw, 20px) clamp(16px, 2vw, 24px);
-  color: rgba(255, 255, 255, 0.92);
-  font-family: var(--font-body);
-  font-size: clamp(0.88rem, 1.1vw, 1rem);
-  line-height: 1.58;
-  font-weight: 550;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(0, 0, 0, 0.15);
-  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.6);
-}
-
-.resumeGrid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  grid-auto-rows: minmax(min-content, max-content);
-  gap: clamp(12px, 1.8vw, 18px);
-  padding: clamp(14px, 1.8vw, 20px);
-  overflow-y: auto;
-  max-height: calc(100vh - 280px);
-  -webkit-overflow-scrolling: touch;
-  scroll-behavior: smooth;
-}
-
-.resumeGrid::-webkit-scrollbar {
-  width: 6px;
-}
-
-.resumeGrid::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.25);
-  border-radius: 999px;
-}
-
-.resumeGrid::-webkit-scrollbar-thumb {
-  background: color-mix(in srgb, var(--surface-accent), transparent 45%);
-  border-radius: 999px;
-}
-
-.resumeGrid::-webkit-scrollbar-thumb:hover {
-  background: color-mix(in srgb, var(--surface-accent), white 20%);
-}
-
-.resumeCell {
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-  gap: clamp(10px, 1.5vw, 14px);
-  min-width: 0;
-  min-height: auto;
-  padding: clamp(16px, 2vw, 24px);
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: linear-gradient(160deg, rgba(38, 26, 14, 0.4), rgba(20, 13, 8, 0.5));
-  opacity: 0;
-  transform: translate3d(0, 14px, 0) scale(0.96);
-  pointer-events: none;
-  transition: all 220ms ease;
-}
-
-.resumeCell.cellActive {
-  border-color: color-mix(in srgb, var(--surface-accent), transparent 30%);
-  background: linear-gradient(160deg, rgba(38, 26, 14, 0.6), rgba(20, 13, 8, 0.72));
-  backdrop-filter: blur(10px);
-  opacity: 1;
-  transform: translate3d(0, 0, 0) scale(1);
-  pointer-events: auto;
-  box-shadow:
-    0 12px 30px rgba(0, 0, 0, 0.3),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.055);
-}
-
-.resumeCell:hover {
-  background: linear-gradient(160deg, rgba(38, 26, 14, 0.7), rgba(20, 13, 8, 0.8));
-  border-color: color-mix(in srgb, var(--surface-accent), white 20%);
-  box-shadow:
-    0 16px 40px rgba(0, 0, 0, 0.4),
-    inset 0 0 0 1px color-mix(in srgb, var(--surface-accent), transparent 50%);
-}
-
-.coreBriefOverlay.exiting .resumeCell {
-  animation: surfaceModuleOut 240ms ease forwards;
-}
-
-.resumeLabel {
-  width: max-content;
-  max-width: 100%;
-  color: color-mix(in srgb, var(--surface-accent), white 35%);
-  font-size: 0.68rem;
-  font-family: var(--font-body);
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  line-height: 1;
-  text-transform: uppercase;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-}
-
-.resumeCell h3 {
-  margin: 0;
-  color: #ffffff;
-  font-family: var(--font-display);
-  font-size: clamp(1.05rem, 1.32vw, 1.28rem);
-  line-height: 1.3;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.45);
-}
-
-.resumeCell p {
-  margin: 0;
-  color: rgba(255, 255, 255, 0.84);
-  font-family: var(--font-body);
-  font-size: clamp(0.79rem, 0.95vw, 0.88rem);
-  line-height: 1.52;
-  font-weight: 500;
-  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.6);
-}
-
-.resumeCell ul {
-  display: grid;
-  gap: clamp(6px, 0.8vw, 9px);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.resumeCell li {
-  position: relative;
-  padding-left: 18px;
-  color: rgba(255, 255, 255, 0.9);
-  font-family: var(--font-body);
-  font-size: clamp(0.75rem, 0.88vw, 0.82rem);
-  line-height: 1.48;
-  font-weight: 500;
-  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.6);
-}
-
-.resumeCell li::before {
-  content: "";
-  position: absolute;
-  left: 3px;
-  top: 0.4em;
-  width: 7px;
-  height: 5px;
-  border-left: 2px solid color-mix(in srgb, var(--surface-accent), #6ee75f 50%);
-  border-bottom: 2px solid color-mix(in srgb, var(--surface-accent), #6ee75f 50%);
-  transform: rotate(-45deg);
-}
-
-.resumeMiniTags,
-.resumeStack {
-  display: flex;
-  flex-wrap: wrap;
-  gap: clamp(8px, 1vw, 10px);
-  margin-top: 6px;
-}
-
-.resumeMiniTags small,
-.resumeStack small {
-  display: inline-flex;
-  align-items: center;
-  min-height: 27px;
-  padding: 6px 13px;
-  color: rgba(255, 255, 255, 0.92);
-  font-size: clamp(0.68rem, 0.82vw, 0.76rem);
-  font-family: var(--font-body);
-  font-weight: 600;
-  line-height: 1;
-  border: 1px solid color-mix(in srgb, var(--surface-accent), transparent 40%);
-  border-radius: 999px;
-  background: linear-gradient(135deg, rgba(232, 195, 122, 0.08), rgba(232, 195, 122, 0.04));
-  backdrop-filter: blur(6px);
-  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
-  opacity: 0;
-  transform: translate3d(0, 7px, 0) scale(0.94);
-  animation: pillReveal 420ms var(--pill-delay) cubic-bezier(0.19, 1, 0.22, 1) forwards;
-  will-change: transform, opacity;
-  transition: all 200ms ease;
-}
-
-.resumeMiniTags small:hover,
-.resumeStack small:hover {
-  border-color: color-mix(in srgb, var(--surface-accent), white 50%);
-  background: linear-gradient(135deg, rgba(232, 195, 122, 0.15), rgba(232, 195, 122, 0.08));
-  box-shadow: 0 4px 12px color-mix(in srgb, var(--surface-accent), transparent 60%);
-}
-
-.coreBriefOverlay.exiting .resumeMiniTags small,
-.coreBriefOverlay.exiting .resumeStack small {
-  animation: pillExit 180ms ease forwards;
-}
-
-.resumeCell a.resumeLink {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  align-self: flex-end;
-  gap: 6px;
-  width: max-content;
-  max-width: 100%;
-  margin-top: auto;
-  margin-left: auto;
-  padding: 9px 20px;
-  color: #ffffff !important;
-  font-size: clamp(0.72rem, 0.85vw, 0.8rem);
-  font-family: var(--font-body);
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  text-decoration: none;
-  border: 1px solid color-mix(in srgb, var(--surface-accent), white 50%);
-  border-radius: 999px;
-  background: linear-gradient(135deg, color-mix(in srgb, var(--surface-accent), white 10%), rgba(0, 0, 0, 0.3));
-  box-shadow: 0 4px 16px color-mix(in srgb, var(--surface-glow), transparent 55%);
-  transition: all 220ms ease;
-  cursor: pointer;
-  pointer-events: auto !important;
-  position: relative;
-  z-index: 10;
-}
-
-.resumeCell a.resumeLink:hover {
-  transform: translateY(-3px);
-  border-color: #ffffff;
-  background: linear-gradient(135deg, color-mix(in srgb, var(--surface-accent), white 25%), color-mix(in srgb, var(--surface-accent), transparent 10%));
-  box-shadow: 0 8px 28px color-mix(in srgb, var(--surface-glow), transparent 35%);
-  color: #000 !important;
-}
-
-.resumeCell a.resumeDownload {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  align-self: flex-end;
-  gap: 8px;
-  width: max-content;
-  max-width: 100%;
-  margin-top: auto;
-  margin-left: auto;
-  padding: 10px 22px;
-  color: #040914 !important;
-  font-size: clamp(0.74rem, 0.88vw, 0.82rem);
-  font-family: var(--font-display);
-  font-weight: 800;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  text-decoration: none;
-  border: 1px solid #ffffff;
-  border-radius: 999px;
-  background: linear-gradient(135deg, #ffffff, color-mix(in srgb, var(--surface-accent), white 80%));
-  box-shadow: 0 6px 26px color-mix(in srgb, var(--surface-glow), transparent 20%), inset 0 1px 0 #ffffff;
-  transition: all 220ms ease;
-  cursor: pointer;
-  pointer-events: auto !important;
-  position: relative;
-  z-index: 10;
-}
-
-.resumeCell a.resumeDownload:hover {
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 10px 32px color-mix(in srgb, var(--surface-glow), transparent 10%);
-  background: #ffffff;
-}
-
-.surfaceHeader,
-.surfaceBody {
-  position: relative;
-  z-index: 2;
-}
-
-.surfaceHeader {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding-bottom: 14px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
-}
-
-.surfaceHeader span,
-.surfaceHeader b,
-.surfaceEyebrow {
-  font-size: 0.66rem;
-  font-weight: 900;
-  letter-spacing: 0.24em;
-  line-height: 1;
-  text-transform: uppercase;
-}
-
-.surfaceHeader span,
-.surfaceEyebrow {
-  color: color-mix(in srgb, var(--surface-accent), white 10%);
-}
-
-.surfaceHeader b {
-  color: rgba(255, 255, 255, 0.82);
-}
-
-.surfaceBody {
-  display: grid;
-  grid-template-columns: minmax(340px, 0.92fr) minmax(480px, 1.08fr);
-  gap: clamp(24px, 3.2vw, 48px);
-  align-items: center;
-}
-
-.surfaceIdentity {
-  display: grid;
-  align-content: center;
-  gap: 13px;
-  min-width: 0;
-}
-
-.surfaceIdentity h2 {
-  max-width: min(760px, 100%);
-  margin: 0;
-  color: #ffffff;
-  font-size: clamp(2.35rem, 4.2vw, 4.35rem);
-  line-height: 0.98;
-  font-weight: 940;
-  letter-spacing: 0;
-  text-shadow: 0 16px 60px rgba(0, 0, 0, 0.42);
-}
-
-.surfaceIdentity h2.singleLineTitle {
-  font-size: clamp(3rem, 5.6vw, 6.2rem);
-  white-space: nowrap;
-}
-
-.surfaceIdentity p {
-  max-width: 560px;
-  margin: 0;
-  color: rgba(245, 249, 255, 0.76);
-  font-size: clamp(0.92rem, 1.4vw, 1.08rem);
-  line-height: 1.58;
-  font-weight: 650;
-}
-
-.surfaceImpact {
-  position: relative;
-  display: grid;
-  gap: 6px;
-  margin-top: 6px;
-  padding: 16px 18px;
-  color: rgba(240, 248, 255, 0.9);
-  border-left: 2px solid color-mix(in srgb, var(--surface-accent), white 10%);
-  background:
-    linear-gradient(90deg, rgba(0, 0, 0, 0.34), rgba(255, 255, 255, 0.045)),
-    rgba(0, 0, 0, 0.14);
-  font-style: normal;
-}
-
-.surfaceImpact span {
-  color: color-mix(in srgb, var(--surface-accent), white 8%);
-  font-size: 0.58rem;
-  font-weight: 900;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-}
-
-.surfaceImpact b {
-  color: rgba(246, 250, 255, 0.9);
-  font-size: 0.86rem;
-  line-height: 1.5;
-  font-weight: 740;
-}
-
-.surfaceTags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 4px;
-}
-
-.surfaceTag {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  min-height: 26px;
-  padding: 7px 12px 6px;
-  color: rgba(255, 255, 255, 0.9);
-  font-size: 0.62rem;
-  font-weight: 860;
-  line-height: 1;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  border-radius: 999px;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(0, 0, 0, 0.18)),
-    color-mix(in srgb, var(--surface-accent), transparent 86%);
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.035),
-    0 8px 20px rgba(0, 0, 0, 0.12);
-}
-
-.surfaceTag::before {
-  content: "";
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: color-mix(in srgb, var(--surface-accent), white 12%);
-  box-shadow: 0 0 10px var(--surface-glow);
-}
-
-.surfaceModules {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 10px;
-  align-content: center;
-}
-
-.surfaceModule {
-  min-width: 0;
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-areas:
-    "label"
-    "title"
-    "subtitle"
-    "tags"
-    "points"
-    "link";
-  gap: 8px;
-  align-content: start;
-  padding: 16px 17px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-left: 2px solid color-mix(in srgb, var(--surface-accent), white 4%);
-  background:
-    linear-gradient(105deg, rgba(4, 9, 18, 0.58), rgba(0, 0, 0, 0.26)),
-    rgba(255, 255, 255, 0.035);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.06),
-    0 12px 30px rgba(0, 0, 0, 0.16);
-  opacity: 0;
-  transform: translate3d(0, 14px, 0);
-  animation: surfaceModuleIn 520ms var(--module-delay) cubic-bezier(0.19, 1, 0.22, 1) forwards;
-}
-
-.coreBriefOverlay.exiting .surfaceModule {
-  animation: surfaceModuleOut 240ms ease forwards;
-}
-
-.surfaceModule span {
-  grid-area: label;
-  width: max-content;
-  max-width: 100%;
-  padding: 7px 10px 6px;
-  color: color-mix(in srgb, var(--surface-accent), white 8%);
-  font-size: 0.56rem;
-  font-weight: 900;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  border: 1px solid color-mix(in srgb, var(--surface-accent), transparent 58%);
-  border-radius: 999px;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.16)),
-    color-mix(in srgb, var(--surface-accent), transparent 88%);
-}
-
-.surfaceModule h3 {
-  grid-area: title;
-  margin: 0;
-  color: #ffffff;
-  font-size: clamp(1rem, 1.35vw, 1.24rem);
-  line-height: 1.12;
-  font-weight: 880;
-  letter-spacing: 0;
-}
-
-.surfaceModule p {
-  grid-area: subtitle;
-  margin: 0;
-  color: rgba(241, 246, 255, 0.66);
-  font-size: 0.72rem;
-  line-height: 1.45;
-  font-weight: 650;
-}
-
-.moduleTags {
-  grid-area: tags;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.moduleTags small {
-  display: inline-flex;
-  align-items: center;
-  min-height: 20px;
-  padding: 4px 7px 3px;
-  color: rgba(255, 255, 255, 0.78);
-  font-size: 0.54rem;
-  font-weight: 850;
-  letter-spacing: 0.08em;
-  line-height: 1;
-  text-transform: uppercase;
-  border: 1px solid rgba(255, 255, 255, 0.13);
-  background: rgba(0, 0, 0, 0.18);
-}
-
-.surfaceModule ul {
-  grid-area: points;
-  display: grid;
-  gap: 6px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.surfaceModule li {
-  position: relative;
-  padding-left: 12px;
-  color: rgba(245, 249, 255, 0.72);
-  font-size: 0.72rem;
-  line-height: 1.42;
-  font-weight: 520;
-}
-
-.surfaceModule li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.58em;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: color-mix(in srgb, var(--surface-accent), white 12%);
-  box-shadow: 0 0 10px var(--surface-glow);
-}
-
-.surfaceModule a {
-  grid-area: link;
-  width: max-content;
-  margin-top: 2px;
-  color: color-mix(in srgb, var(--surface-accent), white 12%);
-  font-size: 0.62rem;
-  font-weight: 900;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  text-decoration: none;
-  pointer-events: auto;
-}
-
-.typeLine {
-  display: block;
-  max-width: 100%;
-  opacity: 0;
-  clip-path: inset(0 100% 0 0);
-  animation: textType 560ms steps(30, end) forwards;
-  animation-delay: var(--text-delay, 620ms);
-}
-
-.coreBriefOverlay.exiting .typeLine {
-  animation: textOut 220ms ease forwards;
-}
-
 .coreHint,
 .exploreHint {
   position: fixed;
@@ -925,21 +208,6 @@ body {
   color: rgba(255, 213, 142, 0.82);
 }
 
-@keyframes surfaceVignetteIn {
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes surfaceVignetteOut {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
-
 @keyframes surfaceFlatten {
   0% {
     opacity: 0;
@@ -974,60 +242,6 @@ body {
   }
 }
 
-@keyframes surfaceModuleIn {
-  to {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-  }
-}
-
-@keyframes surfaceModuleOut {
-  to {
-    opacity: 0;
-    transform: translate3d(0, 8px, 0);
-  }
-}
-
-@keyframes pillReveal {
-  0% {
-    opacity: 0;
-    transform: translate3d(0, 7px, 0) scale(0.94);
-  }
-  72% {
-    opacity: 1;
-    transform: translate3d(0, -1px, 0) scale(1.015);
-  }
-  100% {
-    opacity: 1;
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-}
-
-@keyframes pillExit {
-  to {
-    opacity: 0;
-    transform: translate3d(0, 4px, 0) scale(0.96);
-  }
-}
-
-@keyframes textType {
-  from {
-    opacity: 1;
-    clip-path: inset(0 100% 0 0);
-  }
-  to {
-    opacity: 1;
-    clip-path: inset(0 0 0 0);
-  }
-}
-
-@keyframes textOut {
-  to {
-    opacity: 0;
-    clip-path: inset(0 0 0 100%);
-  }
-}
-
 @keyframes hintReveal {
   from {
     opacity: 0;
@@ -1046,15 +260,6 @@ body {
     min-height: 0;
     padding: clamp(14px, 2vw, 18px);
   }
-
-  .resumeGrid {
-    gap: clamp(10px, 1.6vw, 16px);
-    padding: clamp(12px, 1.6vw, 18px);
-  }
-
-  .resumeCell {
-    padding: clamp(14px, 1.8vw, 20px);
-  }
 }
 
 @media (max-width: 900px) {
@@ -1063,76 +268,6 @@ body {
     height: calc(100vh - 100px);
     min-height: 0;
     padding: clamp(12px, 1.8vw, 16px);
-  }
-
-  .resumeHero {
-    grid-template-columns: auto 1fr;
-    gap: clamp(12px, 1.6vw, 14px);
-    padding: clamp(12px, 1.5vw, 16px);
-  }
-
-  .resumeAvatar {
-    width: clamp(48px, 8vw, 64px);
-    height: clamp(48px, 8vw, 64px);
-  }
-
-  .resumeHeading h2 {
-    font-size: clamp(1.6rem, 2.4vw, 2.2rem);
-  }
-
-  .resumeMeta {
-    grid-column: 1 / -1;
-    justify-items: start;
-    text-align: left;
-    display: flex;
-    gap: 10px;
-  }
-
-  .resumeImpact {
-    padding: clamp(10px, 1.5vw, 14px) clamp(12px, 1.8vw, 16px);
-    font-size: clamp(0.82rem, 1vw, 0.92rem);
-  }
-
-  .resumeGrid {
-    grid-template-columns: 1fr;
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    -webkit-overflow-scrolling: touch;
-    touch-action: pan-y;
-    gap: clamp(10px, 1.5vw, 14px);
-    padding: clamp(12px, 1.5vw, 16px);
-  }
-
-  .resumeCell {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-    padding: clamp(12px, 1.6vw, 18px);
-  }
-
-  .resumeCell:last-child {
-    border-bottom: 0;
-  }
-
-  .surfaceHeader {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 7px;
-  }
-
-  .surfaceBody {
-    grid-template-columns: 1fr;
-    gap: 18px;
-  }
-
-  .surfaceModules {
-    grid-template-columns: 1fr;
-  }
-
-  .surfaceModule {
-    grid-template-columns: 1fr;
-  }
-
-  .surfaceIdentity {
-    align-content: start;
   }
 }
 
@@ -1144,85 +279,6 @@ body {
     overflow: hidden;
     padding: clamp(10px, 2vw, 14px);
     border-radius: 18px;
-  }
-
-  .resumeBoard {
-    grid-template-rows: auto auto 1fr;
-    overflow: hidden;
-    border-radius: 14px;
-  }
-
-  .resumeHero {
-    gap: clamp(10px, 1.4vw, 12px);
-    padding: clamp(10px, 1.5vw, 12px);
-  }
-
-  .resumeAvatar {
-    width: clamp(42px, 10vw, 48px);
-    height: clamp(42px, 10vw, 48px);
-  }
-
-  .resumeHeading h2 {
-    font-size: clamp(1.3rem, 6.5vw, 1.75rem);
-    white-space: normal;
-  }
-
-  .resumeHeading h2.singleLineTitle {
-    white-space: normal;
-  }
-
-  .resumeHeading p {
-    font-size: clamp(0.75rem, 0.9vw, 0.85rem);
-  }
-
-  .resumeImpact {
-    padding: clamp(10px, 1.4vw, 12px);
-    font-size: clamp(0.78rem, 0.95vw, 0.88rem);
-  }
-
-  .resumeCell {
-    padding: clamp(12px, 1.5vw, 14px);
-    align-content: start;
-    gap: clamp(8px, 1.2vw, 10px);
-  }
-
-  .resumeCell h3 {
-    font-size: clamp(0.95rem, 1.15vw, 1.1rem);
-  }
-
-  .resumeCell p {
-    font-size: clamp(0.72rem, 0.88vw, 0.8rem);
-  }
-
-  .resumeCell li {
-    font-size: clamp(0.68rem, 0.82vw, 0.75rem);
-  }
-
-  .resumeMiniTags,
-  .resumeStack {
-    gap: clamp(6px, 0.8vw, 8px);
-  }
-
-  .resumeMiniTags small,
-  .resumeStack small {
-    font-size: clamp(0.62rem, 0.76vw, 0.7rem);
-    padding: 5px 10px;
-    min-height: 24px;
-  }
-
-  .resumeGrid {
-    gap: clamp(8px, 1.2vw, 10px);
-    padding: clamp(10px, 1.4vw, 12px);
-    overflow: auto;
-  }
-
-  .resumeGrid::-webkit-scrollbar {
-    width: 4px;
-  }
-
-  .resumeGrid::-webkit-scrollbar-thumb {
-    border-radius: 999px;
-    background: color-mix(in srgb, var(--surface-accent), transparent 52%);
   }
 
   .coreHint,
@@ -1248,75 +304,1034 @@ body {
     padding: 8px;
     border-radius: 14px;
   }
+}
 
-  .resumeHero {
-    grid-template-columns: auto 1fr;
-    padding: 8px;
+/* =====================================================================
+   PLANET SURFACE — shared shell + kit reused across every bespoke layout
+   ===================================================================== */
+
+.planetSurfaceBoard {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  border-radius: 18px;
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+.planetSurfaceBoard > * {
+  min-height: 0;
+}
+
+.planetBlock {
+  will-change: transform, opacity;
+}
+
+.planetScroll {
+  padding: 30px 20px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+.planetScroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.planetScroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.planetScroll::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--surface-accent), transparent 45%);
+  border-radius: 999px;
+}
+
+/* Chapter header — every layout except the Sun opens with this strip */
+.chapterHeader {
+  flex: none;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: clamp(18px, 2.2vw, 26px) clamp(20px, 2.6vw, 32px) clamp(14px, 1.8vw, 20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent);
+}
+
+.chapterHeaderText {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.chapterEyebrow {
+  color: color-mix(in srgb, var(--surface-accent), white 15%);
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.chapterTitle {
+  margin: 0;
+  color: #ffffff;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.4vw, 2.15rem);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+}
+
+.chapterSubtitle {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: clamp(0.82rem, 1vw, 0.94rem);
+  line-height: 1.5;
+  font-weight: 550;
+  max-width: 620px;
+}
+
+.chapterHeaderActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.chapterBadge {
+  flex-shrink: 0;
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--surface-accent), transparent 40%);
+  background: color-mix(in srgb, var(--surface-accent), transparent 88%);
+  color: color-mix(in srgb, var(--surface-accent), white 20%);
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* Generic text rendering inside any content block */
+.planetBlock h3 {
+  margin: 6px 0 4px;
+  color: #ffffff;
+  font-family: var(--font-display);
+  font-size: clamp(1.02rem, 1.25vw, 1.2rem);
+  font-weight: 750;
+  line-height: 1.28;
+}
+
+.planetBlock p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: clamp(0.78rem, 0.95vw, 0.88rem);
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+.chipLabel {
+  display: inline-block;
+  width: max-content;
+  padding: 5px 11px;
+  margin-bottom: 2px;
+  color: color-mix(in srgb, var(--surface-accent), white 30%);
+  font-size: 0.63rem;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  border: 1px solid color-mix(in srgb, var(--surface-accent), transparent 55%);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface-accent), transparent 90%);
+}
+
+.checkList {
+  display: grid;
+  gap: 8px;
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.checkList li {
+  position: relative;
+  padding-left: 20px;
+  color: rgba(255, 255, 255, 0.86);
+  font-size: clamp(0.78rem, 0.92vw, 0.87rem);
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+.checkList li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 0.45em;
+  width: 8px;
+  height: 6px;
+  border-left: 2px solid color-mix(in srgb, var(--surface-accent), #6ee75f 45%);
+  border-bottom: 2px solid color-mix(in srgb, var(--surface-accent), #6ee75f 45%);
+  transform: rotate(-45deg);
+}
+
+.ctaButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: max-content;
+  margin-top: 14px;
+  padding: 10px 20px;
+  color: #04101f !important;
+  font-size: 0.74rem;
+  font-family: var(--font-body);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--surface-accent), white 30%), var(--surface-accent));
+  box-shadow: 0 6px 20px color-mix(in srgb, var(--surface-glow), transparent 45%);
+  transition: transform 200ms ease, box-shadow 200ms ease;
+  cursor: pointer;
+}
+
+.ctaButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px color-mix(in srgb, var(--surface-glow), transparent 25%);
+}
+
+.ctaButton.subtle {
+  background: transparent;
+  color: color-mix(in srgb, var(--surface-accent), white 25%) !important;
+  border: 1px solid color-mix(in srgb, var(--surface-accent), transparent 45%);
+  box-shadow: none;
+}
+
+.ctaButton.stamp {
+  border-radius: 8px;
+}
+
+.ctaButton.compact {
+  margin-top: 0;
+  padding: 8px 16px;
+  font-size: 0.68rem;
+}
+
+@keyframes cardReveal {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =====================================================================
+   SUN — Signal Beacon: centered hero, orbit tabs, hover-reveal stage
+   ===================================================================== */
+
+.sunScene {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.sunHero {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: clamp(28px, 4vw, 44px);
+  padding: clamp(28px, 3.6vw, 44px) clamp(24px, 3vw, 40px) clamp(20px, 2.6vw, 28px);
+}
+
+.sunAvatarRing {
+  position: relative;
+  width: clamp(96px, 11vw, 128px);
+  height: clamp(96px, 11vw, 128px);
+  border-radius: 26px;
+  padding: 3px;
+  flex-shrink: 0;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--surface-accent), white 45%), color-mix(in srgb, var(--surface-accent), transparent 55%));
+  box-shadow: 0 0 32px color-mix(in srgb, var(--surface-glow), transparent 25%);
+}
+
+.sunAvatarImg {
+  width: 100%;
+  height: 100%;
+  border-radius: 23px;
+  object-fit: cover;
+  display: block;
+}
+
+.sunHeroText {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 560px;
+  text-align: left;
+}
+
+.sunName {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 3.4vw, 2.9rem);
+  font-weight: 900;
+  line-height: 1.02;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+}
+
+.sunTagline {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: clamp(0.8rem, 1vw, 0.92rem);
+  line-height: 1.55;
+  font-weight: 550;
+}
+
+.sunOrbitRow {
+  flex: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 0 clamp(24px, 3vw, 40px) clamp(18px, 2.2vw, 24px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sunOrbitTab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.03);
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  transition: all 220ms ease;
+  font-family: var(--font-body);
+}
+
+.sunOrbitIndex {
+  font-size: 0.6rem;
+  font-weight: 900;
+  color: color-mix(in srgb, var(--surface-accent), white 20%);
+}
+
+.sunOrbitTab:hover,
+.sunOrbitTab.active {
+  border-color: color-mix(in srgb, var(--surface-accent), white 20%);
+  background: color-mix(in srgb, var(--surface-accent), transparent 82%);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.sunStage {
+  flex: 1;
+  padding: clamp(22px, 2.8vw, 32px) clamp(24px, 3vw, 40px);
+}
+
+.sunStageCard {
+  animation: cardReveal 320ms ease;
+  max-width: 680px;
+}
+
+.sunStageHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.sunStageHead h3 {
+  margin: 0 0 8px;
+  font-size: clamp(1.1rem, 1.4vw, 1.3rem);
+}
+
+.sunStageHead .ctaButton {
+  margin-top: 0;
+  flex-shrink: 0;
+}
+
+.sunStackRow {
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.sunStackLabel {
+  display: block;
+  margin-bottom: 10px;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.sunStackChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.sunStackChip {
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.68rem;
+  font-weight: 600;
+}
+
+/* =====================================================================
+   MERCURY — Blueprint Grid: schematic lead card + dashed spec stack
+   ===================================================================== */
+
+.mercuryBlueprint {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+.mercuryBody {
+  flex: 1;
+  display: flex;
+  gap: clamp(20px, 2.6vw, 32px);
+  padding: clamp(20px, 2.6vw, 32px);
+  align-items: flex-start;
+}
+
+.mercuryLead {
+  position: relative;
+  flex: 1.3;
+  padding: clamp(20px, 2.4vw, 28px);
+  border: 1px solid color-mix(in srgb, var(--surface-accent), transparent 55%);
+  background: linear-gradient(160deg, color-mix(in srgb, var(--surface-accent), transparent 90%), transparent);
+}
+
+.mercuryLead::before,
+.mercuryLead::after {
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-color: color-mix(in srgb, var(--surface-accent), white 30%);
+}
+
+.mercuryLead::before {
+  top: -1px;
+  left: -1px;
+  border-top: 2px solid;
+  border-left: 2px solid;
+}
+
+.mercuryLead::after {
+  bottom: -1px;
+  right: -1px;
+  border-bottom: 2px solid;
+  border-right: 2px solid;
+}
+
+.mercurySpec {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: color-mix(in srgb, var(--surface-accent), transparent 30%);
+}
+
+.mercuryStack {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding-top: 4px;
+}
+
+.mercurySchemaRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 16px 4px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.16);
+}
+
+.mercurySchemaRow:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+
+.mercurySpecInline {
+  flex-shrink: 0;
+  width: 36px;
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1;
+  color: color-mix(in srgb, var(--surface-accent), transparent 58%);
+}
+
+.mercurySchemaText {
+  min-width: 0;
+}
+
+.mercuryLegend {
+  flex: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px 18px;
+  padding: 14px clamp(20px, 2.6vw, 32px) clamp(18px, 2.4vw, 26px);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.mercuryLegendChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.66rem;
+  color: rgba(255, 255, 255, 0.65);
+  font-weight: 600;
+}
+
+.mercuryLegendChip i {
+  width: 8px;
+  height: 8px;
+  background: var(--chip-color, color-mix(in srgb, var(--surface-accent), white 20%));
+  display: inline-block;
+}
+
+/* =====================================================================
+   VENUS — Telemetry Console: signal rows with a scanning sweep
+   ===================================================================== */
+
+.venusConsole {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.venusBody {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: clamp(20px, 2.6vw, 30px);
+}
+
+.venusRow {
+  position: relative;
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+  padding: 16px 18px;
+  border-left: 3px solid color-mix(in srgb, var(--surface-accent), transparent 30%);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.035), transparent);
+  overflow: hidden;
+}
+
+.venusRow::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 40%, color-mix(in srgb, var(--surface-accent), transparent 85%) 50%, transparent 60%);
+  transform: translateX(-100%);
+  transition: transform 700ms ease;
+  pointer-events: none;
+}
+
+.venusRow:hover::after {
+  transform: translateX(100%);
+}
+
+.venusSignalTag {
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: color-mix(in srgb, var(--surface-accent), white 20%);
+  padding-top: 2px;
+}
+
+.venusRowContent {
+  min-width: 0;
+}
+
+.venusFooter {
+  flex: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px 16px;
+  padding: 14px clamp(20px, 2.6vw, 30px) clamp(18px, 2.4vw, 24px);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.venusFooterChip {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* =====================================================================
+   EARTH — Mission Timeline: connected nodes, gold marker for awards
+   ===================================================================== */
+
+.earthTimeline {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.earthBody {
+  flex: 1;
+  padding: clamp(20px, 3vw, 36px) clamp(20px, 3vw, 40px);
+}
+
+.earthSnakeContainer {
+  max-width: 920px;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.earthSnakeRow {
+  display: grid;
+  width: 100%;
+  align-items: center;
+  gap: 16px;
+}
+
+.earthSnakeRow.rowLeft {
+  grid-template-columns: 1fr 180px;
+}
+
+.earthSnakeRow.rowRight {
+  grid-template-columns: 180px 1fr;
+}
+
+.earthCardBox {
+  width: 100%;
+}
+
+.earthCardInner {
+  background: color-mix(in srgb, var(--surface-accent), transparent 90%);
+  border: 1px solid color-mix(in srgb, var(--surface-accent), transparent 55%);
+  border-radius: 20px;
+  padding: clamp(20px, 2.2vw, 26px) clamp(22px, 2.5vw, 30px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+  transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+}
+
+.earthCardInner:hover {
+  background: color-mix(in srgb, var(--surface-accent), transparent 82%);
+  border-color: color-mix(in srgb, var(--surface-accent), white 30%);
+}
+
+.earthCardInner h3 {
+  font-size: clamp(1.05rem, 1.3vw, 1.3rem);
+  font-weight: 700;
+  color: #ffffff;
+  margin: 8px 0 4px;
+  line-height: 1.3;
+}
+
+.earthSubtitle {
+  font-size: 0.86rem;
+  color: color-mix(in srgb, var(--surface-accent), white 45%);
+  margin-bottom: 14px;
+}
+
+.earthCurveWrap {
+  width: 100%;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.earthCurveSvg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* shared card look */
+.earthNode > :first-child {
+  background: color-mix(in srgb, var(--surface-accent), transparent 88%);
+  border: 1px solid color-mix(in srgb, var(--surface-accent), transparent 55%);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.earthNode:hover > :first-child {
+  background: color-mix(in srgb, var(--surface-accent), transparent 80%);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* =====================================================================
+   MARS — Command Deck (Featured): asymmetric module row
+   ===================================================================== */
+
+.marsDeck {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.marsTagStrip {
+  flex: none;
+  display: flex;
+  gap: 8px;
+  padding: 20px clamp(22px, 2.8vw, 34px) 14px;
+  overflow-x: auto;
+}
+
+.marsTagChip {
+  flex-shrink: 0;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.68rem;
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+
+/* =====================================================================
+   JUPITER — Orbital Rail (Featured): horizontal snap-scroll cards
+   ===================================================================== */
+
+.jupiterRail {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* =====================================================================
+   SATURN — Site Notes: same sticky-note kit, folded-corner variant
+   ===================================================================== */
+
+.saturnShowcase {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* =====================================================================
+   STICKY NOTE KIT — shared by Jupiter (tape), Saturn (fold), Neptune (pin)
+   ===================================================================== */
+
+.stickyField {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: flex-start;
+  gap: 26px;
+  padding: clamp(24px, 3vw, 36px);
+}
+
+.stickyCard {
+  /* the peeled-corner mechanic: the card's own background is diagonally cut
+     at top-right (--notch deep), and ::before draws the flap that "sits"
+     over that cut in a darker shade — the classic folded-corner note trick,
+     just keyed to our per-planet --surface-accent instead of a fixed hue */
+  --notch: 30px;
+  --paper-front: color-mix(in srgb, var(--surface-accent), transparent 80%);
+  --paper-back: color-mix(in srgb, var(--surface-accent), transparent 55%);
+
+  position: relative;
+  width: min(280px, 82vw);
+  padding: clamp(20px, 2.4vw, 26px) clamp(18px, 2.2vw, 22px);
+  border-radius: 8px;
+  background: var(--paper-front);
+  border: 1px solid color-mix(in srgb, var(--surface-accent), transparent 55%);
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  cursor: default;
+}
+
+.stickyCard::before {
+  display: none;
+}
+
+.stickyCard.wide {
+  width: min(380px, 90vw);
+}
+
+.stickyCard.draggable {
+  cursor: grab;
+}
+
+.stickyCard.draggable:active {
+  cursor: grabbing;
+}
+
+/* faint paper-fiber grain, sits under every note regardless of variant */
+.stickyTexture {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(8deg, rgba(255, 255, 255, 0.025) 0 1px, transparent 1px 10px),
+    repeating-linear-gradient(-12deg, rgba(0, 0, 0, 0.05) 0 1px, transparent 1px 14px);
+  mix-blend-mode: overlay;
+}
+
+/* pin variant — Neptune: a round pin driven straight through the corner */
+.sticky-pin {
+  --notch: 26px;
+}
+
+.stickyPin {
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 30%, color-mix(in srgb, var(--surface-accent), white 70%), color-mix(in srgb, var(--surface-accent), black 20%));
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+  z-index: 2;
+}
+
+/* tape variant — Jupiter: a real strip of washi tape, torn ends, casting a crease shadow onto the page underneath */
+.sticky-tape {
+  --notch: 30px;
+}
+
+.stickyTape {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  width: 70px;
+  height: 26px;
+  margin-left: -35px;
+  transform: rotate(-4deg);
+  background:
+    repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.18) 0 3px, transparent 3px 7px),
+    color-mix(in srgb, var(--surface-accent), white 55%);
+  opacity: 0.68;
+  clip-path: polygon(4% 10%, 96% 0%, 100% 85%, 2% 100%);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  z-index: 2;
+}
+
+.stickyTape::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 10px;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.35), transparent 70%);
+}
+
+/* fold variant — Saturn: the peeled corner on its own, no accessory */
+.sticky-fold {
+  --notch: 36px;
+}
+
+/* curl variant — Mars: the same mechanic, scaled up for a bigger lift */
+.sticky-curl {
+  --notch: 50px;
+}
+
+/* =====================================================================
+   URANUS — Skill Constellation: accent-topped capability clusters
+   ===================================================================== */
+
+.uranusMatrix {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.uranusBody {
+  flex: 1;
+  display: flex;
+  align-items: stretch;
+}
+
+.uranusPanel {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  padding: clamp(24px, 3vw, 34px) clamp(20px, 2.6vw, 28px);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+
+.uranusPanel:last-child {
+  border-right: none;
+}
+
+.uranusGhostNum {
+  position: absolute;
+  top: 6px;
+  right: 14px;
+  font-family: var(--font-mono);
+  font-size: 3.4rem;
+  font-weight: 800;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.05);
+  pointer-events: none;
+}
+
+.uranusPointList {
+  display: grid;
+  gap: 8px;
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.uranusPointList li {
+  position: relative;
+  padding-left: 14px;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: clamp(0.78rem, 0.92vw, 0.87rem);
+  line-height: 1.5;
+}
+
+.uranusPointList li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 5px;
+  height: 1px;
+  background: var(--surface-accent);
+}
+
+.uranusTagLine {
+  margin: 16px 0 0;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  color: color-mix(in srgb, var(--surface-accent), white 25%);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+/* =====================================================================
+   NEPTUNE — Contact Pinboard: draggable sticky notes (motion.div drag)
+   ===================================================================== */
+
+.neptuneBoard {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* =====================================================================
+   RESPONSIVE — collapse multi-column bodies, keep every layout readable
+   ===================================================================== */
+
+@media (max-width: 900px) {
+  .chapterHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .sunHero {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .mercuryBody {
+    flex-direction: column;
+  }
+
+  .mercuryLead {
+    flex: 1;
+  }
+
+  .stickyCard.wide {
+    width: min(280px, 82vw);
+  }
+
+  .uranusBody {
+    flex-direction: column;
+  }
+
+  .uranusPanel {
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .uranusPanel:last-child {
+    border-bottom: none;
+  }
+
+  .stickyCard {
+    width: min(260px, 80vw);
+  }
+
+  .earthSnakeRow.rowLeft,
+  .earthSnakeRow.rowRight {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .earthCurveWrap {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .sunAvatarRing {
+    width: 88px;
+    height: 88px;
+  }
+
+  .sunOrbitRow {
     gap: 8px;
   }
 
-  .resumeAvatar {
-    width: 40px;
-    height: 40px;
+  .sunOrbitTab {
+    padding: 8px 13px;
+    font-size: 0.68rem;
   }
 
-  .resumeHeading h2 {
-    font-size: clamp(1.1rem, 5.5vw, 1.4rem);
-  }
-
-  .resumeMeta {
+  .venusRow {
+    flex-direction: column;
     gap: 6px;
-  }
-
-  .resumeImpact {
-    padding: 8px;
-    font-size: 0.75rem;
-    line-height: 1.5;
-  }
-
-  .resumeCell {
-    padding: 10px;
-    gap: 8px;
-  }
-
-  .resumeCell h3 {
-    font-size: clamp(0.9rem, 5vw, 1rem);
-  }
-
-  .resumeCell p {
-    font-size: 0.7rem;
-    line-height: 1.4;
-  }
-
-  .resumeCell li {
-    font-size: 0.65rem;
-    padding-left: 14px;
-  }
-
-  .resumeCell li::before {
-    left: 2px;
-  }
-
-  .resumeMiniTags,
-  .resumeStack {
-    gap: 6px;
-  }
-
-  .resumeMiniTags small,
-  .resumeStack small {
-    font-size: 0.6rem;
-    padding: 4px 8px;
-    min-height: 22px;
-  }
-
-  .resumeGrid {
-    gap: 8px;
-    padding: 8px;
-  }
-
-  .resumeCell a.resumeLink,
-  .resumeCell a.resumeDownload {
-    padding: 8px 14px;
-    font-size: 0.65rem;
   }
 }

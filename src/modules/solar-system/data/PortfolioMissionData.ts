@@ -35,7 +35,7 @@ export const PORTFOLIO_MISSION_DATA: PortfolioMissionChapter[] = [
         planet: 'Sun',
         section: 'Profile',
         title: 'Koushik Mondal',
-        subtitle: 'Senior React Engineer | Frontend Architect',
+        subtitle: 'Frontend Engineer | React.js | Next.js | TypeScript | Frontend Architecture | Performance Optimization | Enterprise Web Applications',
         stackLabel: 'Complete Stack',
         tags: [
             'TypeScript',
@@ -220,7 +220,7 @@ export const PORTFOLIO_MISSION_DATA: PortfolioMissionChapter[] = [
                 subtitle: 'Feb 2023 – Present | Pune, India',
                 tags: [],
                 highlights: [
-                    'Established frontend foundation architecture for Antaris V2 using Next.js App Router & TypeScript.',
+                    'Established frontend foundation architecture for Antaris using Next.js App Router & TypeScript.',
                     'Independently owned 15–20 enterprise application screens for satellite simulation and mission planning.',
                     'Built 18+ shared React components used across multiple simulation workflows.',
                     'Led Grafana to Apache ECharts telemetry migration (7 backend APIs across 50+ panels).'
@@ -257,7 +257,7 @@ export const PORTFOLIO_MISSION_DATA: PortfolioMissionChapter[] = [
         planet: 'Mars',
         section: 'Featured Project',
         title: 'Satellite Simulation Platform',
-        subtitle: 'Antaris V2 satellite design, mission planning & 3D orbital tracking',
+        subtitle: 'Antaris satellite design, mission planning & 3D orbital tracking',
         tags: [
             'Next.js App Router',
             'CesiumJS 3D',
