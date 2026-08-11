@@ -223,7 +223,7 @@ const CoreBrief = ({
                 <div className="surfaceScan" aria-hidden="true" />
 
                 <div className="planetSurfaceBoard">
-                    <PlanetLayoutRouter chapter={chapter} chapterIndex={chapterIndex} />
+                    <PlanetLayoutRouter key={chapterIndex} chapter={chapter} chapterIndex={chapterIndex} />
                 </div>
             </section>
 

@@ -376,8 +376,9 @@ export const PORTFOLIO_MISSION_DATA: PortfolioMissionChapter[] = [
                 subtitle: 'Full corporate web portal built from scratch',
                 tags: [],
                 highlights: [
-                    'Built Geminus Tech corporate website in collaboration with the UX team.',
-                    'Implemented responsive design, SEO optimization, and clean page layouts.'
+                    'Official corporate web portal for Geminus Tech Pvt. Ltd. (https://www.geminustech.com/).',
+                    'Built from scratch in collaboration with UX team using Next.js & React.',
+                    'Delivered responsive architecture, SEO optimization, and high-performance page loads.'
                 ],
                 impact: 'Establishes strong web presence and product showcase for Geminus Tech.',
                 href: 'https://www.geminustech.com/'
@@ -388,8 +389,9 @@ export const PORTFOLIO_MISSION_DATA: PortfolioMissionChapter[] = [
                 subtitle: 'Modern security product web interface',
                 tags: [],
                 highlights: [
-                    'Engineered the official product website for API Securist.',
-                    'Implemented polished visual sections, product feature showcases, and lead flows.'
+                    'Comprehensive security testing that uncovers vulnerabilities beyond traditional scans.',
+                    'Engineered official product landing & feature demonstration portal for API Securist.',
+                    'Polished visual sections, interactive security feature showcases, and lead generation flows.'
                 ],
                 impact: 'Communicates technical API security features with extreme visual clarity.',
                 href: 'https://apisecurist.com/'

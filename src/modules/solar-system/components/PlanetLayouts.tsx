@@ -6,19 +6,50 @@ import { PortfolioCallout, PortfolioMissionChapter } from '../data/PortfolioMiss
 
 const isExternalHref = (href: string) => /^https?:\/\//.test(href);
 
-const getActionLabel = (href: string) => {
-    if (href.startsWith('mailto:')) return 'Send Email ✉️';
-    if (href.includes('linkedin.com')) return 'LinkedIn Profile ↗';
-    if (href.includes('github.com')) return 'GitHub Profile ↗';
-    if (isExternalHref(href)) return 'Visit Website ↗';
-    return 'Open Link ↗';
+const MailIcon = () => (
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="btnSvgIcon">
+        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+        <polyline points="22,6 12,13 2,6" />
+    </svg>
+);
+
+const ExternalIcon = () => (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" className="btnSvgIcon">
+        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+        <polyline points="15 3 21 3 21 9" />
+        <line x1="10" y1="14" x2="21" y2="3" />
+    </svg>
+);
+
+const getActionContent = (href: string, customLabel?: string) => {
+    const isMail = href.startsWith('mailto:');
+    let labelText = customLabel;
+
+    if (!labelText) {
+        if (isMail) labelText = 'Send Email';
+        else if (href.includes('linkedin.com')) labelText = 'LinkedIn Profile';
+        else if (href.includes('github.com')) labelText = 'GitHub Profile';
+        else if (isExternalHref(href)) labelText = 'Visit Website';
+        else labelText = 'Open Link';
+    } else {
+        labelText = labelText.replace(/[✉️↗]/g, '').trim();
+    }
+
+    return (
+        <>
+            <span className="btnLabel">{labelText}</span>
+            {isMail ? <MailIcon /> : <ExternalIcon />}
+        </>
+    );
 };
 
+const BASE_DELAY = 0.35;
+
 const cardIn = (index: number) => ({
-    initial: { opacity: 0, y: 22, scale: 0.96 },
+    initial: { opacity: 0, y: 32, scale: 0.94 },
     animate: { opacity: 1, y: 0, scale: 1 },
-    exit: { opacity: 0, y: 12, scale: 0.97 },
-    transition: { delay: index * 0.07, duration: 0.5, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }
+    exit: { opacity: 0, y: 16, scale: 0.95 },
+    transition: { delay: BASE_DELAY + index * 0.1, duration: 0.55, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }
 });
 
 const LinkButton = ({
@@ -44,11 +75,30 @@ const LinkButton = ({
 );
 
 const CheckList = ({ items }: { items: string[] }) => (
-    <ul className="checkList">
+    <motion.ul
+        className="checkList"
+        initial="hidden"
+        animate="visible"
+        variants={{
+            hidden: { opacity: 0 },
+            visible: {
+                opacity: 1,
+                transition: { staggerChildren: 0.07, delayChildren: BASE_DELAY + 0.1 }
+            }
+        }}
+    >
         {items.map((item) => (
-            <li key={item}>{item}</li>
+            <motion.li
+                key={item}
+                variants={{
+                    hidden: { opacity: 0, x: -10 },
+                    visible: { opacity: 1, x: 0, transition: { duration: 0.35, ease: 'easeOut' } }
+                }}
+            >
+                {item}
+            </motion.li>
         ))}
-    </ul>
+    </motion.ul>
 );
 
 // Shared header used by every planet except the Sun (which is its own hero).
@@ -61,23 +111,52 @@ const ChapterHeader = ({
     featured?: boolean;
     action?: React.ReactNode;
 }) => (
-    <header className="chapterHeader">
+    <motion.header
+        className="chapterHeader"
+        initial={{ opacity: 0, y: -14 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.18, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+    >
         <div className="chapterHeaderText">
-            <span className="chapterEyebrow">{chapter.section}</span>
-            <h2 className="chapterTitle">{chapter.title}</h2>
-            <p className="chapterSubtitle">{chapter.subtitle}</p>
+            <motion.span
+                className="chapterEyebrow"
+                initial={{ opacity: 0, x: -12 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.22, duration: 0.4 }}
+            >
+                {chapter.section}
+            </motion.span>
+            <motion.h2
+                className="chapterTitle"
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.28, duration: 0.45 }}
+            >
+                {chapter.title}
+            </motion.h2>
+            <motion.p
+                className="chapterSubtitle"
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.32, duration: 0.45 }}
+            >
+                {chapter.subtitle}
+            </motion.p>
         </div>
-        <div className="chapterHeaderActions">
-            {featured ? <span className="chapterBadge">Featured Project</span> : null}
-            {action}
-        </div>
-    </header>
+        {featured || action ? (
+            <motion.div
+                className="chapterHeaderActions"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.36, duration: 0.4 }}
+            >
+                {featured ? <span className="chapterBadge">Featured Project</span> : null}
+                {action}
+            </motion.div>
+        ) : null}
+    </motion.header>
 );
 
-// Sticky note — shared by Jupiter (tape), Saturn (folded corner) and Neptune
-// (pin), each visually distinct but all sharing the same idle left-right
-// sway that pauses the moment you hover or drag it. Color always comes from
-// the current planet's own --surface-accent, never a fixed hue.
 const NOTE_ROTATIONS = [-2, 1.6, -1, 2.2];
 
 const StickyNote = ({
@@ -94,7 +173,7 @@ const StickyNote = ({
     children: React.ReactNode;
 }) => {
     const baseRotation = NOTE_ROTATIONS[index % NOTE_ROTATIONS.length];
-    const delay = index * 0.07;
+    const delay = BASE_DELAY + index * 0.12;
 
     return (
         <motion.article
@@ -102,16 +181,21 @@ const StickyNote = ({
             drag={drag}
             dragElastic={drag ? 0.18 : undefined}
             dragMomentum={drag ? false : undefined}
-            initial={{ opacity: 0, y: 26, scale: 0.94, rotate: baseRotation }}
-            animate={{ opacity: 1, y: 0, scale: 1, rotate: baseRotation + 1.6 }}
+            initial={{ opacity: 0, y: 36, scale: 0.9, rotate: baseRotation - 4 }}
+            animate={{
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                rotate: [baseRotation - 4, baseRotation + 2, baseRotation]
+            }}
             exit={{ opacity: 0, y: 14, scale: 0.96 }}
-            whileHover={{ y: -6, rotate: 0, transition: { duration: 0.25 } }}
+            whileHover={{ y: -8, scale: 1.02, rotate: 0, transition: { duration: 0.25 } }}
             whileDrag={drag ? { scale: 1.06, rotate: 0, boxShadow: '0 24px 60px rgba(0,0,0,0.5)', zIndex: 20 } : undefined}
             transition={{
                 opacity: { delay, duration: 0.5 },
-                y: { delay, duration: 0.5 },
-                scale: { delay, duration: 0.5 },
-                rotate: { delay: delay + 0.5, duration: 2.6, repeat: Infinity, repeatType: 'mirror', ease: 'easeInOut' }
+                y: { delay, duration: 0.55, ease: [0.16, 1, 0.3, 1] },
+                scale: { delay, duration: 0.55, ease: [0.16, 1, 0.3, 1] },
+                rotate: { delay: delay + 0.05, duration: 0.65, ease: [0.16, 1, 0.3, 1] }
             }}
         >
             <span className="stickyTexture" aria-hidden="true" />
@@ -129,56 +213,115 @@ export const SunLayout = ({ chapter }: { chapter: PortfolioMissionChapter }) => 
 
     return (
         <div className="sunScene">
-            <div className="sunHero">
-                <div className="sunAvatarRing">
+            <motion.div
+                className="sunHero"
+                initial={{ opacity: 0, y: -16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2, duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+            >
+                <motion.div
+                    className="sunAvatarRing"
+                    initial={{ scale: 0.7, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ duration: 0.55, delay: 0.25, type: 'spring', stiffness: 200, damping: 15 }}
+                >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src="/koushik.jpg" alt="Koushik Mondal" className="sunAvatarImg" />
-                </div>
+                </motion.div>
                 <div className="sunHeroText">
-                    <h1 className="sunName">{chapter.title}</h1>
-                    <p className="sunTagline">{chapter.subtitle}</p>
+                    <motion.h1
+                        className="sunName"
+                        initial={{ opacity: 0, x: -15 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.28, duration: 0.45 }}
+                    >
+                        {chapter.title}
+                    </motion.h1>
+                    <motion.p
+                        className="sunTagline"
+                        initial={{ opacity: 0, x: -15 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.32, duration: 0.45 }}
+                    >
+                        {chapter.subtitle}
+                    </motion.p>
                 </div>
-            </div>
+            </motion.div>
 
-            <nav className="sunOrbitRow" aria-label="Profile facets">
+            <motion.nav
+                className="sunOrbitRow"
+                aria-label="Profile facets"
+                initial="hidden"
+                animate="visible"
+                variants={{
+                    hidden: { opacity: 0 },
+                    visible: { opacity: 1, transition: { staggerChildren: 0.08, delayChildren: 0.32 } }
+                }}
+            >
                 {chapter.callouts.map((callout, index) => (
-                    <button
+                    <motion.button
                         key={callout.title}
                         type="button"
                         className={`sunOrbitTab ${index === activeIndex ? 'active' : ''}`}
                         onMouseEnter={() => setActiveIndex(index)}
                         onFocus={() => setActiveIndex(index)}
                         onClick={() => setActiveIndex(index)}
+                        variants={{
+                            hidden: { opacity: 0, y: 15 },
+                            visible: { opacity: 1, y: 0, transition: { duration: 0.4 } }
+                        }}
+                        whileHover={{ scale: 1.04 }}
+                        whileTap={{ scale: 0.97 }}
                     >
                         <span className="sunOrbitIndex">{`0${index + 1}`}</span>
                         {callout.category}
-                    </button>
+                    </motion.button>
                 ))}
-            </nav>
+            </motion.nav>
 
             <div className="sunStage planetScroll">
                 {active ? (
-                    <div className="sunStageCard" key={active.title}>
+                    <motion.div
+                        className="sunStageCard"
+                        key={active.title}
+                        initial={{ opacity: 0, y: 20, scale: 0.96 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ delay: 0.38, duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                    >
                         <div className="sunStageHead">
                             <h3>{active.title}</h3>
                             {active.href ? (
-                                <LinkButton href={active.href}>{getActionLabel(active.href)}</LinkButton>
+                                <LinkButton href={active.href}>{getActionContent(active.href)}</LinkButton>
                             ) : null}
                         </div>
                         <p>{active.subtitle}</p>
                         <CheckList items={active.highlights} />
-                    </div>
+                    </motion.div>
                 ) : null}
 
                 {chapter.tags.length > 0 ? (
-                    <div className="sunStackRow">
+                    <motion.div
+                        className="sunStackRow"
+                        initial={{ opacity: 0, y: 15 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.4, duration: 0.5 }}
+                    >
                         <span className="sunStackLabel">{chapter.stackLabel ?? 'Stack'}</span>
                         <div className="sunStackChips">
-                            {chapter.tags.map((tag) => (
-                                <span key={tag} className="sunStackChip">{tag}</span>
+                            {chapter.tags.map((tag, idx) => (
+                                <motion.span
+                                    key={tag}
+                                    className="sunStackChip"
+                                    initial={{ opacity: 0, scale: 0.8 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{ delay: 0.45 + idx * 0.04, duration: 0.3 }}
+                                >
+                                    {tag}
+                                </motion.span>
                             ))}
                         </div>
-                    </div>
+                    </motion.div>
                 ) : null}
             </div>
         </div>
@@ -189,37 +332,44 @@ export const SunLayout = ({ chapter }: { chapter: PortfolioMissionChapter }) => 
 const LEGEND_PALETTE = ['#7dd3fc', '#fca5a5', '#86efac', '#fde68a', '#c4b5fd', '#f9a8d4', '#93c5fd', '#fdba74'];
 
 export const MercuryLayout = ({ chapter }: { chapter: PortfolioMissionChapter }) => {
-    const [lead, ...rest] = chapter.callouts;
+    const [card1, card2, card3] = chapter.callouts;
 
     return (
         <div className="mercuryBlueprint">
             <ChapterHeader chapter={chapter} />
             <div className="mercuryBody planetScroll">
-                {lead ? (
+                {card1 ? (
                     <motion.article className="mercuryLead planetBlock" {...cardIn(0)}>
                         <span className="mercurySpec">01</span>
-                        <span className="chipLabel">{lead.category}</span>
-                        <h3>{lead.title}</h3>
-                        <p>{lead.subtitle}</p>
-                        <CheckList items={lead.highlights} />
+                        <span className="chipLabel">{card1.category}</span>
+                        <h3>{card1.title}</h3>
+                        <p>{card1.subtitle}</p>
+                        <CheckList items={card1.highlights} />
                     </motion.article>
                 ) : null}
 
                 <div className="mercuryStack">
-                    {rest.map((callout, index) => (
-                        <motion.div
-                            key={callout.title}
-                            className="mercurySchemaRow planetBlock"
-                            {...cardIn(index + 1)}
-                        >
-                            <span className="mercurySpecInline">{`0${index + 2}`}</span>
+                    {card2 ? (
+                        <motion.div className="mercurySchemaRow planetBlock" {...cardIn(1)}>
+                            <span className="mercurySpecInline">02</span>
                             <div className="mercurySchemaText">
-                                <span className="chipLabel">{callout.category}</span>
-                                <h3>{callout.title}</h3>
-                                <p>{callout.subtitle}</p>
+                                <span className="chipLabel">{card2.category}</span>
+                                <h3>{card2.title}</h3>
+                                <p>{card2.subtitle}</p>
+                                <CheckList items={card2.highlights} />
                             </div>
                         </motion.div>
-                    ))}
+                    ) : null}
+
+                    {card3 ? (
+                        <motion.article className="mercuryDashedCard planetBlock" {...cardIn(2)}>
+                            <span className="mercurySpec">03</span>
+                            <span className="chipLabel">{card3.category}</span>
+                            <h3>{card3.title}</h3>
+                            <p>{card3.subtitle}</p>
+                            <CheckList items={card3.highlights} />
+                        </motion.article>
+                    ) : null}
                 </div>
             </div>
 
@@ -274,44 +424,140 @@ export const VenusLayout = ({ chapter }: { chapter: PortfolioMissionChapter }) =
     </div>
 );
 
-const EarthCurveRight = () => (
+const EarthCurveRight = ({ index }: { index: number }) => (
     <div className="earthCurveWrap">
         <svg viewBox="0 0 160 120" preserveAspectRatio="none" className="earthCurveSvg">
-            <circle cx="100" cy="60" r="45" fill="color-mix(in srgb, var(--surface-accent), transparent 90%)" />
-            <path
+            <motion.circle
+                cx="100"
+                cy="60"
+                r="45"
+                fill="color-mix(in srgb, var(--surface-accent), transparent 90%)"
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: BASE_DELAY + index * 0.12 + 0.05, duration: 0.5, type: 'spring', stiffness: 180, damping: 16 }}
+            />
+            <motion.path
                 d="M 0 12 H 100 A 48 48 0 0 1 100 108 H 0"
                 stroke="color-mix(in srgb, var(--surface-accent), white 40%)"
                 strokeWidth="2.5"
                 fill="none"
-                vectorEffect="non-scaling-stroke"
+                initial={{ pathLength: 0, opacity: 0 }}
+                animate={{ pathLength: 1, opacity: 1 }}
+                transition={{ delay: BASE_DELAY + index * 0.12 + 0.1, duration: 0.7, ease: 'easeInOut' }}
             />
             {/* Center 20px White Pin */}
-            <circle cx="100" cy="60" r="10" fill="#ffffff" stroke="color-mix(in srgb, var(--surface-accent), white 50%)" strokeWidth="2.5" />
-            <circle cx="100" cy="60" r="4" fill="color-mix(in srgb, var(--surface-accent), black 30%)" />
+            <motion.circle
+                cx="100"
+                cy="60"
+                r="10"
+                fill="#ffffff"
+                stroke="color-mix(in srgb, var(--surface-accent), white 50%)"
+                strokeWidth="2.5"
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: BASE_DELAY + index * 0.12 + 0.35, type: 'spring', stiffness: 260, damping: 16 }}
+            />
+            <motion.circle
+                cx="100"
+                cy="60"
+                r="4"
+                fill="color-mix(in srgb, var(--surface-accent), black 30%)"
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ delay: BASE_DELAY + index * 0.12 + 0.4, duration: 0.3 }}
+            />
 
-            <circle cx="5" cy="12" r="4.5" fill="#0d0f12" stroke="color-mix(in srgb, var(--surface-accent), white 60%)" strokeWidth="2" />
-            <circle cx="5" cy="108" r="4.5" fill="#0d0f12" stroke="color-mix(in srgb, var(--surface-accent), white 60%)" strokeWidth="2" />
+            <motion.circle
+                cx="5"
+                cy="12"
+                r="4.5"
+                fill="#0d0f12"
+                stroke="color-mix(in srgb, var(--surface-accent), white 60%)"
+                strokeWidth="2"
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ delay: BASE_DELAY + index * 0.12 + 0.15, duration: 0.3 }}
+            />
+            <motion.circle
+                cx="5"
+                cy="108"
+                r="4.5"
+                fill="#0d0f12"
+                stroke="color-mix(in srgb, var(--surface-accent), white 60%)"
+                strokeWidth="2"
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ delay: BASE_DELAY + index * 0.12 + 0.55, duration: 0.3 }}
+            />
         </svg>
     </div>
 );
 
-const EarthCurveLeft = () => (
+const EarthCurveLeft = ({ index }: { index: number }) => (
     <div className="earthCurveWrap">
         <svg viewBox="0 0 160 120" preserveAspectRatio="none" className="earthCurveSvg">
-            <circle cx="60" cy="60" r="45" fill="color-mix(in srgb, var(--surface-accent), transparent 90%)" />
-            <path
+            <motion.circle
+                cx="60"
+                cy="60"
+                r="45"
+                fill="color-mix(in srgb, var(--surface-accent), transparent 90%)"
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: BASE_DELAY + index * 0.12 + 0.05, duration: 0.5, type: 'spring', stiffness: 180, damping: 16 }}
+            />
+            <motion.path
                 d="M 160 12 H 60 A 48 48 0 0 0 60 108 H 160"
                 stroke="color-mix(in srgb, var(--surface-accent), white 40%)"
                 strokeWidth="2.5"
                 fill="none"
-                vectorEffect="non-scaling-stroke"
+                initial={{ pathLength: 0, opacity: 0 }}
+                animate={{ pathLength: 1, opacity: 1 }}
+                transition={{ delay: BASE_DELAY + index * 0.12 + 0.1, duration: 0.7, ease: 'easeInOut' }}
             />
             {/* Center 20px White Pin */}
-            <circle cx="60" cy="60" r="10" fill="#ffffff" stroke="color-mix(in srgb, var(--surface-accent), white 50%)" strokeWidth="2.5" />
-            <circle cx="60" cy="60" r="4" fill="color-mix(in srgb, var(--surface-accent), black 30%)" />
+            <motion.circle
+                cx="60"
+                cy="60"
+                r="10"
+                fill="#ffffff"
+                stroke="color-mix(in srgb, var(--surface-accent), white 50%)"
+                strokeWidth="2.5"
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: BASE_DELAY + index * 0.12 + 0.35, type: 'spring', stiffness: 260, damping: 16 }}
+            />
+            <motion.circle
+                cx="60"
+                cy="60"
+                r="4"
+                fill="color-mix(in srgb, var(--surface-accent), black 30%)"
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ delay: BASE_DELAY + index * 0.12 + 0.4, duration: 0.3 }}
+            />
 
-            <circle cx="155" cy="12" r="4.5" fill="#0d0f12" stroke="color-mix(in srgb, var(--surface-accent), white 60%)" strokeWidth="2" />
-            <circle cx="155" cy="108" r="4.5" fill="#0d0f12" stroke="color-mix(in srgb, var(--surface-accent), white 60%)" strokeWidth="2" />
+            <motion.circle
+                cx="155"
+                cy="12"
+                r="4.5"
+                fill="#0d0f12"
+                stroke="color-mix(in srgb, var(--surface-accent), white 60%)"
+                strokeWidth="2"
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ delay: BASE_DELAY + index * 0.12 + 0.15, duration: 0.3 }}
+            />
+            <motion.circle
+                cx="155"
+                cy="108"
+                r="4.5"
+                fill="#0d0f12"
+                stroke="color-mix(in srgb, var(--surface-accent), white 60%)"
+                strokeWidth="2"
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ delay: BASE_DELAY + index * 0.12 + 0.55, duration: 0.3 }}
+            />
         </svg>
     </div>
 );
@@ -341,16 +587,16 @@ export const EarthLayout = ({ chapter }: { chapter: PortfolioMissionChapter }) =
                                             <CheckList items={callout.highlights} />
                                             {callout.href ? (
                                                 <LinkButton href={callout.href} className="ctaButton subtle">
-                                                    {getActionLabel(callout.href)}
+                                                    {getActionContent(callout.href)}
                                                 </LinkButton>
                                             ) : null}
                                         </div>
                                     </div>
-                                    <EarthCurveRight />
+                                    <EarthCurveRight index={index} />
                                 </>
                             ) : (
                                 <>
-                                    <EarthCurveLeft />
+                                    <EarthCurveLeft index={index} />
                                     <div className="earthCardBox">
                                         <div className="earthCardInner">
                                             <span className="chipLabel">{callout.category}</span>
@@ -359,7 +605,7 @@ export const EarthLayout = ({ chapter }: { chapter: PortfolioMissionChapter }) =
                                             <CheckList items={callout.highlights} />
                                             {callout.href ? (
                                                 <LinkButton href={callout.href} className="ctaButton subtle">
-                                                    {getActionLabel(callout.href)}
+                                                    {getActionContent(callout.href)}
                                                 </LinkButton>
                                             ) : null}
                                         </div>
@@ -426,7 +672,6 @@ export const JupiterLayout = ({ chapter }: { chapter: PortfolioMissionChapter })
     );
 };
 
-// ===================== SATURN — Site Notes =====================
 export const SaturnLayout = ({ chapter }: { chapter: PortfolioMissionChapter }) => (
     <div className="saturnShowcase">
         <ChapterHeader chapter={chapter} />
@@ -436,11 +681,12 @@ export const SaturnLayout = ({ chapter }: { chapter: PortfolioMissionChapter }) 
                     <span className="chipLabel">{callout.category}</span>
                     <h3>{callout.title}</h3>
                     <p>{callout.subtitle}</p>
+                    <CheckList items={callout.highlights} />
                     {callout.href ? (
-                        <LinkButton href={callout.href} className="ctaButton stamp">Visit Site ↗</LinkButton>
-                    ) : (
-                        <CheckList items={callout.highlights} />
-                    )}
+                        <LinkButton href={callout.href} className="ctaButton stamp">
+                            {getActionContent(callout.href, 'Visit Site')}
+                        </LinkButton>
+                    ) : null}
                 </StickyNote>
             ))}
         </div>
@@ -494,7 +740,7 @@ export const NeptuneLayout = ({ chapter }: { chapter: PortfolioMissionChapter })
                     {allItems.map((item, index) => {
                         const isEven = index % 2 === 0;
                         const href = item.href ?? '#';
-                        const cta = 'cta' in item && item.cta ? item.cta : (item.href ? getActionLabel(item.href) : 'Open Link ↗');
+                        const ctaLabel = 'cta' in item && item.cta ? item.cta : undefined;
                         const download = 'download' in item ? item.download : undefined;
 
                         return (
@@ -514,15 +760,15 @@ export const NeptuneLayout = ({ chapter }: { chapter: PortfolioMissionChapter })
                                                     <CheckList items={item.highlights} />
                                                 ) : null}
                                                 <LinkButton href={href} download={download} className="ctaButton stamp">
-                                                    {cta}
+                                                    {getActionContent(href, ctaLabel)}
                                                 </LinkButton>
                                             </div>
                                         </div>
-                                        <EarthCurveRight />
+                                        <EarthCurveRight index={index} />
                                     </>
                                 ) : (
                                     <>
-                                        <EarthCurveLeft />
+                                        <EarthCurveLeft index={index} />
                                         <div className="earthCardBox">
                                             <div className="earthCardInner">
                                                 <span className="chipLabel">{item.category}</span>
@@ -532,7 +778,7 @@ export const NeptuneLayout = ({ chapter }: { chapter: PortfolioMissionChapter })
                                                     <CheckList items={item.highlights} />
                                                 ) : null}
                                                 <LinkButton href={href} download={download} className="ctaButton stamp">
-                                                    {cta}
+                                                    {getActionContent(href, ctaLabel)}
                                                 </LinkButton>
                                             </div>
                                         </div>
